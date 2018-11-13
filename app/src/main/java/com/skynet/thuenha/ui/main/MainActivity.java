@@ -7,12 +7,13 @@ import android.support.v4.view.ViewPager;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.ui.base.BaseActivity;
+import com.skynet.thuenha.ui.chosseAddress.ChooseAddressFragment;
 import com.skynet.thuenha.ui.home.HomeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentHomeCallBack {
+public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentHomeCallBack,ChooseAddressFragment.CallBackChooseAddress {
 
     @BindView(R.id.bnve)
     BottomNavigationViewEx bnve;
@@ -55,5 +56,15 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onChooseAddress() {
+        HomeFragment page = (HomeFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + viewpager.getCurrentItem());
+        // based on the current position you can then cast the page to the correct
+        // class and call the method:
+        if (viewpager.getCurrentItem() == 0 && page != null) {
+            ((HomeFragment)page).setupAddress();
+        }
     }
 }
