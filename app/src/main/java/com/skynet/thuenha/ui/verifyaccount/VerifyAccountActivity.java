@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.skynet.thuenha.MainActivity;
+import com.skynet.thuenha.ui.main.MainActivity;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.ui.base.BaseActivity;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;

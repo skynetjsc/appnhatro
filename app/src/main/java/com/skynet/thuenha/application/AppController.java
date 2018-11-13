@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 import com.google.gson.Gson;
 import com.skynet.thuenha.R;
+import com.skynet.thuenha.models.Banner;
 import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.utils.AppConstant;
 
@@ -24,6 +25,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class AppController extends MultiDexApplication {
     private static AppController instance;
     private Profile mProfileUser;
+    private List<Banner> listBanner;
     private SPUtils mSetting;
     private int typeSort = -1;
     private boolean flagInTrip = true;
@@ -43,6 +45,14 @@ public class AppController extends MultiDexApplication {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    public List<Banner> getListBanner() {
+        return listBanner;
+    }
+
+    public void setListBanner(List<Banner> listBanner) {
+        this.listBanner = listBanner;
     }
 
     public synchronized static AppController getInstance() {

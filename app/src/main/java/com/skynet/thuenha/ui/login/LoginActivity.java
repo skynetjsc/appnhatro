@@ -3,17 +3,14 @@ package com.skynet.thuenha.ui.login;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.skynet.thuenha.MainActivity;
+import com.skynet.thuenha.ui.main.MainActivity;
 import com.skynet.thuenha.R;
-import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.ui.base.BaseActivity;
 import com.skynet.thuenha.ui.forgotPassword.ForgotPwActivity;

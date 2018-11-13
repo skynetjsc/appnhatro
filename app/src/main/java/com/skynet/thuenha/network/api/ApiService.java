@@ -1,5 +1,6 @@
 package com.skynet.thuenha.network.api;
 
+import com.skynet.thuenha.models.HomeResponse;
 import com.skynet.thuenha.models.Profile;
 
 import java.util.List;
@@ -26,6 +27,9 @@ public interface ApiService {
 
     @GET("get_info.php")
     Call<ApiResponse<Profile>> getProfile(@Query("id") String uid, @Query("type") int type);
+
+    @GET("home.php")
+    Call<ApiResponse<HomeResponse>> getHome(@Query("id") String uid, @Query("type") int type);
 
     @GET("login.php")
     Call<ApiResponse<Profile>> login(@Query("username") String username, @Query("password") String password, @Query("type") int type);

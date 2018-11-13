@@ -5,16 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.skynet.thuenha.MainActivity;
+import com.skynet.thuenha.ui.main.MainActivity;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SplashActivity extends AppCompatActivity implements SlideContract.View {
@@ -38,7 +35,7 @@ public class SplashActivity extends AppCompatActivity implements SlideContract.V
             public void run() {
                 presenter.getInfor();
             }
-        },5000);
+        },500);
 //        getDialogProgress().hideDialog();
 //        MainApplication.getInstance().setDay(day);
 

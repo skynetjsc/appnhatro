@@ -43,7 +43,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
-
     protected void onReloadDataInPage() {
     }
 
@@ -54,7 +53,7 @@ public abstract class BaseFragment extends Fragment {
             view = inflater.inflate(initLayout(), container, false);
             initViews(view);
             initVariables();
-            LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver,new IntentFilter(AppConstant.ACTION_BROADCAST_NOTIFY));
+            LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter(AppConstant.ACTION_BROADCAST_NOTIFY));
 
         }
         return view;
@@ -80,7 +79,7 @@ public abstract class BaseFragment extends Fragment {
                 .commit();
     }
 
-//    public void showToast(String message, int type) {
+    //    public void showToast(String message, int type) {
 //        if (initViewSBAnchor() == -1) return;
 //        TSnackbar snackbar = TSnackbar.make(view.findViewById(initViewSBAnchor()), message, TSnackbar.LENGTH_LONG);
 //        snackbar.setActionTextColor(Color.WHITE);
@@ -128,7 +127,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
-
     protected void finishFragment() {
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction trans = manager.beginTransaction();
@@ -137,8 +135,12 @@ public abstract class BaseFragment extends Fragment {
         manager.popBackStack();
     }
 
-    protected void showDialogExpiredToken(){
-        BaseActivity baseActivity = (BaseActivity)getActivity();
+    public void showToast(String mess, int type) {
+        ((BaseActivity) getActivity()).showToast(mess, type);
+    }
+
+    protected void showDialogExpiredToken() {
+        BaseActivity baseActivity = (BaseActivity) getActivity();
         baseActivity.showDialogExpired();
     }
 

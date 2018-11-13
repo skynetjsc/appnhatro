@@ -13,15 +13,13 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.blankj.utilcode.util.NetworkUtils;
-import com.skynet.thuenha.MainActivity;
+import com.skynet.thuenha.ui.main.MainActivity;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.interfaces.SnackBarCallBack;

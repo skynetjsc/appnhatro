@@ -86,4 +86,6 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="brownish_grey">#5f5f5f</color>
+    <color name="color_enable">#f67b26</color>
+    <color name="color_disable">#5c6979</color>
 </resources>

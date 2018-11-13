@@ -16,7 +16,10 @@
     <dimen name="dps25">25sp</dimen>
     <dimen name="dps30">30sp</dimen>
     <dimen name="dps10">10sp</dimen>
-
+    <dimen name="speech_bubble_corners">10dp</dimen>
+    <dimen name="speech_bubble_corners_plus_tail">15dp</dimen>
+    <dimen name="speech_bubble_spacing">5dp</dimen>
+    <dimen name="speech_bubble_tail">25dp</dimen>
     <dimen name="alphabet_width">30dp</dimen>
     <dimen name="font_medium">15sp</dimen>
     <dimen name="dp10">10dp</dimen>

@@ -23,7 +23,7 @@ public class Profile implements Parcelable {
     private int number;
     @Expose
     @SerializedName("type")
-    private String type;
+    private int type;
     @Expose
     @SerializedName("point")
     private int point;
@@ -123,11 +123,11 @@ public class Profile implements Parcelable {
         this.address = address;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -296,7 +296,7 @@ public class Profile implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.active);
         dest.writeInt(this.number);
-        dest.writeString(this.type);
+        dest.writeInt(this.type);
         dest.writeInt(this.point);
         dest.writeString(this.register_date);
         dest.writeString(this.avatar);
@@ -323,7 +323,7 @@ public class Profile implements Parcelable {
     protected Profile(Parcel in) {
         this.active = in.readInt();
         this.number = in.readInt();
-        this.type = in.readString();
+        this.type = in.readInt();
         this.point = in.readInt();
         this.register_date = in.readString();
         this.avatar = in.readString();
