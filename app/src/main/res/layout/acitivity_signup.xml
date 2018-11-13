@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dp16">
+
+        <EditText
+            android:id="@+id/username_txt"
+            style="@style/login_edt"
+            android:hint="Số điện thoại sử dụng"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp40"
+            android:text="Tôi đăng ký tài khoản để?"
+            android:textColor="@color/black" />
+
+        <RadioGroup
+            android:id="@+id/radGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radCus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:text="Tìm nhà"
+                android:textColor="@color/black" />
+
+            <RadioButton
+                android:id="@+id/radHost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:text="Cho thuê nhà"
+                android:textColor="@color/black" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/signup_txt"
+            style="@style/signup_btn"
+            android:layout_marginTop="@dimen/dp40"
+            android:text="Gửi mã xác thực" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/forget_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Bằng cách bấm vào gửi mã xác thực là bạn đã đồng ý với các điều khoản và chính sách sử dụng của chúng tôi."
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></LinearLayout>
+
+    <TextView
+        android:id="@+id/privacy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="16dp"
+        android:gravity="bottom"
+        android:padding="@dimen/dp16"
+        android:text="Điều khoản &amp; Chính sách sử dụng"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

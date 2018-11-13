@@ -1,0 +1,94 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+
+
+    <dimen name="dps15">15sp</dimen>
+    <dimen name="dps16">16sp</dimen>
+    <dimen name="dps18">18sp</dimen>
+    <dimen name="dps20">20sp</dimen>
+    <dimen name="dps22">22sp</dimen>
+    <dimen name="dps25">25sp</dimen>
+    <dimen name="dps30">30sp</dimen>
+    <dimen name="dps10">10sp</dimen>
+
+    <dimen name="alphabet_width">30dp</dimen>
+    <dimen name="font_medium">15sp</dimen>
+    <dimen name="dp10">10dp</dimen>
+    <dimen name="dp15">15dp</dimen>
+    <dimen name="dp20">20dp</dimen>
+    <dimen name="dp25">25dp</dimen>
+    <dimen name="dp30">30dp</dimen>
+    <dimen name="dp35">35dp</dimen>
+    <dimen name="dp40">40dp</dimen>
+    <dimen name="dp45">45dp</dimen>
+    <dimen name="dp5">5dp</dimen>
+    <dimen name="dp10dp8">8dp</dimen>
+    <dimen name="dp100">100dp</dimen>
+    <dimen name="dp80">80dp</dimen>
+    <dimen name="dp60">60dp</dimen>
+    <dimen name="dp3">3dp</dimen>
+    <dimen name="dp120">120dp</dimen>
+    <dimen name="dp110">110dp</dimen>
+    <dimen name="dp70">70dp</dimen>
+    <dimen name="dp50">50dp</dimen>
+    <dimen name="dp22">22dp</dimen>
+    <dimen name="dp65">65dp</dimen>
+    <dimen name="dp1">1dp</dimen>
+    <dimen name="dp28">28dp</dimen>
+    <dimen name="dp12">12dp</dimen>
+    <dimen name="dps17">17sp</dimen>
+    <dimen name="dps12">12sp</dimen>
+    <dimen name="dps13">13sp</dimen>
+    <dimen name="dps14">14sp</dimen>
+    <dimen name="dp55">55dp</dimen>
+    <dimen name="dp72">72dp</dimen>
+    <dimen name="dp130">130dp</dimen>
+    <dimen name="dp150">150dp</dimen>
+    <dimen name="dp90">90dp</dimen>
+    <dimen name="dp95">95dp</dimen>
+    <dimen name="dp2">2dp</dimen>
+    <dimen name="dp78">78dp</dimen>
+    <dimen name="dp75">75dp</dimen>
+    <dimen name="login_dp_margin_left">30dp</dimen>
+    <dimen name="width_menu_left">320dp</dimen>
+    <dimen name="dps8">8sp</dimen>
+    <dimen name="dp16">16dp</dimen>
+    <dimen name="home_size_photo">230dp</dimen>
+    <dimen name="dp32">32dp</dimen>
+    <dimen name="dp8">8dp</dimen>
+    <dimen name="dp18">18dp</dimen>
+    <dimen name="dps28">28sp</dimen>
+    <dimen name="home_size_card">200dp</dimen>
+    <dimen name="dp4">4dp</dimen>
+    <dimen name="size_padding_edt">16dp</dimen>
+    <dimen name="size_drawable_nav">24dp</dimen>
+    <dimen name="size_add">46dp</dimen>
+
+    <dimen name="size_line">2px</dimen>
+    <dimen name="connection_size_dot">16dp</dimen>
+    <dimen name="size_dot">16dp</dimen>
+    <dimen name="dp68">80dp</dimen>
+
+
+    <dimen name="default_text_size">18sp</dimen>
+    <dimen name="vcode_text_size">18sp</dimen>
+    <dimen name="vcode_bottom_icon_height">6dp</dimen>
+    <dimen name="vcode_bottom_icon_width">48dp</dimen>
+    <dimen name="vcode_item_space_size">19dp</dimen>
+    <dimen name="size_button">160dp</dimen>
+    <dimen name="shrine_toolbar_offset_start">48dp</dimen>
+    <dimen name="shrine_toolbar_offset_top">64dp</dimen>
+    <dimen name="app_bar_height">120dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="home_size_w_card">150dp</dimen>
+    <dimen name="size_img_category">100dp</dimen>
+    <dimen name="card_padding">30dp</dimen>
+    <dimen name="size_archiement">24dp</dimen>
+
+</resources>
