@@ -110,6 +110,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         if (AppController.getInstance().getListBanner() != null)
             listBanner.addAll(AppController.getInstance().getListBanner());
         slidePhotos.setAdapter(new SlidePhotoHomeAdapter(slidePhotos, listBanner, onClickBanner));
+//        setupAddress();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         setupAddress();
     }
 
@@ -122,6 +128,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
             tvCity.setText(myCity.getName());
         if (myDistrict != null)
             tvDistrict.setText(myDistrict.getName());
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+        setupAddress();
+        return true;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -161,7 +173,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public void onDestroyView() {
         presenter.onDestroyView();
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     @Override

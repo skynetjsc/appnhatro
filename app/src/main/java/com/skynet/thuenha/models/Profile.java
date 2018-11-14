@@ -28,6 +28,9 @@ public class Profile implements Parcelable {
     @SerializedName("point")
     private int point;
     @Expose
+    @SerializedName("number_post")
+    private int number_post;
+    @Expose
     @SerializedName("register_date")
     private String register_date;
     @Expose
@@ -90,6 +93,14 @@ public class Profile implements Parcelable {
     @Expose
     @SerializedName("id")
     private String u_id;
+
+    public int getNumber_post() {
+        return number_post;
+    }
+
+    public void setNumber_post(int number_post) {
+        this.number_post = number_post;
+    }
 
     public String getDepartment_id() {
         return department_id;

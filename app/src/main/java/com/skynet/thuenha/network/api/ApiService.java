@@ -1,7 +1,9 @@
 package com.skynet.thuenha.network.api;
 
 import com.skynet.thuenha.models.Address;
+import com.skynet.thuenha.models.DetailPost;
 import com.skynet.thuenha.models.HomeResponse;
+import com.skynet.thuenha.models.Post;
 import com.skynet.thuenha.models.Profile;
 
 import java.util.List;
@@ -44,6 +46,12 @@ public interface ApiService {
     @GET("district.php")
     Call<ApiResponse<List<Address>>> getDistrict(@Query("city_id") int phone);
 
+    @GET("list_post.php")
+    Call<ApiResponse<List<Post>>> getListPost(@Query("id_service") int phone, @Query("id_district") int idDistrict);
+
+    @GET("search.php")
+    Call<ApiResponse<List<Post>>> searchListPost(@Query("id_service") int phone, @Query("id_district") int idDistrict, @Query("title") String query);
+
     @FormUrlEncoded
     @POST("register.php")
     Call<ApiResponse<Profile>> signUp(@Field("phone") String phone, @Field("password") String pass, @Field("type") int type);
@@ -51,5 +59,17 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("forget_password.php")
     Call<ApiResponse> forgotPass(@Field("phone") String email, @Field("type") int type);
+
+    @FormUrlEncoded
+    @POST("post_detail.php")
+    Call<ApiResponse<DetailPost>> getDetailPost(@Field("user_id") String  idUser, @Field("post_id") int postID);
+
+    @FormUrlEncoded
+    @POST("favourite.php")
+    Call<ApiResponse> toggleFav(@Field("user_id") String  idUser, @Field("post_id") int postID,@Field("type") int isFav);
+
+    @FormUrlEncoded
+    @POST("pay_view.php")
+    Call<ApiResponse> paidForthisPost(@Field("user_id") String  idUser, @Field("post_id") int postID);
 
 }

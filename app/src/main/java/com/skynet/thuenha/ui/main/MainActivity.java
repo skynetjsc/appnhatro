@@ -2,6 +2,7 @@ package com.skynet.thuenha.ui.main;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -13,12 +14,13 @@ import com.skynet.thuenha.ui.home.HomeFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentHomeCallBack,ChooseAddressFragment.CallBackChooseAddress {
+public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentHomeCallBack, ChooseAddressFragment.CallBackChooseAddress {
 
     @BindView(R.id.bnve)
     BottomNavigationViewEx bnve;
     @BindView(R.id.viewpager)
     ViewPager viewpager;
+    private AdapterViewpager adapter;
 
     @Override
     protected int initLayout() {
@@ -37,7 +39,8 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         bnve.enableShiftingMode(false);
         bnve.setTextVisibility(false);
         bnve.enableItemShiftingMode(false);
-        viewpager.setAdapter(new AdapterViewpager(getSupportFragmentManager()));
+        adapter = new AdapterViewpager(getSupportFragmentManager());
+        viewpager.setAdapter(adapter);
         bnve.setupWithViewPager(viewpager);
     }
 
@@ -60,11 +63,21 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
 
     @Override
     public void onChooseAddress() {
-        HomeFragment page = (HomeFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + viewpager.getCurrentItem());
-        // based on the current position you can then cast the page to the correct
-        // class and call the method:
-        if (viewpager.getCurrentItem() == 0 && page != null) {
-            ((HomeFragment)page).setupAddress();
-        }
+//        HomeFragment page = (HomeFragment) getSupportFragmentManager().findFragmentById(getSupportFragmentManager().getFragments().get(0).getId());
+//        // based on the current position you can then cast the page to the correct
+//        // class and call the method:
+//
+//        if (viewpager.getCurrentItem() == 0 && page != null) {
+//            ((HomeFragment) page).setupAddress();
+//        }
+        getSupportFragmentManager().popBackStack();
+//        HomeFragment page = (HomeFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.viewpager + ":" + viewpager.getCurrentItem());
+//        // based on the current position you can then cast the page to the correct
+//        // class and call the method:
+//        if (viewpager.getCurrentItem() == 0 && page != null) {
+//            ((HomeFragment)page).setupAddress();
+//        }
+        adapter.getRegisteredFragment(0).onResume();
+//        adapter.getItem(viewpager.getCurrentItem()).onResume();
     }
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +21,14 @@ import com.google.gson.Gson;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.interfaces.ICallback;
+import com.skynet.thuenha.interfaces.ICallbackObj;
 import com.skynet.thuenha.models.Address;
 import com.skynet.thuenha.ui.base.BaseFragment;
 import com.skynet.thuenha.ui.home.HomeFragment;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 import com.skynet.thuenha.utils.AppConstant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ChooseAddressFragment extends BaseFragment implements ChooseAddressContract.View, ICallback {
+public class ChooseAddressFragment extends BaseFragment implements ChooseAddressContract.View, ICallbackObj {
     @BindView(R.id.spiner)
     Spinner spiner;
     @BindView(R.id.editext)
@@ -50,6 +54,7 @@ public class ChooseAddressFragment extends BaseFragment implements ChooseAddress
     private ChooseAddressContract.Presenter presenter;
     private ProgressDialogCustom dialogLoading;
     private CallBackChooseAddress mListener;
+    private AdapterDistrict adapter;
 
     public static ChooseAddressFragment newInstance(Address city) {
 
@@ -77,6 +82,27 @@ public class ChooseAddressFragment extends BaseFragment implements ChooseAddress
         presenter = new ChooseAddressPresenter(this);
         dialogLoading = new ProgressDialogCustom(getMyContext());
         presenter.getCity();
+        listDistricts = new ArrayList<>();
+        adapter = new AdapterDistrict(listDistricts, getContext(), this);
+        rcv.setAdapter(adapter);
+
+        editext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                adapter.getFilter().filter(editable.toString());
+
+            }
+        });
     }
 
     @Override
@@ -109,8 +135,9 @@ public class ChooseAddressFragment extends BaseFragment implements ChooseAddress
 
     @Override
     public void onSucessGetDistrict(List<Address> list) {
-        listDistricts = list;
-        rcv.setAdapter(new AdapterDistrict(list, getContext(), this));
+        listDistricts.clear();
+        listDistricts.addAll(list);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -165,9 +192,17 @@ public class ChooseAddressFragment extends BaseFragment implements ChooseAddress
     }
 
     @Override
-    public void onCallBack(int pos) {
-        AppController.getInstance().getmSetting().put(AppConstant.district, new Gson().toJson(listDistricts.get(pos)));
+    public void onCallBack(Object pos) {
+        Address obj = (Address)pos;
+        AppController.getInstance().getmSetting().put(AppConstant.district, new Gson().toJson(obj));
         mListener.onChooseAddress();
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+
+        return super.getUserVisibleHint();
+
     }
 
     @Override

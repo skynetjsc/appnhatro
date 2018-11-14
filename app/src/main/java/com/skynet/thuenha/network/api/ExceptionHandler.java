@@ -26,6 +26,8 @@ public class  ExceptionHandler<T> {
             case AppConstant.CODE_SERVER_ERROR: {
                 listener.onErrorApi(apiResponse.getMessage());
             }
+            default:
+                listener.onError(apiResponse.getMessage());
         }
     }
 }
