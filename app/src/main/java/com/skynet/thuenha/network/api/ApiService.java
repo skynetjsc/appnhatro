@@ -1,5 +1,6 @@
 package com.skynet.thuenha.network.api;
 
+import com.skynet.thuenha.models.Address;
 import com.skynet.thuenha.models.HomeResponse;
 import com.skynet.thuenha.models.Profile;
 
@@ -37,9 +38,15 @@ public interface ApiService {
     @GET("verify_code.php")
     Call<ApiResponse<String>> sendCode(@Query("phone") String phone, @Query("type") int type);
 
+    @GET("city.php")
+    Call<ApiResponse<List<Address>>> getCities();
+
+    @GET("district.php")
+    Call<ApiResponse<List<Address>>> getDistrict(@Query("city_id") int phone);
+
     @FormUrlEncoded
     @POST("register.php")
-    Call<ApiResponse<Profile>> signUp( @Field("phone") String phone, @Field("password") String pass,@Field("type") int type);
+    Call<ApiResponse<Profile>> signUp(@Field("phone") String phone, @Field("password") String pass, @Field("type") int type);
 
     @FormUrlEncoded
     @POST("forget_password.php")

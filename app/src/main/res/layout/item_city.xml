@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/textView4"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/address_bg_text_city"
+    android:drawableLeft="@drawable/ic_maps_and_flags"
+    android:drawablePadding="@dimen/dp8"
+    android:gravity="center"
+    android:paddingBottom="@dimen/dp8"
+    android:paddingLeft="@dimen/dp8"
+    android:paddingRight="@dimen/dp16"
+    android:paddingTop="@dimen/dp8"
+    android:text="Hà nội"
+    android:textColor="@color/black"
+    tools:showIn="@layout/activity_choose_address" />

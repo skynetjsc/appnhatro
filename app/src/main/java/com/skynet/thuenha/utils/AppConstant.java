@@ -15,17 +15,17 @@ public class AppConstant {
     public static final String KEY_PAGE_CLOSED_ORDER = "CL";
 
     public static final int CODE_EXPIRED = 401;
-    public static final int CODE_NOT_FOUND= 404;
-    public static final int CODE_SERVER_ERROR= 500;
+    public static final int CODE_NOT_FOUND = 404;
+    public static final int CODE_SERVER_ERROR = 500;
     public static final int CODE_API_ERROR_MAX_ORDER = 2;
     public static final int CODE_API_SUCCESS = 200;
-    public static final  int CODE_STATUS_NEW = 0;
-    public static  final int CODE_STATUS_PREPARING = 1;
-    public static  final int CODE_STATUS_READY_FOR_PICKUP = 2;
-    public static  final int CODE_STATUS_ACCEPTED = 3;
-    public static  final int CODE_STATUS_DELIVERY_IN_PROGRESS = 4;
-    public static  final int CODE_STATUS_DELIVERIED = 5;
-    public static  final int CODE_STATUS_CANCELLED = 6;
+    public static final int CODE_STATUS_NEW = 0;
+    public static final int CODE_STATUS_PREPARING = 1;
+    public static final int CODE_STATUS_READY_FOR_PICKUP = 2;
+    public static final int CODE_STATUS_ACCEPTED = 3;
+    public static final int CODE_STATUS_DELIVERY_IN_PROGRESS = 4;
+    public static final int CODE_STATUS_DELIVERIED = 5;
+    public static final int CODE_STATUS_CANCELLED = 6;
 
     public static final String STR_STATUS_CANCLE_ACCEPTED = "CA";
     public static final String STR_STATUS_ACCEPTED = "AC";
@@ -37,6 +37,8 @@ public class AppConstant {
     public static final String KEY_TOKEN_FCM = "token_fcm";
     public static final String ACTION_BROADCAST_NOTIFY = "ACTION_BROADCAST_NOTIFY";
     public static final String MSG = "msg";
+    public static final String city = "city";
+    public static final String district = "district";
     public static final String BUNDLE = "bundle";
     public static final String NOTIFICATION_SOCKET = "noti_socket";
     public static final String INTENT = "intent";
