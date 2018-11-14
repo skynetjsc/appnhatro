@@ -62,7 +62,7 @@
     <dimen name="width_menu_left">320dp</dimen>
     <dimen name="dps8">8sp</dimen>
     <dimen name="dp16">16dp</dimen>
-    <dimen name="home_size_photo">230dp</dimen>
+    <dimen name="home_size_photo">200dp</dimen>
     <dimen name="dp32">32dp</dimen>
     <dimen name="dp8">8dp</dimen>
     <dimen name="dp18">18dp</dimen>

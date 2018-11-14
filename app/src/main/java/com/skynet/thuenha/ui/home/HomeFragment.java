@@ -53,6 +53,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     private List<Address> listCities;
     private List<Service> listService;
     private Address myCity, myDistrict;
+    private SlidePhotoHomeAdapter adapterSlide;
     private ICallback onClickBanner = new ICallback() {
         @Override
         public void onCallBack(int pos) {
@@ -109,7 +110,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         listBanner = new ArrayList<>();
         if (AppController.getInstance().getListBanner() != null)
             listBanner.addAll(AppController.getInstance().getListBanner());
-        slidePhotos.setAdapter(new SlidePhotoHomeAdapter(slidePhotos, listBanner, onClickBanner));
+        adapterSlide = new SlidePhotoHomeAdapter(slidePhotos, listBanner, onClickBanner);
+        slidePhotos.setAdapter(adapterSlide);
 //        setupAddress();
     }
 
@@ -180,7 +182,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         listBanner = banners;
         listCities = addresses;
         listService = services;
+        adapterSlide.setUrlPhotos(listBanner);
         rcv.setAdapter(new AdapterService(listService, getContext(), onClickService));
+
     }
 
     @Override

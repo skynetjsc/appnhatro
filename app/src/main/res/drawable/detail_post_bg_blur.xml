@@ -6,6 +6,8 @@
         android:angle="90"
         android:centerColor="@color/white"
         android:centerY="0.2"
+        android:centerX="0.7"
+        android:gradientRadius="@dimen/dp8"
         android:endColor="@android:color/transparent"
         android:startColor="@color/white" />
 </shape>

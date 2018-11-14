@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -17,18 +20,27 @@ import com.blankj.utilcode.util.LogUtils;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.models.DetailPost;
 import com.skynet.thuenha.ui.base.BaseActivity;
+import com.skynet.thuenha.ui.views.DialogTwoButtonUtil;
 import com.skynet.thuenha.ui.views.LockableScrollView;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 import com.skynet.thuenha.utils.AppConstant;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.lightsky.infiniteindicator.IndicatorConfiguration;
 import cn.lightsky.infiniteindicator.InfiniteIndicator;
+import cn.lightsky.infiniteindicator.OnPageClickListener;
+import cn.lightsky.infiniteindicator.Page;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class DetailPostActivity extends BaseActivity implements DetailPostContract.View, CompoundButton.OnCheckedChangeListener {
+import static android.view.Gravity.LEFT;
+
+public class DetailPostActivity extends BaseActivity implements DetailPostContract.View, CompoundButton.OnCheckedChangeListener, OnPageClickListener, DialogTwoButtonUtil.DialogOneButtonClickListener {
     @BindView(R.id.indicator_default_circle)
     InfiniteIndicator indicatorDefaultCircle;
     @BindView(R.id.btn_back)
@@ -93,7 +105,8 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     FrameLayout layoutBottomPaid;
     private DetailPostContract.Presenter presenter;
     private ProgressDialogCustom dialogLoading;
-
+    private ArrayList<Page> pageViews;
+    private DialogTwoButtonUtil dialogConfirmPrice;
 
     @Override
     protected int initLayout() {
@@ -110,11 +123,32 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
+        IndicatorConfiguration configuration = new IndicatorConfiguration.Builder()
+                .imageLoader(new PicassoLoader())
+                .isStopWhileTouch(true)
+                .onPageClickListener(this)
+                .direction(LEFT)
+                .position(IndicatorConfiguration.IndicatorPosition.Center_Bottom)
+                .build();
+        indicatorDefaultCircle.init(configuration);
+        indicatorDefaultCircle.notifyDataChange(pageViews);
+
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setHasFixedSize(true);
+
     }
 
     @Override
     protected int initViewSBAnchor() {
         return 0;
+    }
+
+    private void initData(List<String> listImg) {
+        pageViews = new ArrayList<>();
+        for (String img : listImg) {
+            pageViews.add(new Page("A", img, this));
+        }
+        indicatorDefaultCircle.notifyDataChange(pageViews);
     }
 
     @Override
@@ -125,6 +159,10 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
             layoutHost.setVisibility(View.GONE);
             cardbottom.setVisibility(View.GONE);
             scroll.setScrollingEnabled(false);
+            dialogConfirmPrice = new DialogTwoButtonUtil(this, R.drawable.ic_question, "Xem chi tiết tin đăng",
+                    Html.fromHtml(String.format(getString(R.string.content_confirm), detailPost.getPriceBuy())),
+                    this);
+
         } else {
             layoutBottomPaid.setVisibility(View.GONE);
             layoutAddress.setVisibility(View.VISIBLE);
@@ -140,6 +178,11 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
         tvStatus.setText(detailPost.getPost().getActive().equals("1") ? "Đang còn" : "Hết phòng");
         tvArea.setText(String.format("%,.0fm²", detailPost.getPost().getArea()));
         tvContent.setText(detailPost.getPost().getContent());
+        if (detailPost.getImage() != null)
+            initData(detailPost.getImage());
+        if (detailPost.getListUtilies() != null) {
+            recyclerView.setAdapter(new AdapterUtility(detailPost.getListUtilies(), this));
+        }
         bindHostData(detailPost);
         cbBottom.setChecked(detailPost.getIs_favourite() == 1);
         checkBox.setChecked(detailPost.getIs_favourite() == 1);
@@ -184,6 +227,20 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     }
 
     @Override
+    protected void onPause() {
+        indicatorDefaultCircle.stop();
+        if (dialogConfirmPrice != null && dialogConfirmPrice.isShowing())
+            dialogConfirmPrice.dismiss();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        indicatorDefaultCircle.start();
+    }
+
+    @Override
     public void onError(String message) {
         LogUtils.e(message);
         showToast(message, AppConstant.NEGATIVE);
@@ -201,7 +258,7 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_back, R.id.btn_share, R.id.layoutHost, R.id.btnChat, R.id.btnGo})
+    @OnClick({R.id.btn_back, R.id.btn_share, R.id.layoutHost, R.id.btnChat, R.id.btnGo, R.id.btnPaid})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
@@ -215,11 +272,25 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                 break;
             case R.id.btnGo:
                 break;
+            case R.id.btnPaid:
+                if (dialogConfirmPrice != null && !dialogConfirmPrice.isShowing())
+                    dialogConfirmPrice.show();
+                break;
         }
     }
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         presenter.toggleFav(getIntent().getExtras().getInt(AppConstant.MSG), b);
+    }
+
+    @Override
+    public void onPageClick(int i, Page page) {
+
+    }
+
+    @Override
+    public void okClick() {
+        presenter.paidForThisPost(getIntent().getExtras().getInt(AppConstant.MSG));
     }
 }

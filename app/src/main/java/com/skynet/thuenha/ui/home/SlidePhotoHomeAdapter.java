@@ -12,6 +12,7 @@ import com.skynet.thuenha.ui.views.SlideLoopAdapter;
 import com.skynet.thuenha.ui.views.SlideView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SlidePhotoHomeAdapter extends SlideLoopAdapter {
@@ -25,15 +26,15 @@ public class SlidePhotoHomeAdapter extends SlideLoopAdapter {
 
     }
 
-    public void setUrlPhotos(List<String> urlPhotos) {
-//        if (this.urlPhotos == null) this.urlPhotos = new ArrayList<>();
-//        this.urlPhotos.clear();
-//        for (int i = 0; i < urlPhotos.size(); i++) {
-//            if (urlPhotos.get(i) != null && !urlPhotos.get(i).isEmpty()) {
-//                this.urlPhotos.add(urlPhotos.get(i));
-//            }
-//        }
-
+    public void setUrlPhotos(List<Banner> urlPhotos) {
+        if (this.urlPhotos == null) this.urlPhotos = new ArrayList<>();
+        this.urlPhotos.clear();
+        for (int i = 0; i < urlPhotos.size(); i++) {
+            if (urlPhotos.get(i) != null) {
+                this.urlPhotos.add(urlPhotos.get(i));
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override

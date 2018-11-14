@@ -24,9 +24,19 @@ public class DetailPost {
     String district;
     @SerializedName("utility")
     List<Utility> listUtilies;
+    @SerializedName("image")
+    List<String> image;
 
     public Profile getHost() {
         return host;
+    }
+
+    public List<String> getImage() {
+        return image;
+    }
+
+    public void setImage(List<String> image) {
+        this.image = image;
     }
 
     public int getIs_favourite() {

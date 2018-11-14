@@ -16,7 +16,7 @@ public class ChooseAddressPresenter extends Presenter<ChooseAddressContract.View
     @Override
     public void getCity() {
         if (isAvaliableView()) {
-            view.showProgress();
+           // view.showProgress();
             interactor.getCity();
         }
     }
