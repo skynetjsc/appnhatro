@@ -107,6 +107,7 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     private ProgressDialogCustom dialogLoading;
     private ArrayList<Page> pageViews;
     private DialogTwoButtonUtil dialogConfirmPrice;
+    private boolean flagChecked = false;
 
     @Override
     protected int initLayout() {
@@ -187,8 +188,28 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
         cbBottom.setChecked(detailPost.getIs_favourite() == 1);
         checkBox.setChecked(detailPost.getIs_favourite() == 1);
 
-        checkBox.setOnCheckedChangeListener(this);
-        cbBottom.setOnCheckedChangeListener(this);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!flagChecked) {
+                    flagChecked = true;
+                    cbBottom.setChecked(isChecked);
+                }
+                presenter.toggleFav(getIntent().getExtras().getInt(AppConstant.MSG), isChecked);
+
+            }
+        });
+        cbBottom.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!flagChecked) {
+                    flagChecked = true;
+                    checkBox.setChecked(isChecked);
+                }
+                presenter.toggleFav(getIntent().getExtras().getInt(AppConstant.MSG), isChecked);
+
+            }
+        });
 
 
     }
@@ -281,7 +302,7 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        presenter.toggleFav(getIntent().getExtras().getInt(AppConstant.MSG), b);
+
     }
 
     @Override

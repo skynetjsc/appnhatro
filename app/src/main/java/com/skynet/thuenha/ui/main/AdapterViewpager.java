@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.skynet.thuenha.ui.favourite.FavouriteFragment;
 import com.skynet.thuenha.ui.home.HomeFragment;
+import com.skynet.thuenha.ui.listchat.ListChatFragment;
+import com.skynet.thuenha.ui.profile.ProfileFragment;
 import com.skynet.thuenha.ui.search.FragmentSearch;
 
 public class AdapterViewpager extends FragmentStatePagerAdapter {
@@ -45,15 +48,15 @@ public class AdapterViewpager extends FragmentStatePagerAdapter {
                 return HomeFragment.newInstance();
             }
             case 1: {
-//                return HomeFragment.newInstance();
+                return FavouriteFragment.newInstance();
 
             }
             case 2: {
-//                return HomeFragment.newInstance();
+                return ListChatFragment.newInstance();
 
             }
             case 3: {
-//                return HomeFragment.newInstance();
+                return ProfileFragment.newInstance();
 
             }
         }

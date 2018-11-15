@@ -57,6 +57,25 @@ public class Post {
     @SerializedName("id")
     private int id;
 
+    private Utility utility1;
+    private Utility utility2;
+
+    public Utility getUtility1() {
+        return utility1;
+    }
+
+    public void setUtility1(Utility utility1) {
+        this.utility1 = utility1;
+    }
+
+    public Utility getUtility2() {
+        return utility2;
+    }
+
+    public void setUtility2(Utility utility2) {
+        this.utility2 = utility2;
+    }
+
     public String getActive() {
         return active;
     }

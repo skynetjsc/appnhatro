@@ -87,4 +87,14 @@
         <item name="android:padding">@dimen/dp16</item>
     </style>
 
+    <style name="fav_item_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawableLeft">@drawable/ic_washroom</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:drawablePadding">@dimen/dp4</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#b83f3f47</item>
+    </style>
+
 </resources>

@@ -66,7 +66,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("favourite.php")
-    Call<ApiResponse> toggleFav(@Field("user_id") String  idUser, @Field("post_id") int postID,@Field("type") int isFav);
+    Call<ApiResponse> toggleFav(@Field("id_user") String  idUser, @Field("id_post") int postID,@Field("type") int isFav);
 
     @FormUrlEncoded
     @POST("pay_view.php")

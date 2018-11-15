@@ -97,7 +97,7 @@ public class DetailPostImplRemote extends Interactor implements DetailPostContra
                     if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
 
                     } else {
-                        new ExceptionHandler<DetailPost>(listener, response.body()).excute();
+                      //  new ExceptionHandler<DetailPost>(listener, response.body()).excute();
                     }
                 } else {
                     listener.onError(response.message());
