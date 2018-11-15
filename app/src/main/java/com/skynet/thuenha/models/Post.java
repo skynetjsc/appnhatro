@@ -56,6 +56,28 @@ public class Post {
     @Expose
     @SerializedName("id")
     private int id;
+    @Expose
+    @SerializedName("number_bed")
+    private int number_bed;
+    @Expose
+    @SerializedName("number_wc")
+    private int number_wc;
+
+    public int getNumber_bed() {
+        return number_bed;
+    }
+
+    public void setNumber_bed(int number_bed) {
+        this.number_bed = number_bed;
+    }
+
+    public int getNumber_wc() {
+        return number_wc;
+    }
+
+    public void setNumber_wc(int number_wc) {
+        this.number_wc = number_wc;
+    }
 
     private Utility utility1;
     private Utility utility2;

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.interfaces.ICallback;
+import com.skynet.thuenha.interfaces.ICallbackTwoM;
 import com.skynet.thuenha.models.Post;
 import com.skynet.thuenha.models.Utility;
 import com.squareup.picasso.Picasso;
@@ -25,10 +26,10 @@ import butterknife.ButterKnife;
 public class AdapterFavourite extends RecyclerView.Adapter<AdapterFavourite.ViewHolder> {
     List<Post> list;
     Context context;
-    ICallback iCallback;
+    ICallbackTwoM iCallback;
 
 
-    public AdapterFavourite(List<Post> list, Context context, ICallback iCallback) {
+    public AdapterFavourite(List<Post> list, Context context, ICallbackTwoM iCallback) {
         this.list = list;
         this.context = context;
         this.iCallback = iCallback;
@@ -43,7 +44,7 @@ public class AdapterFavourite extends RecyclerView.Adapter<AdapterFavourite.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.tvName.setText(String.format("%,.0fđ/tháng"));
+        viewHolder.tvName.setText(String.format("%,.0fđ/tháng",list.get(i).getPrice()));
         viewHolder.tvAddress.setText(list.get(i).getAddress());
         viewHolder.tvArea.setText(list.get(i).getArea() + context.getString(R.string.area_unit));
         Picasso.with(context).load(list.get(i).getAvatar()).fit().centerCrop().into(viewHolder.img);

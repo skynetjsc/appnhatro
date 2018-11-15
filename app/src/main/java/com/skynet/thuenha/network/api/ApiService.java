@@ -49,6 +49,9 @@ public interface ApiService {
     @GET("list_post.php")
     Call<ApiResponse<List<Post>>> getListPost(@Query("id_service") int phone, @Query("id_district") int idDistrict);
 
+    @GET("list_favourite.php")
+    Call<ApiResponse<List<Post>>> getFavouriteList(@Query("id") String idUser);
+
     @GET("search.php")
     Call<ApiResponse<List<Post>>> searchListPost(@Query("id_service") int phone, @Query("id_district") int idDistrict, @Query("title") String query);
 
