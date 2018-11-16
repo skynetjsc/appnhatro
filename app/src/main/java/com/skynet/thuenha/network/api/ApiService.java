@@ -5,6 +5,7 @@ import com.skynet.thuenha.models.ChatItem;
 import com.skynet.thuenha.models.DetailPost;
 import com.skynet.thuenha.models.HomeResponse;
 import com.skynet.thuenha.models.Message;
+import com.skynet.thuenha.models.Notification;
 import com.skynet.thuenha.models.Post;
 import com.skynet.thuenha.models.Profile;
 
@@ -79,8 +80,12 @@ public interface ApiService {
     Call<ApiResponse> deletePost(@Field("id") int user_id);
 
     @FormUrlEncoded
+    @POST("rent.php")
+    Call<ApiResponse> rentPost(@Field("host_id") String host_id, @Field("post_id") int post_id);
+
+    @FormUrlEncoded
     @POST("delete_message.php")
-    Call<ApiResponse> deleteChat(@Field("id_host") String host_id,@Field("id_user") String user_id,@Field("id_post") int idPOst);
+    Call<ApiResponse> deleteChat(@Field("id_host") String host_id, @Field("id_user") String user_id, @Field("id_post") int idPOst);
 
     @FormUrlEncoded
     @POST("forget_password.php")
@@ -99,8 +104,15 @@ public interface ApiService {
     Call<ApiResponse> paidForthisPost(@Field("user_id") String idUser, @Field("post_id") int postID);
 
     @GET("get_message.php")
-    Call<ApiResponse<ChatItem>> getListMessageBetween(@Query("id_user") String uiId,@Query("id_host") String id_host,@Query("id_post") int id_post);
+    Call<ApiResponse<ChatItem>> getListMessageBetween(@Query("id_user") String uiId, @Query("id_host") String id_host, @Query("id_post") int id_post);
+
     @FormUrlEncoded
     @POST("message.php")
-    Call<ApiResponse<Message>> sendMessageTo(@Field("id_post") int id_post,@Field("id_user") String idUser,@Field("id_host") String idShop,@Field("time") String time,@Field("content") String content,@Field("type") int typeUser);
+    Call<ApiResponse<Message>> sendMessageTo(@Field("id_post") int id_post, @Field("id_user") String idUser, @Field("id_host") String idShop, @Field("time") String time, @Field("content") String content, @Field("type") int typeUser);
+
+    @GET("notification.php")
+    Call<ApiResponse<List<Notification>>> getListNotification(@Query("id") String uid, @Query("type") int type);
+    @GET("notification_detail.php")
+    Call<ApiResponse<Notification>> getDetailNotification(@Query("id") String id, @Query("type") int type, @Query("user_id") String shID);
+
 }

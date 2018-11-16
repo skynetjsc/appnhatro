@@ -33,7 +33,7 @@ public class DetailPostImplRemote extends Interactor implements DetailPostContra
             listener.onErrorAuthorization();
             return;
         }
-        getmService().getDetailPost(profile.getId(), idPost,profile.getType()).enqueue(new CallBackBase<ApiResponse<DetailPost>>() {
+        getmService().getDetailPost(profile.getId(), idPost, profile.getType()).enqueue(new CallBackBase<ApiResponse<DetailPost>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<DetailPost>> call, Response<ApiResponse<DetailPost>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -84,6 +84,57 @@ public class DetailPostImplRemote extends Interactor implements DetailPostContra
     }
 
     @Override
+    public void deleteThisPost(int idPost) {
+        getmService().deletePost(idPost).enqueue(new CallBackBase<ApiResponse>() {
+            @Override
+            public void onRequestSuccess(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
+                        listener.onSucessDelete();
+                    } else {
+                        new ExceptionHandler<DetailPost>(listener, response.body()).excute();
+                    }
+                } else {
+                    listener.onError(response.message());
+                }
+            }
+
+            @Override
+            public void onRequestFailure(Call<ApiResponse> call, Throwable t) {
+                listener.onErrorApi(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void rentThisPost(int idPost) {
+        Profile profile = AppController.getInstance().getmProfileUser();
+        if (profile == null) {
+            listener.onErrorAuthorization();
+            return;
+        }
+        getmService().rentPost(profile.getId(), idPost).enqueue(new CallBackBase<ApiResponse>() {
+            @Override
+            public void onRequestSuccess(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
+                        listener.onSucessRent();
+                    } else {
+                        new ExceptionHandler<DetailPost>(listener, response.body()).excute();
+                    }
+                } else {
+                    listener.onError(response.message());
+                }
+            }
+
+            @Override
+            public void onRequestFailure(Call<ApiResponse> call, Throwable t) {
+                listener.onErrorApi(t.getMessage());
+            }
+        });
+    }
+
+    @Override
     public void toggleFav(int idPost, boolean isFav) {
         Profile profile = AppController.getInstance().getmProfileUser();
         if (profile == null) {
@@ -97,7 +148,7 @@ public class DetailPostImplRemote extends Interactor implements DetailPostContra
                     if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
 
                     } else {
-                      //  new ExceptionHandler<DetailPost>(listener, response.body()).excute();
+                        //  new ExceptionHandler<DetailPost>(listener, response.body()).excute();
                     }
                 } else {
                     listener.onError(response.message());

@@ -33,7 +33,8 @@ public class ChattingRemoteImpl extends Interactor implements ChattingContract.I
             @Override
             public void onRequestSuccess(Call<ApiResponse<ChatItem>> call, Response<ApiResponse<ChatItem>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    if (response.code() == AppConstant.CODE_API_SUCCESS) {
+                    if (response.code() == AppConstant.CODE_API_SUCCESS ) {
+                        if( response.body().getData() != null)
                         listener.onSuccessGetMessages(response.body().getData().getContent());
                     } else {
                         listener.onError(response.body().getMessage());

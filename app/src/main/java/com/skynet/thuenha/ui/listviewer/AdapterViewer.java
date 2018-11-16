@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.interfaces.ICallbackTwoM;
 import com.skynet.thuenha.models.Profile;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -40,7 +41,11 @@ public class AdapterViewer extends RecyclerView.Adapter<AdapterViewer.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-
+        viewHolder.tvName.setText(list.get(i).getName());
+        viewHolder.tvAddress.setText(list.get(i).getAddress());
+        viewHolder.tvEmail.setText(list.get(i).getPhone());
+        if (list.get(i).getAvatar() != null && !list.get(i).getAvatar().isEmpty())
+            Picasso.with(context).load(list.get(i).getAvatar()).fit().centerCrop().into(viewHolder.imgAvt);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.LogUtils;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.application.AppController;
+import com.skynet.thuenha.interfaces.SnackBarCallBack;
 import com.skynet.thuenha.models.DetailPost;
 import com.skynet.thuenha.ui.base.BaseActivity;
 import com.skynet.thuenha.ui.detailPost.viewProfile.ProfileViewerFragment;
@@ -167,7 +168,7 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
             cardEditbottom.setVisibility(View.GONE);
             layoutAddress.setVisibility(View.GONE);
             layoutHost.setVisibility(View.GONE);
-            cardbottom.setVisibility(View.GONE);
+            cardbottom.setVisibility(View.VISIBLE);
             scroll.setScrollingEnabled(false);
             dialogConfirmPrice = new DialogTwoButtonUtil(this, R.drawable.ic_question, "Xem chi tiết tin đăng",
                     Html.fromHtml(String.format(getString(R.string.content_confirm), detailPost.getPriceBuy())),
@@ -245,7 +246,25 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
 
     @Override
     public void onSuccessPaid() {
-        showToast("Đã mua lượt xem thành công", AppConstant.POSITIVE);
+        showToast("Đã mua lượt xem thành công!", AppConstant.POSITIVE);
+    }
+
+    @Override
+    public void onSucessRent() {
+        showToast("Xác nhận cho thuê thành công!", AppConstant.POSITIVE);
+
+    }
+
+    @Override
+    public void onSucessDelete() {
+        showToast("Đã xóa bài đăng thành công!", AppConstant.POSITIVE, new SnackBarCallBack() {
+            @Override
+            public void onClosedSnackBar() {
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+
     }
 
     @Override
@@ -313,7 +332,7 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                 if (detailPost != null && detailPost.getHost() != null) {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     ProfileViewerFragment fragmentSearch = ProfileViewerFragment.newInstance(detailPost.getHost().getId());
-                    fragmentManager.beginTransaction().replace(R.id.layoutRoot, fragmentSearch, fragmentSearch.getClass().getSimpleName())
+                    fragmentManager.beginTransaction().replace(R.id.layoutRootDetailPost, fragmentSearch, fragmentSearch.getClass().getSimpleName())
                             .addToBackStack(null)
                             .commit();
                 }
@@ -350,8 +369,11 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
             case R.id.btnEdit:
                 break;
             case R.id.btnRent:
+                presenter.rentThisPost(getIntent().getExtras().getInt(AppConstant.MSG));
                 break;
             case R.id.tvDelete:
+                presenter.deleteThisPost(getIntent().getExtras().getInt(AppConstant.MSG));
+
                 break;
         }
     }

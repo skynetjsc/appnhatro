@@ -8,7 +8,11 @@ import com.skynet.thuenha.ui.base.OnFinishListener;
 public interface DetailPostContract {
     interface View extends BaseView {
         void onSuccessGetDetail(DetailPost detailPost);
+
         void onSuccessPaid();
+        void onSucessRent();
+
+        void onSucessDelete();
 
     }
 
@@ -18,6 +22,9 @@ public interface DetailPostContract {
         void paidForThisPost(int idPost);
 
         void toggleFav(int idPost, boolean isFav);
+
+        void deleteThisPost(int idPost);
+        void rentThisPost(int idPost);
     }
 
     interface Interactor {
@@ -25,11 +32,18 @@ public interface DetailPostContract {
 
         void paidForThisPost(int idPost);
 
+        void deleteThisPost(int idPost);
+        void rentThisPost(int idPost);
+
         void toggleFav(int idPost, boolean isFav);
     }
 
     interface Listener extends OnFinishListener {
         void onSuccessGetDetail(DetailPost detailPost);
+
         void onSuccessPaid();
+
+        void onSucessDelete();
+        void onSucessRent();
     }
 }

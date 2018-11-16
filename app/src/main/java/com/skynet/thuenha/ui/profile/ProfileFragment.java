@@ -128,7 +128,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
                 AppController.getInstance().setmProfileUser(null);
                 AppController.getInstance().getmSetting().remove(AppConstant.KEY_PROFILE);
                 AppController.getInstance().getmSetting().remove(AppConstant.KEY_TOKEN);
-                AppController.getInstance().setmProfileUser(null);
                 startActivity(intent);
                 getActivity().finishAffinity();
                 break;
@@ -209,7 +208,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void onCallBackToggle(int pos, boolean isCheck) {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         ListViewerFragment fragmentSearch = ListViewerFragment.newInstance(listPost.get(pos).getId());
-        fragmentManager.beginTransaction().replace(R.id.layoutRoot, fragmentSearch, fragmentSearch.getClass().getSimpleName())
+        fragmentManager.beginTransaction().replace(R.id.layoutRootProfile, fragmentSearch, fragmentSearch.getClass().getSimpleName())
                 .addToBackStack(null)
                 .commit();
     }

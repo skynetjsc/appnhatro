@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,6 +46,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     TextView tvCity;
     @BindView(R.id.tvDistrict)
     TextView tvDistrict;
+    @BindView(R.id.cardSearch)
+    CardView cardSearch;
     Unbinder unbinder1;
     private OnFragmentHomeCallBack mListener;
     HomeContract.Presenter presenter;
@@ -113,6 +116,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         adapterSlide = new SlidePhotoHomeAdapter(slidePhotos, listBanner, onClickBanner);
         slidePhotos.setAdapter(adapterSlide);
 //        setupAddress();
+        if(AppController.getInstance().getmProfileUser().getType() == 2){
+            cardSearch.setVisibility(View.GONE);
+        }
     }
 
     @Override

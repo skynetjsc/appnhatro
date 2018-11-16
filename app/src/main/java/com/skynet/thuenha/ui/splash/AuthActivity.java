@@ -37,11 +37,11 @@ public class AuthActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnLogin: {
-                startActivity(new Intent(AuthActivity.this, LoginActivity.class));
+                startActivityForResult(new Intent(AuthActivity.this, LoginActivity.class),1000);
                 break;
             }
             case R.id.button2: {
-                startActivity(new Intent(AuthActivity.this, FragmentSignUp.class));
+                startActivityForResult(new Intent(AuthActivity.this, FragmentSignUp.class),1000);
                 break;
             }
         }

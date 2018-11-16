@@ -3,6 +3,7 @@ package com.skynet.thuenha.ui.listchat;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,12 +19,15 @@ import com.skynet.thuenha.models.ChatItem;
 import com.skynet.thuenha.ui.base.BaseFragment;
 import com.skynet.thuenha.ui.chatting.ChatActivity;
 import com.skynet.thuenha.ui.listchat.ListChatAdapter.ChatCallBack;
+import com.skynet.thuenha.ui.listviewer.ListViewerFragment;
+import com.skynet.thuenha.ui.notification.NotificationActivity;
 import com.skynet.thuenha.utils.AppConstant;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class ListChatFragment extends BaseFragment implements ListChatContract.View, ChatCallBack, SwipeRefreshLayout.OnRefreshListener {
@@ -59,6 +63,15 @@ public class ListChatFragment extends BaseFragment implements ListChatContract.V
     protected void initVariables() {
         presenter = new ListChatPresenter(this);
         presenter.getListChat();
+    }
+
+    @OnClick(R.id.noti)
+    public void onClickNoti() {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        NotificationActivity fragmentSearch = NotificationActivity.newInstance();
+        fragmentManager.beginTransaction().replace(R.id.layoutRootChat, fragmentSearch, fragmentSearch.getClass().getSimpleName())
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override

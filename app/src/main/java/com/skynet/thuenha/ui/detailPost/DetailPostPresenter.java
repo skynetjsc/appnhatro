@@ -35,6 +35,22 @@ public class DetailPostPresenter extends Presenter<DetailPostContract.View> impl
     }
 
     @Override
+    public void deleteThisPost(int idPost) {
+        if (isAvaliableView()) {
+            view.showProgress();
+            interactor.deleteThisPost(idPost);
+        }
+    }
+
+    @Override
+    public void rentThisPost(int idPost) {
+        if (isAvaliableView()) {
+            view.showProgress();
+            interactor.rentThisPost(idPost);
+        }
+    }
+
+    @Override
     public void onDestroyView() {
 
         view = null;
@@ -53,7 +69,23 @@ public class DetailPostPresenter extends Presenter<DetailPostContract.View> impl
     public void onSuccessPaid() {
         if (isAvaliableView()) {
             view.hiddenProgress();
-                view.onSuccessPaid();
+            view.onSuccessPaid();
+        }
+    }
+
+    @Override
+    public void onSucessDelete() {
+        if (isAvaliableView()) {
+            view.hiddenProgress();
+            view.onSucessDelete();
+        }
+    }
+
+    @Override
+    public void onSucessRent() {
+        if (isAvaliableView()) {
+            view.hiddenProgress();
+            view.onSucessRent();
         }
     }
 

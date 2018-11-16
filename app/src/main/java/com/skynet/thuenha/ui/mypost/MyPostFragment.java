@@ -3,6 +3,7 @@ package com.skynet.thuenha.ui.mypost;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,8 @@ import com.skynet.thuenha.ui.favourite.AdapterFavourite;
 import com.skynet.thuenha.ui.favourite.FavouriteContract;
 import com.skynet.thuenha.ui.favourite.FavouriteFragment;
 import com.skynet.thuenha.ui.favourite.FavouritePresenter;
+import com.skynet.thuenha.ui.listviewer.ListViewerFragment;
+import com.skynet.thuenha.ui.notification.NotificationActivity;
 import com.skynet.thuenha.utils.AppConstant;
 
 import java.util.List;
@@ -125,6 +128,11 @@ public class MyPostFragment extends BaseFragment implements MyPostContract.View,
 
     @Override
     public void onCallBackToggle(int pos, boolean isCheck) {
-        presenter.toggleFav(list.get(pos).getId(), isCheck);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        ListViewerFragment fragmentSearch = ListViewerFragment.newInstance(list.get(pos).getId());
+//        NotificationActivity fragmentSearch = NotificationActivity.newInstance();
+        fragmentManager.beginTransaction().replace(R.id.layoutRootMyPost, fragmentSearch, fragmentSearch.getClass().getSimpleName())
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -46,6 +46,7 @@
         <activity android:name=".ui.chosseAddress.ChooseAddressActivity"></activity>
         <activity android:name=".ui.detailPost.DetailPostActivity" />
         <activity android:name=".ui.chatting.ChatActivity" />
+        <activity android:name=".ui.DetailNotificationActivity.DetailNotificationActivity" />
     </application>
 
 </manifest>
