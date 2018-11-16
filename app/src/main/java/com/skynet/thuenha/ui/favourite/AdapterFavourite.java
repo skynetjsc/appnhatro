@@ -4,10 +4,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,13 +29,17 @@ public class AdapterFavourite extends RecyclerView.Adapter<AdapterFavourite.View
     List<Post> list;
     Context context;
     ICallbackTwoM iCallback;
-
+    SparseBooleanArray cachedBoolen;
 
     public AdapterFavourite(List<Post> list, Context context, ICallbackTwoM iCallback) {
         this.list = list;
         this.context = context;
         this.iCallback = iCallback;
-
+        cachedBoolen = new SparseBooleanArray();
+        for (int i = 0; i < this.list.size(); i++) {
+            list.get(i).setChecked(true);
+            cachedBoolen.put(i, true);
+        }
     }
 
     @NonNull
@@ -43,11 +49,25 @@ public class AdapterFavourite extends RecyclerView.Adapter<AdapterFavourite.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.tvName.setText(String.format("%,.0fđ/tháng",list.get(i).getPrice()));
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+        viewHolder.tvName.setText(String.format("%,.0fđ/tháng", list.get(i).getPrice()));
         viewHolder.tvAddress.setText(list.get(i).getAddress());
-        viewHolder.tvArea.setText(list.get(i).getArea() + context.getString(R.string.area_unit));
+        viewHolder.tvArea.setText(String.format("%,.0f", list.get(i).getArea()) + context.getString(R.string.area_unit));
         Picasso.with(context).load(list.get(i).getAvatar()).fit().centerCrop().into(viewHolder.img);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iCallback.onCallBack(i);
+            }
+        });
+        viewHolder.checkBox2.setChecked(cachedBoolen.get(i));
+        viewHolder.checkBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                iCallback.onCallBackToggle(i, b);
+                cachedBoolen.put(i, b);
+            }
+        });
     }
 
     @Override

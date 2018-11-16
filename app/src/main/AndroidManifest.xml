@@ -45,6 +45,7 @@
         <activity android:name=".ui.forgotPassword.ForgotPwActivity" />
         <activity android:name=".ui.chosseAddress.ChooseAddressActivity"></activity>
         <activity android:name=".ui.detailPost.DetailPostActivity" />
+        <activity android:name=".ui.chatting.ChatActivity" />
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import com.skynet.thuenha.R;
 import com.skynet.thuenha.ui.base.BaseActivity;
 import com.skynet.thuenha.ui.chosseAddress.ChooseAddressFragment;
 import com.skynet.thuenha.ui.home.HomeFragment;
+import com.skynet.thuenha.ui.views.ViewpagerNotSwipe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +20,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     @BindView(R.id.bnve)
     BottomNavigationViewEx bnve;
     @BindView(R.id.viewpager)
-    ViewPager viewpager;
+    ViewpagerNotSwipe viewpager;
     private AdapterViewpager adapter;
 
     @Override
@@ -42,6 +43,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         adapter = new AdapterViewpager(getSupportFragmentManager());
         viewpager.setAdapter(adapter);
         bnve.setupWithViewPager(viewpager);
+        viewpager.setPagingEnabled(false);
     }
 
     @Override

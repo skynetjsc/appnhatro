@@ -11,7 +11,7 @@
     <item
         android:id="@+id/nav_noti"
         android:title="noti"
-        android:icon="@drawable/ic_k_dc_thi_nghi_choi" />
+        android:icon="@drawable/ic_profile" />
     <item
         android:id="@+id/nav_profile"
         android:title="profile"

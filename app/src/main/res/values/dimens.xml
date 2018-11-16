@@ -93,5 +93,7 @@
     <dimen name="size_img_category">100dp</dimen>
     <dimen name="card_padding">30dp</dimen>
     <dimen name="size_archiement">24dp</dimen>
+    <dimen name="size_avt">64dp</dimen>
+    <dimen name="size_avt_small">28dp</dimen>
 
 </resources>

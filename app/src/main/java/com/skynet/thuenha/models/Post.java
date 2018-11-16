@@ -63,6 +63,16 @@ public class Post {
     @SerializedName("number_wc")
     private int number_wc;
 
+    private boolean isChecked;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
     public int getNumber_bed() {
         return number_bed;
     }

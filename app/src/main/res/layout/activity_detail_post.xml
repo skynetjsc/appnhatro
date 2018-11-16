@@ -219,8 +219,8 @@ Nếu bạn quan tâm vui lòng bấm vào liên hệ bên duới."
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/circleImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="@dimen/size_avt"
+                    android:layout_height="@dimen/size_avt"
                     android:layout_marginStart="16dp"
                     android:src="@drawable/background"
                     app:layout_constraintBottom_toBottomOf="parent"
