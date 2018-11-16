@@ -57,6 +57,12 @@ public interface ApiService {
     @GET("list_favourite.php")
     Call<ApiResponse<List<Post>>> getFavouriteList(@Query("id") String idUser);
 
+    @GET("list_post_host.php")
+    Call<ApiResponse<List<Post>>> getListMyPost(@Query("id") String idUser);
+
+    @GET("list_view_post.php")
+    Call<ApiResponse<List<Profile>>> getListViewer(@Query("id") int idUser);
+
     @GET("search.php")
     Call<ApiResponse<List<Post>>> searchListPost(@Query("id_service") int phone, @Query("id_district") int idDistrict, @Query("title") String query);
 
@@ -82,7 +88,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("post_detail.php")
-    Call<ApiResponse<DetailPost>> getDetailPost(@Field("user_id") String idUser, @Field("post_id") int postID);
+    Call<ApiResponse<DetailPost>> getDetailPost(@Field("user_id") String idUser, @Field("post_id") int postID, @Field("type") int type);
 
     @FormUrlEncoded
     @POST("favourite.php")

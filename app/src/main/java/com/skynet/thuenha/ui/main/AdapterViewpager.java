@@ -11,14 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.ui.favourite.FavouriteFragment;
 import com.skynet.thuenha.ui.home.HomeFragment;
 import com.skynet.thuenha.ui.listchat.ListChatFragment;
+import com.skynet.thuenha.ui.mypost.MyPostFragment;
 import com.skynet.thuenha.ui.profile.ProfileFragment;
 import com.skynet.thuenha.ui.search.FragmentSearch;
 
 public class AdapterViewpager extends FragmentStatePagerAdapter {
     SparseArray<Fragment> registeredFragments = new SparseArray<>();
+
     public AdapterViewpager(FragmentManager fm) {
         super(fm);
     }
@@ -27,20 +30,24 @@ public class AdapterViewpager extends FragmentStatePagerAdapter {
     public int getCount() {
         return 4;
     }
+
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         Fragment fragment = (Fragment) super.instantiateItem(container, position);
         registeredFragments.put(position, fragment);
         return fragment;
     }
+
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         registeredFragments.remove(position);
         super.destroyItem(container, position, object);
     }
+
     public Fragment getRegisteredFragment(int position) {
         return registeredFragments.get(position);
     }
+
     @Override
     public Fragment getItem(int i) {
         switch (i) {
@@ -48,7 +55,7 @@ public class AdapterViewpager extends FragmentStatePagerAdapter {
                 return HomeFragment.newInstance();
             }
             case 1: {
-                return FavouriteFragment.newInstance();
+                return AppController.getInstance().getmProfileUser().getType() == 1 ? FavouriteFragment.newInstance() : MyPostFragment.newInstance();
 
             }
             case 2: {

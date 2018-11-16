@@ -3,10 +3,9 @@ package com.skynet.thuenha.ui.detailPost;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.widget.NestedScrollView;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
@@ -18,8 +17,11 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.skynet.thuenha.R;
+import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.models.DetailPost;
 import com.skynet.thuenha.ui.base.BaseActivity;
+import com.skynet.thuenha.ui.detailPost.viewProfile.ProfileViewerFragment;
+import com.skynet.thuenha.ui.listviewer.ListViewerFragment;
 import com.skynet.thuenha.ui.views.DialogTwoButtonUtil;
 import com.skynet.thuenha.ui.views.LockableScrollView;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
@@ -78,7 +80,7 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     @BindView(R.id.tvContent)
     TextView tvContent;
     @BindView(R.id.textView16)
-    TextView textView16;
+    TextView tvInfoHostTitle;
     @BindView(R.id.circleImageView)
     CircleImageView circleImageView;
     @BindView(R.id.imageView6)
@@ -103,11 +105,16 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     LockableScrollView scroll;
     @BindView(R.id.layoutBottomPaid)
     FrameLayout layoutBottomPaid;
+    @BindView(R.id.constraintLayoutEdit)
+    ConstraintLayout constraintLayoutEdit;
+    @BindView(R.id.cardEditbottom)
+    CardView cardEditbottom;
     private DetailPostContract.Presenter presenter;
     private ProgressDialogCustom dialogLoading;
     private ArrayList<Page> pageViews;
     private DialogTwoButtonUtil dialogConfirmPrice;
     private boolean flagChecked = false;
+    private DetailPost detailPost;
 
     @Override
     protected int initLayout() {
@@ -154,8 +161,10 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
 
     @Override
     public void onSuccessGetDetail(DetailPost detailPost) {
-
+        this.detailPost = detailPost;
         if (detailPost.getIsPay() == 0) {
+            // not paid
+            cardEditbottom.setVisibility(View.GONE);
             layoutAddress.setVisibility(View.GONE);
             layoutHost.setVisibility(View.GONE);
             cardbottom.setVisibility(View.GONE);
@@ -163,13 +172,26 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
             dialogConfirmPrice = new DialogTwoButtonUtil(this, R.drawable.ic_question, "Xem chi tiết tin đăng",
                     Html.fromHtml(String.format(getString(R.string.content_confirm), detailPost.getPriceBuy())),
                     this);
-
         } else {
-            layoutBottomPaid.setVisibility(View.GONE);
-            layoutAddress.setVisibility(View.VISIBLE);
-            layoutHost.setVisibility(View.VISIBLE);
-            cardbottom.setVisibility(View.VISIBLE);
-            scroll.setScrollingEnabled(true);
+            if (detailPost.getHost().getId().equals(AppController.getInstance().getmProfileUser().getId())) {
+                //owner
+                cardEditbottom.setVisibility(View.VISIBLE);
+                layoutAddress.setVisibility(View.VISIBLE);
+//                layoutHost.setVisibility(View.GONE);
+                cardbottom.setVisibility(View.GONE);
+//                tvInfoHostTitle.setVisibility(View.GONE);
+                layoutBottomPaid.setVisibility(View.GONE);
+                scroll.setScrollingEnabled(true);
+            } else {
+                // paid for this post
+                cardEditbottom.setVisibility(View.GONE);
+                layoutBottomPaid.setVisibility(View.GONE);
+                layoutAddress.setVisibility(View.VISIBLE);
+                layoutHost.setVisibility(View.VISIBLE);
+                cardbottom.setVisibility(View.VISIBLE);
+                scroll.setScrollingEnabled(true);
+            }
+
         }
 
         tvName.setText(detailPost.getPost().getTitle());
@@ -288,6 +310,13 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
             case R.id.btn_share:
                 break;
             case R.id.layoutHost:
+                if (detailPost != null && detailPost.getHost() != null) {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    ProfileViewerFragment fragmentSearch = ProfileViewerFragment.newInstance(detailPost.getHost().getId());
+                    fragmentManager.beginTransaction().replace(R.id.layoutRoot, fragmentSearch, fragmentSearch.getClass().getSimpleName())
+                            .addToBackStack(null)
+                            .commit();
+                }
                 break;
             case R.id.btnChat:
                 break;
@@ -313,5 +342,17 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     @Override
     public void okClick() {
         presenter.paidForThisPost(getIntent().getExtras().getInt(AppConstant.MSG));
+    }
+
+    @OnClick({R.id.btnEdit, R.id.btnRent, R.id.tvDelete})
+    public void onViewOwnerClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btnEdit:
+                break;
+            case R.id.btnRent:
+                break;
+            case R.id.tvDelete:
+                break;
+        }
     }
 }

@@ -93,6 +93,28 @@ public class Profile implements Parcelable {
     @Expose
     @SerializedName("id")
     private String u_id;
+    @Expose
+    @SerializedName("account")
+    private double accountWallet;
+    @Expose
+    @SerializedName("post")
+    private List<Post> post;
+
+    public List<Post> getPost() {
+        return post;
+    }
+
+    public void setPost(List<Post> post) {
+        this.post = post;
+    }
+
+    public double getAccountWallet() {
+        return accountWallet;
+    }
+
+    public void setAccountWallet(double accountWallet) {
+        this.accountWallet = accountWallet;
+    }
 
     public int getNumber_post() {
         return number_post;
@@ -309,6 +331,7 @@ public class Profile implements Parcelable {
         dest.writeInt(this.number);
         dest.writeInt(this.type);
         dest.writeInt(this.point);
+        dest.writeInt(this.number_post);
         dest.writeString(this.register_date);
         dest.writeString(this.avatar);
         dest.writeStringList(this.archiement);
@@ -329,6 +352,8 @@ public class Profile implements Parcelable {
         dest.writeString(this.code);
         dest.writeString(this.department_id);
         dest.writeString(this.u_id);
+        dest.writeDouble(this.accountWallet);
+        dest.writeTypedList(this.post);
     }
 
     protected Profile(Parcel in) {
@@ -336,6 +361,7 @@ public class Profile implements Parcelable {
         this.number = in.readInt();
         this.type = in.readInt();
         this.point = in.readInt();
+        this.number_post = in.readInt();
         this.register_date = in.readString();
         this.avatar = in.readString();
         this.archiement = in.createStringArrayList();
@@ -356,6 +382,8 @@ public class Profile implements Parcelable {
         this.code = in.readString();
         this.department_id = in.readString();
         this.u_id = in.readString();
+        this.accountWallet = in.readDouble();
+        this.post = in.createTypedArrayList(Post.CREATOR);
     }
 
     public static final Creator<Profile> CREATOR = new Creator<Profile>() {

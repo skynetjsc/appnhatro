@@ -1,9 +1,12 @@
 package com.skynet.thuenha.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Post {
+public class Post implements Parcelable {
 
     @Expose
     @SerializedName("active")
@@ -48,6 +51,9 @@ public class Post {
     @SerializedName("id_service")
     private int id_service;
     @Expose
+    @SerializedName("number_seen")
+    private int number_seen;
+    @Expose
     @SerializedName("user_id")
     private int user_id;
     @Expose
@@ -62,6 +68,14 @@ public class Post {
     @Expose
     @SerializedName("number_wc")
     private int number_wc;
+
+    public int getNumber_seen() {
+        return number_seen;
+    }
+
+    public void setNumber_seen(int number_seen) {
+        this.number_seen = number_seen;
+    }
 
     private boolean isChecked;
 
@@ -243,4 +257,77 @@ public class Post {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.active);
+        dest.writeString(this.type);
+        dest.writeString(this.date);
+        dest.writeString(this.avatar);
+        dest.writeString(this.note);
+        dest.writeString(this.id_utility);
+        dest.writeString(this.content);
+        dest.writeDouble(this.price);
+        dest.writeDouble(this.area);
+        dest.writeString(this.district_id);
+        dest.writeString(this.city_id);
+        dest.writeString(this.address);
+        dest.writeString(this.title);
+        dest.writeInt(this.id_service);
+        dest.writeInt(this.number_seen);
+        dest.writeInt(this.user_id);
+        dest.writeInt(this.host_id);
+        dest.writeInt(this.id);
+        dest.writeInt(this.number_bed);
+        dest.writeInt(this.number_wc);
+        dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.utility1, flags);
+        dest.writeParcelable(this.utility2, flags);
+    }
+
+    public Post() {
+    }
+
+    protected Post(Parcel in) {
+        this.active = in.readString();
+        this.type = in.readString();
+        this.date = in.readString();
+        this.avatar = in.readString();
+        this.note = in.readString();
+        this.id_utility = in.readString();
+        this.content = in.readString();
+        this.price = in.readDouble();
+        this.area = in.readDouble();
+        this.district_id = in.readString();
+        this.city_id = in.readString();
+        this.address = in.readString();
+        this.title = in.readString();
+        this.id_service = in.readInt();
+        this.number_seen = in.readInt();
+        this.user_id = in.readInt();
+        this.host_id = in.readInt();
+        this.id = in.readInt();
+        this.number_bed = in.readInt();
+        this.number_wc = in.readInt();
+        this.isChecked = in.readByte() != 0;
+        this.utility1 = in.readParcelable(Utility.class.getClassLoader());
+        this.utility2 = in.readParcelable(Utility.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Post> CREATOR = new Parcelable.Creator<Post>() {
+        @Override
+        public Post createFromParcel(Parcel source) {
+            return new Post(source);
+        }
+
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
 }

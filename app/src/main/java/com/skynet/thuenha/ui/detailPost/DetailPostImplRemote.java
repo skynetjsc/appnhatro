@@ -33,7 +33,7 @@ public class DetailPostImplRemote extends Interactor implements DetailPostContra
             listener.onErrorAuthorization();
             return;
         }
-        getmService().getDetailPost(profile.getId(), idPost).enqueue(new CallBackBase<ApiResponse<DetailPost>>() {
+        getmService().getDetailPost(profile.getId(), idPost,profile.getType()).enqueue(new CallBackBase<ApiResponse<DetailPost>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<DetailPost>> call, Response<ApiResponse<DetailPost>> response) {
                 if (response.isSuccessful() && response.body() != null) {
