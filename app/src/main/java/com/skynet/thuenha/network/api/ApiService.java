@@ -7,13 +7,17 @@ import com.skynet.thuenha.models.HomeResponse;
 import com.skynet.thuenha.models.Message;
 import com.skynet.thuenha.models.Notification;
 import com.skynet.thuenha.models.Post;
+import com.skynet.thuenha.models.PriceService;
 import com.skynet.thuenha.models.Profile;
+import com.skynet.thuenha.models.Service;
+import com.skynet.thuenha.models.Utility;
 
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -36,6 +40,15 @@ public interface ApiService {
 
     @GET("home.php")
     Call<ApiResponse<HomeResponse>> getHome(@Query("id") String uid, @Query("type") int type);
+
+    @GET("service.php")
+    Call<ApiResponse<List<Service>>> getServices();
+
+    @GET("utility.php")
+    Call<ApiResponse<List<Utility>>> getUtility();
+
+    @GET("price.php")
+    Call<ApiResponse<PriceService>> getPrice(@Query("id_service") int id_service);
 
     @GET("login.php")
     Call<ApiResponse<Profile>> login(@Query("username") String username, @Query("password") String password, @Query("type") int type);
@@ -112,7 +125,15 @@ public interface ApiService {
 
     @GET("notification.php")
     Call<ApiResponse<List<Notification>>> getListNotification(@Query("id") String uid, @Query("type") int type);
+
     @GET("notification_detail.php")
     Call<ApiResponse<Notification>> getDetailNotification(@Query("id") String id, @Query("type") int type, @Query("user_id") String shID);
 
+    @Multipart
+    @POST("post.php")
+    Call<ApiResponse<Integer>> submitPost(@Part("host_id") RequestBody host_id, @Part("id_service") RequestBody idServiceBody, @Part("title") RequestBody title,
+                                          @Part("price") RequestBody price, @Part("area") RequestBody area, @Part("city_id") RequestBody city_id,
+                                          @Part("district_id") RequestBody district_id, @Part("address") RequestBody address, @Part("content") RequestBody content,
+                                          @Part("id_utility") RequestBody id_utility, @Part("number_bed") RequestBody number_bed, @Part("number_wc") RequestBody number_wc,
+                                          @Part List<MultipartBody.Part> listFile);
 }

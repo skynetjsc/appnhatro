@@ -56,7 +56,7 @@ public class ProfileViewerPresenter extends Presenter<ProfileViewerContract.View
         if (isAvaliableView()) {
             view.hiddenProgress();
             if (profile != null) {
-                AppController.getInstance().setmProfileUser(profile);
+//                AppController.getInstance().setmProfileUser(profile);
                 view.onSucessGetProfile(profile);
             }
         }

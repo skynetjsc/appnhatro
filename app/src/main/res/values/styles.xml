@@ -81,4 +81,50 @@
         <item name="android:textColor">#b83f3f47</item>
     </style>
 
+    <style name="post_style_title_1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="post_style_title_2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="post_style_editext">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:ems">10</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">14sp</item>
+
+    </style>
+
+    <style name="post_style_line">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:background">#25a8b6c8</item>
+    </style>
+
+    <style name="post_style_unit_editext">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

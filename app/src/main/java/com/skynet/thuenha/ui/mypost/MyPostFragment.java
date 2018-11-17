@@ -123,7 +123,16 @@ public class MyPostFragment extends BaseFragment implements MyPostContract.View,
     public void onCallBack(int pos) {
         Intent i = new Intent(getActivity(), DetailPostActivity.class);
         i.putExtra(AppConstant.MSG, list.get(pos).getId());
-        startActivity(i);
+        startActivityForResult(i, 1000);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == getActivity().RESULT_OK) {
+            onRefresh();
+        }
     }
 
     @Override

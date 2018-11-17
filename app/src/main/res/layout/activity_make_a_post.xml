@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutRootMakePost"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/include5"
+            layout="@layout/layout_toolbar_title_btn_left"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include5"
+            app:layout_constraintVertical_bias="0.0">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    style="@style/post_style_title_1"
+                    android:text="Kiểu loại"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcvTypeService"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    style="@style/post_style_title_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Thông tin phòng"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rcvTypeService" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    style="@style/post_style_title_2"
+                    android:text="Tiêu đề tin đăng"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="@+id/textView13"
+                    app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+                <EditText
+                    android:id="@+id/edtTitle"
+                    style="@style/post_style_editext"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Tối đa 50 ký tự"
+                    android:maxLength="50"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView14"
+                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+                <TextView
+                    android:id="@+id/textView17"
+                    style="@style/post_style_unit_editext"
+                    android:layout_marginBottom="8dp"
+                    android:text="VND"
+                    app:layout_constraintBottom_toBottomOf="@+id/editText2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/editText2" />
+
+                <View
+                    android:id="@+id/view2"
+                    style="@style/post_style_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/edtTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/edtTitle" />
+
+                <TextView
+                    android:id="@+id/textView18"
+                    style="@style/post_style_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Giá phòng (/tháng)"
+                    app:layout_constraintStart_toStartOf="@+id/edtTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                <EditText
+                    android:id="@+id/editText2"
+                    style="@style/post_style_editext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:ems="10"
+                    android:hint="VD: 2,5000,000"
+                    android:inputType="number"
+                    app:layout_constraintEnd_toStartOf="@+id/textView17"
+                    app:layout_constraintStart_toStartOf="@+id/textView18"
+                    app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+                <View
+                    android:id="@+id/view3"
+                    style="@style/post_style_line"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/editText2"
+                    app:layout_constraintTop_toBottomOf="@+id/editText2" />
+
+                <TextView
+                    android:id="@+id/textView19"
+                    style="@style/post_style_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Diện tích"
+                    app:layout_constraintStart_toStartOf="@+id/editText2"
+                    app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+                <EditText
+                    android:id="@+id/edtArea"
+                    style="@style/post_style_editext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:ems="10"
+                    android:hint="VD: 20 "
+                    android:inputType="number"
+                    app:layout_constraintEnd_toStartOf="@+id/textView20"
+                    app:layout_constraintStart_toStartOf="@+id/textView19"
+                    app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    style="@style/post_style_unit_editext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="m2"
+                    app:layout_constraintBottom_toBottomOf="@+id/edtArea"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/edtArea" />
+
+                <View
+                    android:id="@+id/view4"
+                    style="@style/post_style_line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/edtArea"
+                    app:layout_constraintTop_toBottomOf="@+id/edtArea" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    style="@style/post_style_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Thành phố"
+                    app:layout_constraintStart_toStartOf="@+id/edtArea"
+                    app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+                <TextView
+                    android:id="@+id/tvCity"
+                    style="@style/post_style_editext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+
+                    app:layout_constraintEnd_toStartOf="@+id/tvChooseCity"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/textView21"
+                    app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+                <TextView
+                    android:id="@+id/tvChooseCity"
+                    style="@style/post_style_unit_editext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="Chọn"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvCity"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvCity" />
+
+                <View
+                    android:id="@+id/view5"
+                    style="@style/post_style_line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.49"
+                    app:layout_constraintStart_toStartOf="@+id/tvCity"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCity" />
+
+                <TextView
+                    android:id="@+id/textView22"
+                    style="@style/post_style_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Quận"
+                    app:layout_constraintStart_toStartOf="@+id/edtArea"
+                    app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+                <TextView
+                    android:id="@+id/tvDistrict"
+                    style="@style/post_style_editext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+
+                    app:layout_constraintEnd_toStartOf="@+id/tvChooseDistrict"
+                    app:layout_constraintStart_toStartOf="@+id/textView22"
+                    app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+                <TextView
+                    android:id="@+id/tvChooseDistrict"
+                    style="@style/post_style_unit_editext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Chọn"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvDistrict"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvDistrict" />
+
+                <View
+                    android:id="@+id/view6"
+                    style="@style/post_style_line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/tvCity"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDistrict" />
+
+                <TextView
+                    android:id="@+id/textView23"
+                    style="@style/post_style_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Địa chỉ"
+                    app:layout_constraintStart_toStartOf="@+id/tvDistrict"
+                    app:layout_constraintTop_toBottomOf="@+id/view6" />
+
+                <EditText
+                    android:id="@+id/edtAddress"
+                    style="@style/post_style_editext"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:ems="10"
+                    android:hint="VD: T10 ,Timecity"
+                    android:inputType="textPersonName"
+                    android:singleLine="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView23"
+                    app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+                <View
+                    android:id="@+id/view7"
+                    style="@style/post_style_line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/edtAddress"
+                    app:layout_constraintTop_toBottomOf="@+id/edtAddress" />
+
+                <TextView
+                    android:id="@+id/textView24"
+                    style="@style/post_style_title_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Tiện ích"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtAddress" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcvUtility"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView24"
+                    app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+                <TextView
+                    android:id="@+id/textView25"
+                    style="@style/post_style_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Mô tả chi tiết"
+                    app:layout_constraintStart_toStartOf="@+id/rcvUtility"
+                    app:layout_constraintTop_toBottomOf="@+id/rcvUtility" />
+
+                <EditText
+                    android:id="@+id/editText3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:hint="Mô tả chi tiết về phòng/căn hộ của bạn"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/textView25"
+                    app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    style="@style/post_style_title_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Thông tin phòng"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtWc" />
+
+                <TextView
+                    android:id="@+id/textView27"
+                    style="@style/post_style_title_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="Tối đa 10 ảnh (mỗi ảnh không quá 3mb)"
+                    app:layout_constraintStart_toStartOf="@+id/textView26"
+                    app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/btnUpload"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/profile_bg_stock_btn_logout"
+                    android:elevation="3dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView27">
+
+                    <TextView
+                        android:id="@+id/textView28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="12dp"
+                        android:drawablePadding="@dimen/dp8"
+                        android:drawableRight="@drawable/ic_photo"
+                        android:text="Tải ảnh lên"
+                        android:textColor="#fb7a32"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/btnsubmit"
+                    app:layout_constraintEnd_toEndOf="@+id/btnUpload"
+                    app:layout_constraintStart_toStartOf="@+id/btnUpload"
+                    app:layout_constraintTop_toBottomOf="@+id/btnUpload" />
+
+                <Button
+                    android:id="@+id/btnsubmit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/detail_post_bg_orange_btn"
+                    android:text="Đăng tin ngay"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <EditText
+                    android:id="@+id/edtBed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"                    android:textSize="14sp"
+
+                    android:hint="Số phòng ngủ"
+                    android:inputType="number"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editText3" />
+
+                <EditText
+                    android:id="@+id/edtWc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:hint="Số nhà vệ sinh"                    android:textSize="14sp"
+
+                    android:inputType="number"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edtBed" />
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

@@ -53,6 +53,8 @@ public class AdapterFavourite extends RecyclerView.Adapter<AdapterFavourite.View
         viewHolder.tvName.setText(String.format("%,.0fđ/tháng", list.get(i).getPrice()));
         viewHolder.tvAddress.setText(list.get(i).getAddress());
         viewHolder.tvArea.setText(String.format("%,.0f", list.get(i).getArea()) + context.getString(R.string.area_unit));
+        viewHolder.tvBed.setText(list.get(i).getNumber_bed()+"");
+        viewHolder.tvWashingRoom.setText(list.get(i).getNumber_wc()+"");
         Picasso.with(context).load(list.get(i).getAvatar()).fit().centerCrop().into(viewHolder.img);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

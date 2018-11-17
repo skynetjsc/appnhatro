@@ -1,6 +1,7 @@
 package com.skynet.thuenha.ui.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +24,7 @@ import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.models.Service;
 import com.skynet.thuenha.ui.base.BaseFragment;
 import com.skynet.thuenha.ui.chosseAddress.ChooseAddressFragment;
+import com.skynet.thuenha.ui.makepost.MakeAPostActivity;
 import com.skynet.thuenha.ui.search.FragmentSearch;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 import com.skynet.thuenha.ui.views.SlideView;
@@ -67,11 +69,17 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     private ICallback onClickService = new ICallback() {
         @Override
         public void onCallBack(int pos) {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentSearch fragmentSearch = FragmentSearch.newInstance(listService.get(pos).getId());
-            fragmentManager.beginTransaction().replace(R.id.layoutRoot, fragmentSearch, fragmentSearch.getClass().getSimpleName())
-                    .addToBackStack(null)
-                    .commit();
+            if (AppController.getInstance().getmProfileUser().getType() == 1) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentSearch fragmentSearch = FragmentSearch.newInstance(listService.get(pos).getId());
+                fragmentManager.beginTransaction().replace(R.id.layoutRoot, fragmentSearch, fragmentSearch.getClass().getSimpleName())
+                        .addToBackStack(null)
+                        .commit();
+            } else {
+                Intent i = new Intent(getActivity(), MakeAPostActivity.class);
+                i.putExtra(AppConstant.MSG, listService.get(pos).getId());
+                startActivity(i);
+            }
         }
     };
 
@@ -92,6 +100,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     }
 
+
+    @OnClick(R.id.button3)
+    public void onClickMakePost() {
+        if (AppController.getInstance().getmProfileUser().getType() == 2) {
+            startActivity(new Intent(getActivity(), MakeAPostActivity.class));
+        } else {
+            showToast("Tài khoản của bạn không thể đăng bài vào lúc này. Vui lòng đăng nhập với tư cách người cho thuê!", AppConstant.POSITIVE);
+        }
+    }
 
     @Override
     protected int initLayout() {
@@ -116,7 +133,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         adapterSlide = new SlidePhotoHomeAdapter(slidePhotos, listBanner, onClickBanner);
         slidePhotos.setAdapter(adapterSlide);
 //        setupAddress();
-        if(AppController.getInstance().getmProfileUser().getType() == 2){
+        if (AppController.getInstance().getmProfileUser().getType() == 2) {
             cardSearch.setVisibility(View.GONE);
         }
     }

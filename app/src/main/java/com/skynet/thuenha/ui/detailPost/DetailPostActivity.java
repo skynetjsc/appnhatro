@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.view.Gravity.LEFT;
 
-public class DetailPostActivity extends BaseActivity implements DetailPostContract.View, CompoundButton.OnCheckedChangeListener, OnPageClickListener, DialogTwoButtonUtil.DialogOneButtonClickListener {
+public class DetailPostActivity extends BaseActivity implements DetailPostContract.View, CompoundButton.OnCheckedChangeListener, SwipeRefreshLayout.OnRefreshListener,OnPageClickListener, DialogTwoButtonUtil.DialogOneButtonClickListener {
     @BindView(R.id.indicator_default_circle)
     InfiniteIndicator indicatorDefaultCircle;
     @BindView(R.id.btn_back)
@@ -110,6 +111,8 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     ConstraintLayout constraintLayoutEdit;
     @BindView(R.id.cardEditbottom)
     CardView cardEditbottom;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipe;
     private DetailPostContract.Presenter presenter;
     private ProgressDialogCustom dialogLoading;
     private ArrayList<Page> pageViews;
@@ -144,7 +147,7 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setHasFixedSize(true);
-
+        swipe.setOnRefreshListener(this);
     }
 
     @Override
@@ -165,10 +168,11 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
         this.detailPost = detailPost;
         if (detailPost.getIsPay() == 0) {
             // not paid
+            layoutBottomPaid.setVisibility(View.VISIBLE);
             cardEditbottom.setVisibility(View.GONE);
             layoutAddress.setVisibility(View.GONE);
             layoutHost.setVisibility(View.GONE);
-            cardbottom.setVisibility(View.VISIBLE);
+            cardbottom.setVisibility(View.GONE);
             scroll.setScrollingEnabled(false);
             dialogConfirmPrice = new DialogTwoButtonUtil(this, R.drawable.ic_question, "Xem chi tiết tin đăng",
                     Html.fromHtml(String.format(getString(R.string.content_confirm), detailPost.getPriceBuy())),
@@ -252,7 +256,7 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     @Override
     public void onSucessRent() {
         showToast("Xác nhận cho thuê thành công!", AppConstant.POSITIVE);
-
+        onRefresh();
     }
 
     @Override
@@ -274,12 +278,14 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
 
     @Override
     public void showProgress() {
+        swipe.setRefreshing(true);
         dialogLoading.showDialog();
     }
 
     @Override
     public void hiddenProgress() {
         dialogLoading.hideDialog();
+        swipe.setRefreshing(false);
     }
 
     @Override
@@ -376,5 +382,10 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
 
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.getDetailPost(getIntent().getExtras().getInt(AppConstant.MSG));
     }
 }

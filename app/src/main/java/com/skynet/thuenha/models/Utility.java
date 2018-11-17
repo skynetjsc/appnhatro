@@ -29,9 +29,28 @@ public class Utility implements Parcelable {
     @Expose
     @SerializedName("id")
     private int id;
+    @SerializedName("number")
+    int number;
 
+    boolean isChecked;
     public String getActive() {
         return active;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     public void setActive(String active) {

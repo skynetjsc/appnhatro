@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/LanguageProgram/Android/Android%20studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_send_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_clear_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,12 +28,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="18" />
-                            <entry key="outputName" value="ic_trash" />
+                            <entry key="outputName" value="ic_clear_black_24dp" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\DuongKK\Downloads\icon thuenha\icon thuenha\trash.svg" />
-                            <entry key="width" value="16" />
+                            <entry key="sourceFile" value="F:\Project\Android\SourceCode\thuenha\icon thuenha\photo.svg" />
                           </map>
                         </option>
                       </PersistentState>

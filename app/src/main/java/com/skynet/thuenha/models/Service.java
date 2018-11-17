@@ -17,6 +17,15 @@ public class Service {
     @Expose
     @SerializedName("id")
     private int id;
+    private boolean isChecked;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public String getActive() {
         return active;
