@@ -46,7 +46,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:padding="@dimen/dp16"
-                app:srcCompat="@drawable/ic_info_black_24dp" />
+                app:srcCompat="@drawable/ic_info_outline_black_24dp" />
         </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
 

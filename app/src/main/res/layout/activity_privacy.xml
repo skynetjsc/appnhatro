@@ -12,11 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:padding="16dp"
-        android:textColor="#48484a"
-       /></ScrollView>
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textColor="#48484a"
+            android:textSize="12sp" /></ScrollView>
 </LinearLayout>

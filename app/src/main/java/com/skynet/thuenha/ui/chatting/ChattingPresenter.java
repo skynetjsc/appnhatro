@@ -21,18 +21,18 @@ public class ChattingPresenter implements ChattingContract.Presenter {
     }
 
     @Override
-    public void getMessages(String idShop,int idPost) {
+    public void getMessages(int idUser,int hostId,int idPost) {
         view.showProgress();
         Profile profile  = AppController.getInstance().getmProfileUser();
         if(profile==null){
             onErrorAuthorization();
             return;
         }
-        interactor.getMessages(idShop,profile.getId(),idPost);
+        interactor.getMessages(hostId,idUser,idPost);
     }
 
     @Override
-    public void sendMessage(int idPost,String idShop, String content, SocketClient socketClient) {
+    public void sendMessage(int idPost,int idUser, int idShop, String content, SocketClient socketClient) {
         view.showProgress();
         this.socketClient   = socketClient;
         Profile profile  = AppController.getInstance().getmProfileUser();
@@ -40,7 +40,7 @@ public class ChattingPresenter implements ChattingContract.Presenter {
             onErrorAuthorization();
             return;
         }
-        interactor.sendMessage(idPost,idShop,profile.getId(),content,new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(new Date()));
+        interactor.sendMessage(idPost,idUser,idShop,content,new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(new Date()));
     }
 
     @Override

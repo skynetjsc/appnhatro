@@ -45,7 +45,7 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
     ChatParentLayout mChatLL;
     private ChattingContract.Presenter presenter;
     private String idShop;
-    private Profile shop;
+    private Profile shop, user;
     private int IdPost;
     private AdapterChat mAdapterChat;
     private List<Message> mList = new ArrayList<>();
@@ -86,6 +86,7 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
         presenter = new ChattingPresenter(this);
         if (getIntent() != null) {
             shop = getIntent().getBundleExtra(AppConstant.BUNDLE).getParcelable(AppConstant.INTENT);
+            user = getIntent().getBundleExtra(AppConstant.BUNDLE).getParcelable("user");
             IdPost = getIntent().getBundleExtra(AppConstant.BUNDLE).getInt("idPost");
             msg = getIntent().getBundleExtra(AppConstant.BUNDLE).getString("msgs");
             urlAvt = getIntent().getBundleExtra(AppConstant.BUNDLE).getString("avt");
@@ -192,7 +193,7 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
 //                        }
 //                    }
 //                }));
-                presenter.sendMessage(IdPost, idShop, content, getmSocket());
+                presenter.sendMessage(IdPost, Integer.parseInt(user.getId()), Integer.parseInt(shop.getId()), content, getmSocket());
                 break;
         }
     }
@@ -209,7 +210,7 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
 //                }
 //            }
 //        }));
-        presenter.getMessages(idShop, IdPost);
+        presenter.getMessages(Integer.parseInt(user.getId()),Integer.parseInt(shop.getId()), IdPost);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.Utils;
 import com.google.gson.Gson;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.models.Banner;
+import com.skynet.thuenha.models.Filter;
 import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.utils.AppConstant;
 
@@ -33,7 +34,7 @@ public class AppController extends MultiDexApplication {
     private boolean isReview;
     private boolean isStartOverQuiz;
     public static Context context;
-
+    private Filter filter;
     // ---
 
     private Timer mActivityTransitionTimer;
@@ -106,6 +107,14 @@ public class AppController extends MultiDexApplication {
         AppController.instance = instance;
     }
 
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Filter filter) {
+        this.filter = filter;
+    }
+
     public boolean isToogleInternet() {
         return toogleInternet;
     }
@@ -155,9 +164,11 @@ public class AppController extends MultiDexApplication {
         if (mProfileUser != null) {
             mSetting.put(AppConstant.KEY_PROFILE, new Gson().toJson(mProfileUser));
             mSetting.put(AppConstant.KEY_TOKEN,mProfileUser.getToken());
+            mSetting.put(AppConstant.KEY_ID,mProfileUser.getId());
         }else {
             mSetting.put(AppConstant.KEY_PROFILE, "");
             mSetting.put(AppConstant.KEY_TOKEN,"");
+            mSetting.put(AppConstant.KEY_ID,"");
 
         }
 

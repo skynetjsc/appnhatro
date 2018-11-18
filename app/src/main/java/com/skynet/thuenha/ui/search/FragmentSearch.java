@@ -18,10 +18,12 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.skynet.thuenha.R;
+import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.interfaces.ICallback;
 import com.skynet.thuenha.models.Post;
 import com.skynet.thuenha.ui.base.BaseFragment;
 import com.skynet.thuenha.ui.detailPost.DetailPostActivity;
+import com.skynet.thuenha.ui.filter.FilterActivity;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 import com.skynet.thuenha.utils.AppConstant;
 
@@ -46,6 +48,8 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     TextView title;
     @BindView(R.id.filter)
     ImageView filter;
+    @BindView(R.id.dot_filter)
+    ImageView dot_filter;
     private SearchContract.Presenter presenter;
     private ProgressDialogCustom dialogLoading;
     private List<Post> listPost;
@@ -69,13 +73,20 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
         ButterKnife.bind(this, view);
         rcv.setLayoutManager(new LinearLayoutManager(getMyContext()));
         rcv.setHasFixedSize(true);
+
     }
 
     @Override
     protected void initVariables() {
         presenter = new SearchPresenter(this);
         dialogLoading = new ProgressDialogCustom(getMyContext());
-        presenter.getAllPostByService(getArguments().getInt("idService"));
+        if (AppController.getInstance().getFilter() != null) {
+            dot_filter.setVisibility(View.VISIBLE);
+            presenter.getAllPostByFilter();
+        } else {
+            presenter.getAllPostByService(getArguments().getInt("idService"));
+            dot_filter.setVisibility(View.GONE);
+        }
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -169,7 +180,23 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
                 getFragmentManager().popBackStack();
                 break;
             case R.id.filter:
+                startActivityForResult(new Intent(getActivity(), FilterActivity.class), 1000);
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == getActivity().RESULT_OK) {
+            if (AppController.getInstance().getFilter() != null) {
+                dot_filter.setVisibility(View.VISIBLE);
+                presenter.getAllPostByFilter();
+            } else {
+                dot_filter.setVisibility(View.GONE);
+                presenter.getAllPostByService(getArguments().getInt("idService"));
+
+            }
         }
     }
 

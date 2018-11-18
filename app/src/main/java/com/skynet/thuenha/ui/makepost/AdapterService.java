@@ -37,6 +37,14 @@ public class AdapterService extends RecyclerView.Adapter<AdapterService.ViewHold
         }
     }
 
+    public void updateAdapter() {
+        cache.clear();
+        for (int i = 0; i < list.size(); i++) {
+            cache.put(i, list.get(i).isChecked());
+        }
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -47,7 +55,7 @@ public class AdapterService extends RecyclerView.Adapter<AdapterService.ViewHold
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         viewHolder.cb.setOnCheckedChangeListener(null);
         viewHolder.cb.setChecked(cache.get(i));
-        if(cache.get(i)){
+        if (cache.get(i)) {
             oldHolder = viewHolder;
         }
         viewHolder.cb.setText(list.get(i).getName());

@@ -121,8 +121,9 @@ public class ListChatFragment extends BaseFragment implements ListChatContract.V
         Intent i = new Intent(getActivity(), ChatActivity.class);
         Bundle b = new Bundle();
         b.putParcelable(AppConstant.INTENT, chatItem.getShop());
+        b.putParcelable("user", chatItem.getUse());
         b.putInt("idPost", chatItem.getId_post());
-        b.putString("avt", chatItem.getShop().getAvatar());
+        b.putString("avt", AppController.getInstance().getmProfileUser().getType() == 1 ? chatItem.getShop().getAvatar() : chatItem.getUse().getAvatar());
         i.putExtra(AppConstant.BUNDLE, b);
         startActivityForResult(i, 1000);
     }

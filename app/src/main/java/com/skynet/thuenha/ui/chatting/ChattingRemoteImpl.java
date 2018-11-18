@@ -1,6 +1,7 @@
 package com.skynet.thuenha.ui.chatting;
 
 
+import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.models.ChatItem;
 import com.skynet.thuenha.models.Message;
 import com.skynet.thuenha.network.api.ApiResponse;
@@ -28,7 +29,8 @@ public class ChattingRemoteImpl extends Interactor implements ChattingContract.I
     }
 
     @Override
-    public void getMessages(String idShop, String uiId, int idPost) {
+    public void getMessages(int idShop, int uiId, int idPost) {
+
         getmService().getListMessageBetween(uiId, idShop, idPost).enqueue(new CallBackBase<ApiResponse<ChatItem>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<ChatItem>> call, Response<ApiResponse<ChatItem>> response) {
@@ -53,8 +55,8 @@ public class ChattingRemoteImpl extends Interactor implements ChattingContract.I
     }
 
     @Override
-    public void sendMessage(int idPost, String idShop, String idUser, String content, String time) {
-        getmService().sendMessageTo(idPost, idUser, idShop, time, content, AppConstant.TYPE_USER).enqueue(new CallBackBase<ApiResponse<Message>>() {
+    public void sendMessage(int idPost, int idUser, int idShop, String content, String time) {
+        getmService().sendMessageTo(idPost, idUser, idShop, time, content, AppController.getInstance().getmProfileUser().getType()).enqueue(new CallBackBase<ApiResponse<Message>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<Message>> call, Response<ApiResponse<Message>> response) {
                 if (response.isSuccessful() && response.body() != null) {

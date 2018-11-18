@@ -39,6 +39,13 @@ public class AdapterUtility extends RecyclerView.Adapter<AdapterUtility.ViewHold
             cache.put(i, list.get(i).isChecked());
         }
     }
+    public void updateAdapter() {
+        cache.clear();
+        for (int i = 0; i < list.size(); i++) {
+            cache.put(i, list.get(i).isChecked());
+        }
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override

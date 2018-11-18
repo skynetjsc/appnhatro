@@ -67,6 +67,9 @@
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".ui.filter.FilterActivity" />
+        <activity android:name=".ui.updateProfile.ProfileUpdateFragment" />
+        <activity android:name=".ui.feedback.FeedbackActivity" />
     </application>
 
 </manifest>

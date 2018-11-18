@@ -46,7 +46,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolerMessa
 
     @Override
     public ViewHolerMessage onCreateViewHolder(ViewGroup parent, int viewType) {
-        layoutId = viewType == AppConstant.TYPE_USER ? R.layout.row_my_chat : R.layout.row_partner_chat;
+        layoutId = viewType == AppController.getInstance().getmProfileUser().getType() ? R.layout.row_my_chat : R.layout.row_partner_chat;
         return new AdapterChat.ViewHolerMessage(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
     }
 
@@ -62,7 +62,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolerMessa
 //                holder.mTime.setVisibility(View.INVISIBLE);
 //
 //            }
-            if (getItemViewType(position) == AppConstant.TYPE_USER) {
+            if (getItemViewType(position) == AppController.getInstance().getmProfileUser().getType()) {
 
                 if (AppController.getInstance().getmProfileUser().getAvatar() != null
                         && !AppController.getInstance().getmProfileUser().getAvatar().isEmpty()) {

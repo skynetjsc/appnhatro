@@ -70,6 +70,7 @@ public class AppConstant {
     public static final String HELPER_AGREE = "agree";
     public static final String PHONE_CENTER = "0962672240";
     public static final String KEY_TRIP_TIME = "trip_future";
+    public static final String KEY_ID = "key_id";
     public static String ID_CHAT = "id_chat";
     public static final int CODE_REQ_BOOKING = 1001;
 

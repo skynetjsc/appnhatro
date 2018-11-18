@@ -169,6 +169,15 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
 
     @Override
     public void onSuccessGetDetail(DetailPost detailPost) {
+        if (detailPost.getPost().getId() == 0) {
+            showToast("Tin đăng đã bị ẩn. Vui lòng quay lại sau!", AppConstant.NEGATIVE, new SnackBarCallBack() {
+                @Override
+                public void onClosedSnackBar() {
+                    finish();
+                }
+            });
+            return;
+        }
         this.detailPost = detailPost;
         if (detailPost.getIsPay() == 0) {
             // not paid
@@ -182,7 +191,8 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                     Html.fromHtml(String.format(getString(R.string.content_confirm), detailPost.getPriceBuy())),
                     this);
         } else {
-            if (detailPost.getHost().getId().equals(AppController.getInstance().getmProfileUser().getId())) {
+            if (detailPost.getHost().getId().equals(AppController.getInstance().getmProfileUser().getId())
+                    && AppController.getInstance().getmProfileUser().getType() == 2) {
                 //owner
                 cardEditbottom.setVisibility(View.VISIBLE);
                 layoutAddress.setVisibility(View.VISIBLE);
@@ -352,8 +362,9 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                 Intent i = new Intent(DetailPostActivity.this, ChatActivity.class);
                 Bundle b = new Bundle();
                 b.putParcelable(AppConstant.INTENT, detailPost.getHost());
+                b.putParcelable("user", AppController.getInstance().getmProfileUser());
                 b.putInt("idPost", detailPost.getPost().getId());
-                b.putString("avt", detailPost.getHost().getAvatar());
+                b.putString("avt", AppController.getInstance().getmProfileUser().getType() == 1 ? detailPost.getHost().getAvatar() : AppController.getInstance().getmProfileUser().getAvatar());
                 b.putString("msgs", "Chào anh/chị em muốn hỏi\n" +
                         "căn hộ nhà mình còn không\n" +
                         "vậy ạ!");
@@ -367,7 +378,9 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                 Intent i = new Intent(DetailPostActivity.this, ChatActivity.class);
                 Bundle b = new Bundle();
                 b.putParcelable(AppConstant.INTENT, detailPost.getHost());
+                b.putParcelable("user", AppController.getInstance().getmProfileUser());
                 b.putInt("idPost", detailPost.getPost().getId());
+                b.putString("avt", AppController.getInstance().getmProfileUser().getType() == 1 ? detailPost.getHost().getAvatar() : AppController.getInstance().getmProfileUser().getAvatar());
                 b.putString("msgs", "Chào anh/chị em muốn hỏi\n" +
                         "căn hộ nhà mình em có thể\n" +
                         "xem nhà lúc nào thì tiện ạ!");
@@ -405,7 +418,7 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                 Bundle b = new Bundle();
                 b.putParcelable(AppConstant.MSG, detailPost);
                 intent.putExtra(AppConstant.BUNDLE, b);
-                intent.putExtra(AppConstant.MSG,detailPost.getPost().getId_service());
+                intent.putExtra(AppConstant.MSG, detailPost.getPost().getId_service());
                 startActivityForResult(intent, 1000);
                 break;
             case R.id.btnRent:

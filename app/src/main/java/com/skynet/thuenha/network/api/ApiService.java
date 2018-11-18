@@ -3,6 +3,7 @@ package com.skynet.thuenha.network.api;
 import com.skynet.thuenha.models.Address;
 import com.skynet.thuenha.models.ChatItem;
 import com.skynet.thuenha.models.DetailPost;
+import com.skynet.thuenha.models.Feedback;
 import com.skynet.thuenha.models.HomeResponse;
 import com.skynet.thuenha.models.Message;
 import com.skynet.thuenha.models.Notification;
@@ -10,6 +11,7 @@ import com.skynet.thuenha.models.Post;
 import com.skynet.thuenha.models.PriceService;
 import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.models.Service;
+import com.skynet.thuenha.models.Term;
 import com.skynet.thuenha.models.Utility;
 
 import java.util.List;
@@ -63,7 +65,11 @@ public interface ApiService {
     Call<ApiResponse<List<Address>>> getDistrict(@Query("city_id") int phone);
 
     @GET("list_post.php")
-    Call<ApiResponse<List<Post>>> getListPost(@Query("id_service") int phone, @Query("id_district") int idDistrict);
+    Call<ApiResponse<List<Post>>> getListPost(@Query("user_id") String user_id, @Query("id_service") int phone, @Query("id_district") int idDistrict);
+
+    @GET("filter.php")
+    Call<ApiResponse<List<Post>>> getListFilterPost(@Query("user_id") String user_id, @Query("id_service") String phone, @Query("price_min") String min,
+                                                    @Query("price_max") String max, @Query("id_utility") String id_utility, @Query("id_district") int idDistric);
 
     @GET("list_chat.php")
     Call<ApiResponse<List<ChatItem>>> getListChat(@Query("id_user") String phone, @Query("type") int type);
@@ -78,7 +84,19 @@ public interface ApiService {
     Call<ApiResponse<List<Profile>>> getListViewer(@Query("id") int idUser);
 
     @GET("search.php")
-    Call<ApiResponse<List<Post>>> searchListPost(@Query("id_service") int phone, @Query("id_district") int idDistrict, @Query("title") String query);
+    Call<ApiResponse<List<Post>>> searchListPost(@Query("user_id") String user_id,
+                                                 @Query("id_service") int id_service,
+                                                 @Query("id_district") int idDistrict,
+                                                 @Query("title") String query);
+
+    @GET("search.php")
+    Call<ApiResponse<List<Post>>> searchListPost(@Query("user_id") String user_id,
+                                                 @Query("id_service") String id_service,
+                                                 @Query("id_district") int idDistrict,
+                                                 @Query("title") String query,
+                                                 @Query("price_min") String min,
+                                                 @Query("price_max") String max,
+                                                 @Query("id_utility") String id_utility);
 
     @FormUrlEncoded
     @POST("register.php")
@@ -117,14 +135,32 @@ public interface ApiService {
     Call<ApiResponse> paidForthisPost(@Field("user_id") String idUser, @Field("post_id") int postID);
 
     @GET("get_message.php")
-    Call<ApiResponse<ChatItem>> getListMessageBetween(@Query("id_user") String uiId, @Query("id_host") String id_host, @Query("id_post") int id_post);
+    Call<ApiResponse<ChatItem>> getListMessageBetween(@Query("id_user") int uiId, @Query("id_host") int id_host, @Query("id_post") int id_post);
 
     @FormUrlEncoded
     @POST("message.php")
-    Call<ApiResponse<Message>> sendMessageTo(@Field("id_post") int id_post, @Field("id_user") String idUser, @Field("id_host") String idShop, @Field("time") String time, @Field("content") String content, @Field("type") int typeUser);
+    Call<ApiResponse<Message>> sendMessageTo(@Field("id_post") int id_post, @Field("id_user") int idUser, @Field("id_host") int idShop, @Field("time") String time, @Field("content") String content, @Field("type") int typeUser);
 
     @GET("notification.php")
     Call<ApiResponse<List<Notification>>> getListNotification(@Query("id") String uid, @Query("type") int type);
+
+    @GET("list_feedback.php")
+    Call<ApiResponse<List<Feedback>>> getListFeedback(@Query("user_id") String uid, @Query("type") int type);
+
+    @FormUrlEncoded
+    @POST("like.php")
+    Call<ApiResponse> likeFeedback(@Field("id") int idFeedback, @Field("user_id") String user_id, @Field("type") int type,
+                                   @Field("is_like") int is_like);
+
+    @FormUrlEncoded
+    @POST("comment.php")
+    Call<ApiResponse> commentFeedback(@Field("id") int idFeedback, @Field("user_id") String user_id, @Field("type") int type,
+                                      @Field("comment") String comment);
+
+    @FormUrlEncoded
+    @POST("feedback.php")
+    Call<ApiResponse> makeNewFeedback(@Field("user_id") String user_id, @Field("type") int type,
+                                      @Field("comment") String comment);
 
     @GET("notification_detail.php")
     Call<ApiResponse<Notification>> getDetailNotification(@Query("id") String id, @Query("type") int type, @Query("user_id") String shID);
@@ -136,4 +172,15 @@ public interface ApiService {
                                           @Part("district_id") RequestBody district_id, @Part("address") RequestBody address, @Part("content") RequestBody content,
                                           @Part("id_utility") RequestBody id_utility, @Part("number_bed") RequestBody number_bed, @Part("number_wc") RequestBody number_wc,
                                           @Part List<MultipartBody.Part> listFile);
+
+    @Multipart
+    @POST("update_profile.php")
+    Call<ApiResponse> updateInfor(@PartMap() Map<String, okhttp3.RequestBody> partMap);
+
+    @Multipart
+    @POST("update_avatar.php")
+    Call<ApiResponse<String>> uploadAvatar(@Part MultipartBody.Part image, @PartMap() Map<String, okhttp3.RequestBody> partMap);
+
+    @GET("term.php")
+    Call<ApiResponse<Term>> getTerm();
 }

@@ -294,6 +294,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     AppController.getInstance().setmProfileUser(null);
                     AppController.getInstance().getmSetting().remove(AppConstant.KEY_PROFILE);
                     AppController.getInstance().getmSetting().remove(AppConstant.KEY_TOKEN);
+                    AppController.getInstance().getmSetting().remove(AppConstant.KEY_ID);
                     AppController.getInstance().setmProfileUser(null);
                     startActivity(intent);
                     finishAffinity();

@@ -22,6 +22,14 @@ public class SearchPresenter extends Presenter<SearchContract.View> implements S
     }
 
     @Override
+    public void getAllPostByFilter() {
+        if (isAvaliableView()) {
+            view.showProgress();
+            interactor.getAllPostByFilter();
+        }
+    }
+
+    @Override
     public void queryPostByService(int idService, String query) {
 
         if (isAvaliableView()) {

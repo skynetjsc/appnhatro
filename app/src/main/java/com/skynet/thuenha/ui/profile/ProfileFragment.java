@@ -29,6 +29,7 @@ import com.skynet.thuenha.ui.detailPost.DetailPostActivity;
 import com.skynet.thuenha.ui.listviewer.ListViewerFragment;
 import com.skynet.thuenha.ui.search.FragmentSearch;
 import com.skynet.thuenha.ui.splash.SplashActivity;
+import com.skynet.thuenha.ui.updateProfile.ProfileUpdateFragment;
 import com.skynet.thuenha.utils.AppConstant;
 import com.squareup.picasso.Picasso;
 
@@ -96,7 +97,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     protected void initViews(View view) {
         ButterKnife.bind(this, view);
         swipe.setOnRefreshListener(this);
-        rcv.setLayoutManager(new GridLayoutManager(getContext(),2));
+        rcv.setLayoutManager(new GridLayoutManager(getContext(), 2));
         rcv.setHasFixedSize(true);
         tvToolbar.setText("Cá nhân");
     }
@@ -118,6 +119,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layoutProfile:
+                startActivityForResult(new Intent(getActivity(), ProfileUpdateFragment.class), 1000);
                 break;
             case R.id.tvInput:
                 break;

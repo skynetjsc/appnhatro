@@ -7,11 +7,17 @@ import android.widget.TextView;
 
 
 import com.skynet.thuenha.R;
+import com.skynet.thuenha.models.Term;
+import com.skynet.thuenha.network.api.ApiResponse;
+import com.skynet.thuenha.network.api.ApiUtil;
+import com.skynet.thuenha.network.api.CallBackBase;
 import com.skynet.thuenha.ui.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class PrivacyActivity extends BaseActivity {
@@ -19,6 +25,8 @@ public class PrivacyActivity extends BaseActivity {
     ImageView imgBtnBackToolbar;
     @BindView(R.id.tvTitle_toolbar)
     TextView tvTitleToolbar;
+    @BindView(R.id.tv)
+    TextView tv;
 
     @Override
     protected int initLayout() {
@@ -27,7 +35,19 @@ public class PrivacyActivity extends BaseActivity {
 
     @Override
     protected void initVariables() {
+        ApiUtil.createNotTokenApi().getTerm().enqueue(new CallBackBase<ApiResponse<Term>>() {
+            @Override
+            public void onRequestSuccess(Call<ApiResponse<Term>> call, Response<ApiResponse<Term>> response) {
+                if (response.isSuccessful() && response.body().getData() != null) {
+                    tv.setText(response.body().getData().getContent());
+                }
+            }
 
+            @Override
+            public void onRequestFailure(Call<ApiResponse<Term>> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

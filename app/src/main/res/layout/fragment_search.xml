@@ -38,12 +38,26 @@
                 android:textColor="#2e2f4f"
                 android:textSize="@dimen/dps18" />
 
-            <ImageView
-                android:id="@+id/filter"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp16"
-                android:src="@drawable/ic_filterbtn" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp16"
+                    android:src="@drawable/ic_filterbtn" />
+
+                <ImageView
+                    android:id="@+id/dot_filter"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:src="@drawable/dot_stock" />
+            </RelativeLayout>
+
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 

@@ -16,13 +16,13 @@ public interface ChattingContract {
     }
 
     interface Presenter extends IBasePresenter,ChattingListener{
-        void getMessages(String udId,int idPost);
-        void sendMessage(int idPost,String idUser, String content, SocketClient socketClient);
+        void getMessages(int udId,int hostId,int idPost);
+        void sendMessage(int idPost,int idUser,int hostId, String content, SocketClient socketClient);
     }
 
     interface Interactor {
-        void getMessages(String udId, String idShop,int idPost);
-        void sendMessage(int idPost,String idUser, String idShop, String content, String time);
+        void getMessages(int udId, int idShop,int idPost);
+        void sendMessage(int idPost,int idUser, int idShop, String content, String time);
     }
 
     interface ChattingListener extends OnFinishListener {

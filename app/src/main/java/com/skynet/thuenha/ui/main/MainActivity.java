@@ -2,8 +2,10 @@ package com.skynet.thuenha.ui.main;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.skynet.thuenha.R;
@@ -22,6 +24,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     @BindView(R.id.viewpager)
     ViewpagerNotSwipe viewpager;
     private AdapterViewpager adapter;
+    private boolean doubleBackToExitPressedOnce;
 
     @Override
     protected int initLayout() {
@@ -61,6 +64,25 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Nhấn BACK 2 lần để thoát", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
     @Override

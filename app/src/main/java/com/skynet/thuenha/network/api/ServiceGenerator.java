@@ -1,12 +1,14 @@
 package com.skynet.thuenha.network.api;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.utils.AppConstant;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.CertificatePinner;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -42,10 +44,15 @@ public class ServiceGenerator {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
                 // Request customization: add request headers
+                HttpUrl originalHttpUrl = original.url();
+                HttpUrl url = originalHttpUrl.newBuilder()
+                        .addQueryParameter("user_id", new SPUtils(AppConstant.KEY_SETTING).getString(AppConstant.KEY_ID,""))
+                        .build();
                 Request.Builder requestBuilder = original.newBuilder()
                         .addHeader("Content-Type", "application/json")
                         .addHeader("Apikey",
                                 new SPUtils(AppConstant.KEY_SETTING).getString(AppConstant.KEY_TOKEN,"c6b5164284474adf4236635b332bea9f"))
+                        .url(url)
                         .method(original.method(), original.body());
                 Request request = requestBuilder.build();
                 return chain.proceed(request);

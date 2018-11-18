@@ -129,12 +129,12 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
     private Address myCity, myDistrict;
     private List<Service> listServices;
     private List<Utility> listUtilities;
+    private List<Utility> listUtilityRequest = new ArrayList<>();
     private List<File> listImage;
     private AdapterPhoto adapterPhoto;
     private double price = 0;
     private DialogTwoButtonUtil dialogConfirmPrice;
     private int idService = -1;
-    private List<Utility> listUtilityRequest = new ArrayList<>();
     private DetailPost postToEdit;
 
     @Override
@@ -204,6 +204,7 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
             for (Service s : listServices) {
                 if (s.getId() == getIntent().getExtras().getInt(AppConstant.MSG, -1)) {
                     s.setChecked(true);
+                    break;
                 }
             }
         }
@@ -296,6 +297,11 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
     @Override
     public void onErrorAuthorization() {
         showDialogExpired();
+    }
+    @Override
+    protected void onDestroy() {
+        presenter.onDestroyView();
+        super.onDestroy();
     }
 
     @Override
