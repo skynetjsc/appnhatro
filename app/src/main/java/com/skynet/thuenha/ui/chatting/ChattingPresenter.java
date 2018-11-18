@@ -3,6 +3,7 @@ package com.skynet.thuenha.ui.chatting;
 
 import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.models.Message;
+import com.skynet.thuenha.models.Post;
 import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.network.socket.SocketClient;
 import com.skynet.thuenha.network.socket.SocketResponse;
@@ -32,7 +33,7 @@ public class ChattingPresenter implements ChattingContract.Presenter {
     }
 
     @Override
-    public void sendMessage(int idPost,int idUser, int idShop, String content, SocketClient socketClient) {
+    public void sendMessage(int idPost,int idUser, int idShop, String content, SocketClient socketClient,int attach) {
         view.showProgress();
         this.socketClient   = socketClient;
         Profile profile  = AppController.getInstance().getmProfileUser();
@@ -40,7 +41,7 @@ public class ChattingPresenter implements ChattingContract.Presenter {
             onErrorAuthorization();
             return;
         }
-        interactor.sendMessage(idPost,idUser,idShop,content,new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(new Date()));
+        interactor.sendMessage(idPost,idUser,idShop,content,new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").format(new Date()),attach);
     }
 
     @Override
@@ -49,11 +50,11 @@ public class ChattingPresenter implements ChattingContract.Presenter {
     }
 
     @Override
-    public void onSuccessGetMessages(List<Message> list) {
+    public void onSuccessGetMessages(List<Message> list,Post post) {
         if(view ==null )return;
         view.hiddenProgress();
         if(list!=null)
-        view.onSuccessGetMessages(list);
+        view.onSuccessGetMessages(list,post);
 
     }
 
@@ -61,7 +62,7 @@ public class ChattingPresenter implements ChattingContract.Presenter {
     public void onSuccessSendMessage(Message message) {
         if(view ==null )return;
         view.hiddenProgress();
-//        if(socketClient!=null){
+        if(socketClient!=null){
 //            SocketResponse data = new SocketResponse();
 //            Profile user = new Profile();
 //            user.setId(message.getUId());
@@ -73,7 +74,7 @@ public class ChattingPresenter implements ChattingContract.Presenter {
 //            data.setMessage(message);
 //            data.setContentMessage(message.getContent());
 //            getSocketClient().sendMessage(data);
-//        }
+        }
         view.onSuccessSendMessage(message);
     }
 

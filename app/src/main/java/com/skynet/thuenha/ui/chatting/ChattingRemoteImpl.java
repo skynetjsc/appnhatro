@@ -37,7 +37,7 @@ public class ChattingRemoteImpl extends Interactor implements ChattingContract.I
                 if (response.isSuccessful() && response.body() != null) {
                     if (response.code() == AppConstant.CODE_API_SUCCESS ) {
                         if( response.body().getData() != null)
-                        listener.onSuccessGetMessages(response.body().getData().getContent());
+                        listener.onSuccessGetMessages(response.body().getData().getContent(),response.body().getData().getPost());
                     } else {
                         listener.onError(response.body().getMessage());
                     }
@@ -55,8 +55,8 @@ public class ChattingRemoteImpl extends Interactor implements ChattingContract.I
     }
 
     @Override
-    public void sendMessage(int idPost, int idUser, int idShop, String content, String time) {
-        getmService().sendMessageTo(idPost, idUser, idShop, time, content, AppController.getInstance().getmProfileUser().getType()).enqueue(new CallBackBase<ApiResponse<Message>>() {
+    public void sendMessage(int idPost, int idUser, int idShop, String content, String time,int attach) {
+        getmService().sendMessageTo(idPost, idUser, idShop, time, content, AppController.getInstance().getmProfileUser().getType(),attach).enqueue(new CallBackBase<ApiResponse<Message>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<Message>> call, Response<ApiResponse<Message>> response) {
                 if (response.isSuccessful() && response.body() != null) {

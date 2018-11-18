@@ -95,5 +95,8 @@
     <dimen name="size_archiement">24dp</dimen>
     <dimen name="size_avt">64dp</dimen>
     <dimen name="size_avt_small">28dp</dimen>
+    <dimen name="chat_post_img_w">200dp</dimen>
+    <dimen name="chat_post_img_h">120dp</dimen>
+    <dimen name="size_avt_medium">48dp</dimen>
 
 </resources>

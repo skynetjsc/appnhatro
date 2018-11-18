@@ -10,16 +10,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class SocketResponse implements Parcelable {
-    @SerializedName("idBooking")
-    String idBooking;
-    @SerializedName("u_id")
-    String u_id;
-    @SerializedName("h_id")
-    String h_id;
-    @SerializedName("address")
-    String address;
-    @SerializedName("distance")
-    String distance;
+
     @SerializedName("name")
     String name;
     @SerializedName("time")
@@ -30,136 +21,50 @@ public class SocketResponse implements Parcelable {
     String content;
     @SerializedName("type")
     String type;
-    @SerializedName("active")
-    String active;
-    @SerializedName("avatar")
-    String avatar;
-    @SerializedName("numberHelper")
-    String numberHelper;
+    @SerializedName("sendFrom")
+    String sendFrom;
+    @SerializedName("idUser")
+    String idUser;
+    @SerializedName("idHost")
+    String idHost;
+    @SerializedName("idPost")
+    String idPost;
 
-
-    // message
-    @SerializedName("from")
-    String from;
-    @SerializedName("to")
-    String to;
-    @SerializedName("idUserBooking")
-    String idUserBooking;
-    @SerializedName("idDriverBooking")
-    String idDriverBooking;
-    @SerializedName("idSimpleBooking")
-    String idSimpleBooking;
-    @SerializedName("wantToJoin")
-    int wantToJoin;
-    @SerializedName("type_booking")
-    int type_booking;
-
-    public int getWantToJoin() {
-        return wantToJoin;
-    }
-
-    public void setWantToJoin(int wantToJoin) {
-        this.wantToJoin = wantToJoin;
-    }
 
     public SocketResponse() {
     }
 
-    public String getIdSimpleBooking() {
-        return idSimpleBooking;
+
+    public String getSendFrom() {
+        return sendFrom;
     }
 
-    public void setIdSimpleBooking(String idSimpleBooking) {
-        this.idSimpleBooking = idSimpleBooking;
+    public void setSendFrom(String sendFrom) {
+        this.sendFrom = sendFrom;
     }
 
-    public String getIdUserBooking() {
-        return idUserBooking;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public void setIdUserBooking(String idUserBooking) {
-        this.idUserBooking = idUserBooking;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
-    public int getType_booking() {
-        return type_booking;
+    public String getIdHost() {
+        return idHost;
     }
 
-    public void setType_booking(int type_booking) {
-        this.type_booking = type_booking;
+    public void setIdHost(String idHost) {
+        this.idHost = idHost;
     }
 
-    public String getIdDriverBooking() {
-        return idDriverBooking;
+    public String getIdPost() {
+        return idPost;
     }
 
-    public void setIdDriverBooking(String idDriverBooking) {
-        this.idDriverBooking = idDriverBooking;
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public String getActive() {
-        return active;
-    }
-
-    public void setActive(String active) {
-        this.active = active;
-    }
-
-    public String getIdBooking() {
-        return idBooking;
-    }
-
-    public void setIdBooking(String idBooking) {
-        this.idBooking = idBooking;
-    }
-
-    public String getU_id() {
-        return u_id;
-    }
-
-    public void setU_id(String u_id) {
-        this.u_id = u_id;
-    }
-
-    public String getH_id() {
-        return h_id;
-    }
-
-    public void setH_id(String h_id) {
-        this.h_id = h_id;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getDistance() {
-        return distance;
-    }
-
-    public void setDistance(String distance) {
-        this.distance = distance;
+    public void setIdPost(String idPost) {
+        this.idPost = idPost;
     }
 
     public String getName() {
@@ -202,21 +107,6 @@ public class SocketResponse implements Parcelable {
         this.type = type;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getNumberHelper() {
-        return numberHelper;
-    }
-
-    public void setNumberHelper(String numberHelper) {
-        this.numberHelper = numberHelper;
-    }
 
     @Override
     public int describeContents() {
@@ -225,49 +115,27 @@ public class SocketResponse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.idBooking);
-        dest.writeString(this.u_id);
-        dest.writeString(this.h_id);
-        dest.writeString(this.address);
-        dest.writeString(this.distance);
         dest.writeString(this.name);
         dest.writeString(this.time);
         dest.writeString(this.title);
         dest.writeString(this.content);
         dest.writeString(this.type);
-        dest.writeString(this.active);
-        dest.writeString(this.avatar);
-        dest.writeString(this.numberHelper);
-        dest.writeString(this.from);
-        dest.writeString(this.to);
-        dest.writeString(this.idUserBooking);
-        dest.writeString(this.idDriverBooking);
-        dest.writeString(this.idSimpleBooking);
-        dest.writeInt(this.wantToJoin);
-        dest.writeInt(this.type_booking);
+        dest.writeString(this.sendFrom);
+        dest.writeString(this.idUser);
+        dest.writeString(this.idHost);
+        dest.writeString(this.idPost);
     }
 
     protected SocketResponse(Parcel in) {
-        this.idBooking = in.readString();
-        this.u_id = in.readString();
-        this.h_id = in.readString();
-        this.address = in.readString();
-        this.distance = in.readString();
         this.name = in.readString();
         this.time = in.readString();
         this.title = in.readString();
         this.content = in.readString();
         this.type = in.readString();
-        this.active = in.readString();
-        this.avatar = in.readString();
-        this.numberHelper = in.readString();
-        this.from = in.readString();
-        this.to = in.readString();
-        this.idUserBooking = in.readString();
-        this.idDriverBooking = in.readString();
-        this.idSimpleBooking = in.readString();
-        this.wantToJoin = in.readInt();
-        this.type_booking = in.readInt();
+        this.sendFrom = in.readString();
+        this.idUser = in.readString();
+        this.idHost = in.readString();
+        this.idPost = in.readString();
     }
 
     public static final Creator<SocketResponse> CREATOR = new Creator<SocketResponse>() {

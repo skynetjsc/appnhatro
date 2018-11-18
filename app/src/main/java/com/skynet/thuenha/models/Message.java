@@ -15,6 +15,9 @@ public class Message implements Parcelable {
     @Expose
     @SerializedName("type")
     private int type;
+    @Expose
+    @SerializedName("attach")
+    private int attach;
 
     @Expose
     @SerializedName("content")
@@ -28,6 +31,14 @@ public class Message implements Parcelable {
     @Expose
     @SerializedName("u_id")
     private String uId;
+
+    public int getAttach() {
+        return attach;
+    }
+
+    public void setAttach(int attach) {
+        this.attach = attach;
+    }
 
     public int getType() {
         return type;
@@ -69,6 +80,9 @@ public class Message implements Parcelable {
         this.uId = uId;
     }
 
+    public Message() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -77,17 +91,16 @@ public class Message implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.type);
+        dest.writeInt(this.attach);
         dest.writeString(this.content);
         dest.writeString(this.time);
         dest.writeString(this.shId);
         dest.writeString(this.uId);
     }
 
-    public Message() {
-    }
-
     protected Message(Parcel in) {
         this.type = in.readInt();
+        this.attach = in.readInt();
         this.content = in.readString();
         this.time = in.readString();
         this.shId = in.readString();

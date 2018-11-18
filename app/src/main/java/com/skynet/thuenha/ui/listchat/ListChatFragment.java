@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -29,6 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 public class ListChatFragment extends BaseFragment implements ListChatContract.View, ChatCallBack, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.tvToolbar)
@@ -37,7 +40,10 @@ public class ListChatFragment extends BaseFragment implements ListChatContract.V
     RecyclerView rcv;
     @BindView(R.id.swipe)
     SwipeRefreshLayout swipe;
+    @BindView(R.id.noti)
+    ImageView noti;
     private ListChatContract.Presenter presenter;
+    private Badge badget;
 
     public static ListChatFragment newInstance() {
         Bundle args = new Bundle();
@@ -63,6 +69,34 @@ public class ListChatFragment extends BaseFragment implements ListChatContract.V
     protected void initVariables() {
         presenter = new ListChatPresenter(this);
         presenter.getListChat();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bindBadges();
+    }
+
+    private void bindBadges() {
+        if (AppController.getInstance().getmProfileUser().getNoty() != 0) {
+            if (badget == null)
+                badget = new QBadgeView(getContext())
+                        .setBadgeNumber(AppController.getInstance().getmProfileUser().getNoty())
+                        .setGravityOffset(12, 2, true)
+                        .bindTarget(noti)
+                        .setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
+                            @Override
+                            public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+//                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState)
+//                            Toast.makeText(BadgeViewActivity.this, R.string.tips_badge_removed, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            else
+                badget.setBadgeNumber(AppController.getInstance().getmProfileUser().getNoty());
+        } else if (badget != null) {
+            badget.hide(true);
+        }
     }
 
     @OnClick(R.id.noti)
@@ -131,6 +165,7 @@ public class ListChatFragment extends BaseFragment implements ListChatContract.V
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        bindBadges();
         if (resultCode == getActivity().RESULT_OK) onRefresh();
     }
 

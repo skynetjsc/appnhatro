@@ -111,8 +111,8 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
             search = getmService().searchListPost(AppController.getInstance().getmProfileUser().getId(),
                     filter.getIdService() == 0 ? "" : filter.getIdService() + "",
                     district != null ? district.getId() : 1, query,
-                    filter.getMin() == 0 ?  "" : filter.getMin()+"",
-                    filter.getMax() == 0 ?  "" : filter.getMax()+"",
+                    filter.getMin() == 0 ?  "500000" : filter.getMin()+"",
+                    filter.getMax() == 0 ?  "20000000" : filter.getMax()+"",
                     filter.getListIdUtility());
         }
         search.enqueue(new CallBackBase<ApiResponse<List<Post>>>() {

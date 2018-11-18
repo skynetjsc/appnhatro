@@ -24,6 +24,7 @@ import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.models.Service;
 import com.skynet.thuenha.ui.base.BaseFragment;
 import com.skynet.thuenha.ui.chosseAddress.ChooseAddressFragment;
+import com.skynet.thuenha.ui.feedback.FeedbackActivity;
 import com.skynet.thuenha.ui.makepost.MakeAPostActivity;
 import com.skynet.thuenha.ui.search.FragmentSearch;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
@@ -108,6 +109,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         } else {
             showToast("Tài khoản của bạn không thể thực hiện chức năng này. Vui lòng đăng nhập với tư cách người cho thuê!", AppConstant.POSITIVE);
         }
+    }
+
+    @OnClick({R.id.layoutFeedback, R.id.imageView3})
+    public void onClickMakePost(View view) {
+        startActivity(new Intent(getActivity(), FeedbackActivity.class));
     }
 
     @Override

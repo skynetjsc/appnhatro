@@ -57,6 +57,29 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
     }
 
     @Override
+    public void edtPost(int idPost, int idService, String title, String price, String area, int city, int district, String address, List<Utility> listUtility, String content, String numberBed, String numberWC, List<File> listPhotos) {
+        if (isAvaliableView()) {
+            double priceD, areaD;
+            int numberBedD, numberWcD;
+            String jsonUtility = "";
+            try {
+                priceD = Double.parseDouble(price);
+                areaD = Double.parseDouble(area);
+                numberBedD = Integer.parseInt(numberBed);
+                numberWcD = Integer.parseInt(numberWC);
+                jsonUtility = new Gson().toJson(listUtility);
+                LogUtils.e("Json utility \n " + jsonUtility);
+            } catch (Exception e) {
+                LogUtils.e(e.fillInStackTrace());
+                onError(e.getMessage());
+                return;
+            }
+            view.showProgress();
+            interactor.edtPost(idPost,idService, title, priceD, areaD, city, district, address, jsonUtility, content, numberBedD, numberWcD, listPhotos);
+        }
+    }
+
+    @Override
     public void getPriceService(int idService) {
         if(isAvaliableView()){
             view.showProgress();
@@ -89,6 +112,14 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
         if (isAvaliableView()) {
             view.hiddenProgress();
             view.onSucessSubmitPost(idPost);
+        }
+    }
+
+    @Override
+    public void onSucessEditPost(int idPost) {
+        if (isAvaliableView()) {
+            view.hiddenProgress();
+            view.onSucessEditPost(idPost);
         }
     }
 

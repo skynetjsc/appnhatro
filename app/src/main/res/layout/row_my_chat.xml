@@ -1,48 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginRight="16dp"
-    android:layout_marginTop="@dimen/dp8"
-    android:gravity="right|center">
+    android:layout_marginEnd="16dp">
+    <include layout="@layout/chat_post_attach" />
 
+    <!--<android.support.constraint.ConstraintLayout-->
+        <!--android:id="@+id/layoutPost"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/chat_bg_attach"-->
+        <!--android:visibility="visible"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="1.0"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent">-->
 
+        <!--<com.makeramen.roundedimageview.RoundedImageView-->
+            <!--android:id="@+id/roundedImageView"-->
+            <!--android:layout_width="@dimen/chat_post_img_w"-->
+            <!--android:layout_height="@dimen/chat_post_img_h"-->
+            <!--android:layout_marginEnd="4dp"-->
+            <!--android:layout_marginStart="4dp"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:src="@drawable/background"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--app:riv_border_color="#333333"-->
+            <!--app:riv_corner_radius="30dip"-->
+            <!--app:riv_corner_radius_bottom_left="5dp"-->
+            <!--app:riv_corner_radius_bottom_right="5dp"-->
+            <!--app:riv_corner_radius_top_left="5dp"-->
+            <!--app:riv_corner_radius_top_right="5dp"-->
+            <!--app:riv_mutate_background="true"-->
+            <!--app:riv_oval="false"-->
+            <!--app:riv_tile_mode="repeat" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvNamePost"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:gravity="left|center"-->
+            <!--android:singleLine="true"-->
+            <!--android:text="TextView"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintHorizontal_bias="0.0"-->
+            <!--app:layout_constraintStart_toStartOf="@+id/roundedImageView"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/roundedImageView" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvAddressPost"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:gravity="left"-->
+            <!--android:singleLine="true"-->
+            <!--android:text="TextView"-->
+            <!--android:textSize="13sp"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintHorizontal_bias="0.0"-->
+            <!--app:layout_constraintStart_toStartOf="@+id/roundedImageView"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tvNamePost" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvPricePost"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:gravity="left"-->
+            <!--android:singleLine="true"-->
+            <!--android:text="TextView"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintHorizontal_bias="0.0"-->
+            <!--app:layout_constraintStart_toStartOf="@+id/roundedImageView"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tvAddressPost" />-->
+    <!--</android.support.constraint.ConstraintLayout>-->
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:orientation="vertical">
+        android:gravity="right|center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutPost">
 
-        <TextView
-            android:id="@+id/content_txt"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_button_1"
-            android:gravity="left|center"
-            android:maxWidth="200dp"
-            android:paddingBottom="8dp"
-            android:paddingLeft="12dp"   android:elevation="3dp"
-            android:layout_margin="@dimen/dp8"
-            android:translationZ="@dimen/dp5"
-            android:paddingRight="12dp"
-            android:paddingTop="8dp"
-            android:text="afdasfdas"
-            android:textColor="@color/black" />
+            android:gravity="right"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/time_tt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp8"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/content_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp8"
+                android:background="@drawable/background_button_1"
+                android:elevation="3dp"
+                android:gravity="left|center"
+                android:maxWidth="200dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp"
+                android:text="afdasfdas"
+                android:textColor="@color/black"
+                android:translationZ="@dimen/dp5" />
 
+            <TextView
+                android:id="@+id/time_tt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp8"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avt"
+            android:layout_width="@dimen/size_avt_small"
+            android:layout_height="@dimen/size_avt_small"
+            android:layout_marginLeft="@dimen/dp8"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background" />
     </LinearLayout>
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/avt"
-        android:layout_width="@dimen/size_avt_small"
-        android:layout_height="@dimen/size_avt_small"
-        android:src="@drawable/background"
-        android:layout_marginLeft="@dimen/dp8"
-        android:scaleType="centerCrop" />
-</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

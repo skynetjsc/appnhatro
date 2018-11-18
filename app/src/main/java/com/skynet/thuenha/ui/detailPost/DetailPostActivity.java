@@ -368,6 +368,7 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                 b.putString("msgs", "Chào anh/chị em muốn hỏi\n" +
                         "căn hộ nhà mình còn không\n" +
                         "vậy ạ!");
+                b.putInt("attach",detailPost.getPost().getId());
                 i.putExtra(AppConstant.BUNDLE, b);
                 startActivityForResult(i, 1000);
 
@@ -380,6 +381,8 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                 b.putParcelable(AppConstant.INTENT, detailPost.getHost());
                 b.putParcelable("user", AppController.getInstance().getmProfileUser());
                 b.putInt("idPost", detailPost.getPost().getId());
+                b.putInt("attach",detailPost.getPost().getId());
+
                 b.putString("avt", AppController.getInstance().getmProfileUser().getType() == 1 ? detailPost.getHost().getAvatar() : AppController.getInstance().getmProfileUser().getAvatar());
                 b.putString("msgs", "Chào anh/chị em muốn hỏi\n" +
                         "căn hộ nhà mình em có thể\n" +

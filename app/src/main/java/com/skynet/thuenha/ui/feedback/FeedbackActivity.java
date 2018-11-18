@@ -2,10 +2,12 @@ package com.skynet.thuenha.ui.feedback;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -20,16 +22,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FeedbackActivity extends BaseActivity implements FeedbackContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class FeedbackActivity extends BaseActivity implements FeedbackContract.View, SwipeRefreshLayout.OnRefreshListener, AdapterFeedback.feedbackCallback {
     @BindView(R.id.tvToolbar)
     TextView tvToolbar;
-    @BindView(R.id.appBarLayout)
-    AppBarLayout appBarLayout;
+
     @BindView(R.id.rcv)
     RecyclerView rcv;
     @BindView(R.id.swipe)
     SwipeRefreshLayout swipe;
     FeedbackContract.Presenter presenter;
+    @BindView(R.id.message_txt)
+    EditText messageTxt;
+    @BindView(R.id.send_imv)
+    ImageView sendImv;
+    @BindView(R.id.bottom_chat_layout)
+    LinearLayout bottomChatLayout;
+    private List<Feedback> list;
 
     @Override
     protected int initLayout() {
@@ -48,6 +56,7 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.V
         swipe.setOnRefreshListener(this);
         rcv.setLayoutManager(new LinearLayoutManager(this));
         rcv.setHasFixedSize(true);
+        tvToolbar.setText("Phản hồi");
     }
 
     @Override
@@ -62,7 +71,8 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.V
 
     @Override
     public void onSucessGetListFeedback(List<Feedback> list) {
-
+        this.list = list;
+        rcv.setAdapter(new AdapterFeedback(this.list, this, this));
     }
 
     @Override
@@ -110,5 +120,33 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.V
     @Override
     public void onRefresh() {
         presenter.getListFeedback();
+    }
+
+    @Override
+    public void clickLike(Feedback fb, boolean isChecked) {
+        presenter.toggleLikeFeedback(fb.getId(), isChecked);
+    }
+
+    @Override
+    public void clickComment(Feedback fb) {
+
+    }
+
+    @Override
+    public void clickRep(Feedback fb) {
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.send_imv)
+    public void onViewEdtClicked() {
+        if (!messageTxt.getText().toString().isEmpty())
+            presenter.makeNewFeedback(messageTxt.getText().toString());
     }
 }

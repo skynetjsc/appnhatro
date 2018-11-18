@@ -137,6 +137,37 @@ public class MakeAPostImplRemote extends Interactor implements MakeAPostContract
     }
 
     @Override
+    public void edtPost(int idPost, int idService, String title, double price, double area, int city, int district, String address,
+                        String listUtility, String content, int numberBed, int numberWC, List<File> listPhotos) {
+        Profile profile = AppController.getInstance().getmProfileUser();
+        if (profile == null) {
+            listener.onErrorAuthorization();
+            return;
+        }
+        getmService().edtPost(idPost,profile.getId(),idService, title,
+                price, area, city, district, address,
+                content, listUtility, numberBed, numberWC).enqueue(new CallBackBase<ApiResponse<Integer>>() {
+            @Override
+            public void onRequestSuccess(Call<ApiResponse<Integer>> call, Response<ApiResponse<Integer>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
+                        listener.onSucessEditPost(response.body().getData());
+                    } else {
+                        new ExceptionHandler<Integer>(listener, response.body()).excute();
+                    }
+                } else {
+                    listener.onError(response.message());
+                }
+            }
+
+            @Override
+            public void onRequestFailure(Call<ApiResponse<Integer>> call, Throwable t) {
+                LogUtils.e(t.getMessage());
+            }
+        });
+    }
+
+    @Override
     public void getPriceService(int idService) {
         getmService().getPrice(idService).enqueue(new CallBackBase<ApiResponse<PriceService>>() {
             @Override

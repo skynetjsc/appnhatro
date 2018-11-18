@@ -66,17 +66,17 @@ public class SocketClient extends Service {
     }
 
 
-    public void sendMessage(String from, String to, String idDriverBooking, int type, String name, String content) {
+    public void sendMessage(String sendFrom, String idUser, String idHost, int idPost, String content,int type) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("idBooking", idDriverBooking);
-            jsonObject.put("type_booking", type);
-            jsonObject.put("from", from);
-            jsonObject.put("name", name);
+            jsonObject.put("sendFrom", sendFrom);
+            jsonObject.put("idUser", idUser);
+            jsonObject.put("idHost", idHost);
+            jsonObject.put("idPost", idPost);
             jsonObject.put("content", content);
-            jsonObject.put("to", to);
-            socket.emit("nb_chat", jsonObject);
-            LogUtils.e("send socket chat to " + to);
+            jsonObject.put("type", type);
+            socket.emit("tn_chat", jsonObject);
+            LogUtils.e("send socket chat to " + sendFrom);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -100,7 +100,6 @@ public class SocketClient extends Service {
         LogUtils.e("OnDestroy");
         if (socket != null)
             this.socket.disconnect();
-
         Intent broadcastIntent = new Intent("chayngamT.restart");
         sendBroadcast(broadcastIntent);
     }
@@ -115,24 +114,6 @@ public class SocketClient extends Service {
         initSocket();
     }
 
-
-    public void sendBooking(String idBooking, String idHelper) {
-        JSONObject jsonObject = new JSONObject();
-//        String booking = new Gson().toJson(new GhepDon(gid,gbCode));
-        try {
-            jsonObject.put("idBooking", idBooking);
-            jsonObject.put("h_id", idHelper);
-            jsonObject.put("u_id", AppController.getInstance().getmProfileUser().getId());
-            jsonObject.put("type", 1);
-            jsonObject.put("active", 1);
-//            jsonObject.put("numberHelper", numberHelper);
-//            jsonObject.put("time", time);
-            socket.emit("nb_start_booking", jsonObject);
-            LogUtils.e("sent trip to shiper " + jsonObject);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public void initSocket() {
         try {
@@ -161,7 +142,7 @@ public class SocketClient extends Service {
             //  os.reconnectionDelay = 2000;
             //  os.reconnectionAttempts = 5;
             // os.sslContext = sc;
-            socket = IO.socket("http://45.118.144.81:4001/");
+            socket = IO.socket("http://103.237.147.86:3001/");
             socket.connect();
             LogUtils.e("Set socket IO", "Socket IO setting");
         } catch (Exception e) {
@@ -177,11 +158,11 @@ public class SocketClient extends Service {
 //                intent.putExtra(SocketConstants.KEY_STATUS_CONNECTION, getString(R.string.connected));
                 SocketClient.this.sendBroadcast(intent);
 
-                socket.off("send_nb_notification");
-                socket.on("send_nb_notification", new Emitter.Listener() {
+                socket.off("send_tn_notification");
+                socket.on("send_tn_notification", new Emitter.Listener() {
                     @Override
                     public void call(Object... args) {
-                        LogUtils.e("ts_send_notification ------> " + args[0].toString());
+                        LogUtils.e("send_tn_notification ------> " + args[0].toString());
                         SocketResponse data = new Gson().fromJson(args[0].toString(), SocketResponse.class);
                         Profile profile = new Gson().fromJson(mSetting.getString(AppConstant.KEY_PROFILE), Profile.class);
                         if (profile != null && profile.getActive() == 1 && !data.getType().equals("2")) {
@@ -192,22 +173,30 @@ public class SocketClient extends Service {
                     }
                 });
 
-                socket.off("send_nb_chat");
-                socket.on("send_nb_chat", new Emitter.Listener() {
+                socket.off("send_tn_chat");
+                socket.on("send_tn_chat", new Emitter.Listener() {
                     @Override
                     public void call(Object... args) {
                         Gson gson = new Gson();
                         SocketResponse l = gson.fromJson(args[0].toString(), SocketResponse.class);
                         Profile profile = AppController.getInstance().getmProfileUser();
-                        if (profile != null && profile.getActive() == 1 && l.getTo().equals(profile.getId())) {
+                        if (profile != null && profile.getActive() == 1 ) {
+                            if(profile.getType() == 1){
+                                if(!l.getIdUser().equals(profile.getId())){
+                                    return;
+                                }
+                            }else{
+                                if(!l.getIdHost().equals(profile.getId())){
+                                    return;
+                                }
+                            }
                             Intent intent1 = new Intent();
                             intent1.setAction(SocketConstants.SOCKET_CHAT);
                             intent1.putExtra(AppConstant.HELPER_AGREE, args[0].toString());
                             SocketClient.this.sendBroadcast(intent1);
-                            l.setType("2");
                             notification = CommomUtils.createNotificationWithMsg(getApplicationContext(), "Thông báo", "Bạn có tin nhắn mới", new Gson().toJson(l));
                             showNotificationInStack(0);
-                            LogUtils.e("Noibaicar_send_chat", args[0].toString());
+                            LogUtils.e("send_tn_chat", args[0].toString());
                         }
                     }
                 });

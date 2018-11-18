@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.skynet.thuenha.R;
+import com.skynet.thuenha.application.AppController;
+import com.skynet.thuenha.interfaces.ICallback;
 import com.skynet.thuenha.ui.base.BaseActivity;
 import com.skynet.thuenha.ui.chosseAddress.ChooseAddressFragment;
 import com.skynet.thuenha.ui.home.HomeFragment;
@@ -16,8 +19,10 @@ import com.skynet.thuenha.ui.views.ViewpagerNotSwipe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
-public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentHomeCallBack, ChooseAddressFragment.CallBackChooseAddress {
+public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentHomeCallBack, ChooseAddressFragment.CallBackChooseAddress, ICallback {
 
     @BindView(R.id.bnve)
     BottomNavigationViewEx bnve;
@@ -25,6 +30,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     ViewpagerNotSwipe viewpager;
     private AdapterViewpager adapter;
     private boolean doubleBackToExitPressedOnce;
+    private Badge badge;
 
     @Override
     protected int initLayout() {
@@ -47,6 +53,36 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         viewpager.setAdapter(adapter);
         bnve.setupWithViewPager(viewpager);
         viewpager.setPagingEnabled(false);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int count = AppController.getInstance().getmProfileUser().getMessage() + AppController.getInstance().getmProfileUser().getNoty();
+        if (count > 0)
+            addBadgeAt(2, count);
+        else if (badge != null)
+            badge.hide(true);
+    }
+
+    private void addBadgeAt(int position, int number) {
+        // add badge
+        if (badge == null)
+            badge = new QBadgeView(this)
+                    .setBadgeNumber(number)
+                    .setGravityOffset(12, 2, true)
+                    .bindTarget(bnve.getBottomNavigationItemView(position))
+                    .setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
+                        @Override
+                        public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+//                        if (Badge.OnDragStateChangedListener.STATE_SUCCEED == dragState)
+//                            Toast.makeText(BadgeViewActivity.this, R.string.tips_badge_removed, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        else
+            badge.setBadgeNumber(number);
     }
 
     @Override
@@ -80,7 +116,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
@@ -103,5 +139,14 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
 //        }
         adapter.getRegisteredFragment(0).onResume();
 //        adapter.getItem(viewpager.getCurrentItem()).onResume();
+    }
+
+    @Override
+    public void onCallBack(int pos) {
+        int count = AppController.getInstance().getmProfileUser().getMessage() + AppController.getInstance().getmProfileUser().getNoty();
+        if (count > 0)
+            addBadgeAt(2, count);
+        else if (badge != null)
+            badge.hide(true);
     }
 }

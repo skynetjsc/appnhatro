@@ -51,11 +51,11 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     @Override
-    public void update(String name, String phone, String password) {
+    public void update(String name,String email, String phone, String password) {
 
         view.showProgress();
         if (password.equals("******")) password = "";
-        interactor.update(name, phone, password);
+        interactor.update(name, email, phone, password);
     }
 
     @Override

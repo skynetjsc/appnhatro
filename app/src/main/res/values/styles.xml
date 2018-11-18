@@ -127,4 +127,22 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="profile_style_input_layout">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:background">@drawable/login_edit_bg</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:padding">@dimen/dp8</item>
+    </style>
+
+    <style name="profile_style_edt">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">#f5f5f5</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

@@ -252,6 +252,19 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
     }
 
     @Override
+    public void onSucessEditPost(final int idPost) {
+        showToast("Bạn đã cập nhật bài viết thành công!", AppConstant.POSITIVE, new SnackBarCallBack() {
+            @Override
+            public void onClosedSnackBar() {
+                Intent i = new Intent(MakeAPostActivity.this, DetailPostActivity.class);
+                i.putExtra(AppConstant.MSG, idPost);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
+
+    @Override
     public void onSucessGetPriceService(double price) {
         dialogConfirmPrice = new DialogTwoButtonUtil(this, R.drawable.ic_question, "Xác nhận đăng tin",
                 Html.fromHtml(String.format(getString(R.string.content_confirm_post), price)),
@@ -298,6 +311,7 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
     public void onErrorAuthorization() {
         showDialogExpired();
     }
+
     @Override
     protected void onDestroy() {
         presenter.onDestroyView();
@@ -346,10 +360,8 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
                     nestedScrollView.scrollTo(0, 0);
                     return;
                 }
-                if (listImage.size() == 0) {
-                    showToast("Hãy cung cấp ảnh căn hộ để thu hút thêm khách hàng.", AppConstant.NEGATIVE);
-                    return;
-                }
+
+
                 listUtilityRequest.clear();
                 if (listUtilities != null && listUtilities.size() > 0) {
                     for (Utility u : listUtilities) {
@@ -358,7 +370,19 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
                         }
                     }
                 }
+                if (postToEdit != null) {
+                    presenter.edtPost(postToEdit.getPost().getId(), idService, edtTitle.getText().toString(), price + "",
+                            edtArea.getText().toString(), myCity.getId(), myDistrict.getId(),
+                            edtAddress.getText().toString(), listUtilityRequest, editText3.getText().toString(), edtBed.getText().toString(), edtWc.getText().toString(), listImage
+                    );
+                    return;
+                }
+                if (listImage.size() == 0) {
+                    showToast("Hãy cung cấp ảnh căn hộ để thu hút thêm khách hàng.", AppConstant.NEGATIVE);
+                    return;
+                }
                 presenter.getPriceService(idService);
+
                 break;
             default:
                 FragmentManager fragmentManager = getSupportFragmentManager();

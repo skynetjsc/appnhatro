@@ -52,6 +52,8 @@ dependencies {
     implementation 'cn.lightsky.infiniteindicator:library:1.2.2'
     implementation 'com.github.Jay-Goo:RangeSeekBar:v2.0.4'
     implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'q.rorbin:badgeview:1.1.0'
     //    Net
     implementation('com.github.nkzawa:socket.io-client:0.6.0') {
         exclude group: 'org.json', module: 'json'

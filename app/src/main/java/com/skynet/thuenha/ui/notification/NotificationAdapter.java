@@ -3,6 +3,7 @@ package com.skynet.thuenha.ui.notification;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -53,6 +54,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.name.setText(list.get(position).getTitle());
         holder.address.setText(list.get(position).getName());
         holder.textView8.setText(list.get(position).getTime());
+        if (sparseBooleanArray.get(position)) {
+            holder.layoutRootNotia.setBackgroundResource(R.drawable.noti_bg_read);
+        } else {
+            holder.layoutRootNotia.setBackgroundResource(R.drawable.search_item_bg);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +88,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         TextView textView8;
         @BindView(R.id.imageView5)
         ImageView imageView5;
+        @BindView(R.id.layoutRootNotia)
+        ConstraintLayout layoutRootNotia;
 
 
         public CategoryViewHoder(View itemView) {

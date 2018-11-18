@@ -75,6 +75,8 @@ public class ProfileUpdateFragment extends BaseActivity implements ProfileContra
     TextInputEditText edtPassword;
     @BindView(R.id.edtName)
     TextInputEditText edtName;
+    @BindView(R.id.edtEmail)
+    TextInputEditText edtEmail;
     @BindView(R.id.inputLayoutPassword)
     TextInputLayout inputLayoutPassword;
     Unbinder unbinder;
@@ -128,7 +130,7 @@ public class ProfileUpdateFragment extends BaseActivity implements ProfileContra
                 onBackPressed();
                 break;
             case R.id.btnUpdate:
-                presenter.update(edtName.getText().toString(), edtAddress.getText().toString(), edtPassword.getText().toString());
+                presenter.update(edtName.getText().toString(), edtEmail.getText().toString(), edtAddress.getText().toString(), edtPassword.getText().toString());
                 break;
         }
     }
@@ -140,6 +142,7 @@ public class ProfileUpdateFragment extends BaseActivity implements ProfileContra
 //        phoneTxt.setText("Chủ hàng");
         edtName.setText(profile.getName());
         edtAddress.setText(profile.getAddress());
+        edtEmail.setText(profile.getEmail());
         edtPassword.setText("******");
         edtAddress.setEnabled(false);
         tvAddress.setText(profile.getAddress());

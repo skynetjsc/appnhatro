@@ -70,6 +70,32 @@
         <activity android:name=".ui.filter.FilterActivity" />
         <activity android:name=".ui.updateProfile.ProfileUpdateFragment" />
         <activity android:name=".ui.feedback.FeedbackActivity" />
+
+
+        <service android:name=".network.socket.SocketClient">
+            <intent-filter>
+                <action android:name="socket" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".network.socket.RestartReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="chayngamT.restart" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".network.socket.InternetReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".network.socket.AlarmReceiver"
+            android:enabled="true"
+            android:process=":remote" />
+        <!--<service android:name=".utils.SchedulingService"/>-->
+
     </application>
 
 </manifest>

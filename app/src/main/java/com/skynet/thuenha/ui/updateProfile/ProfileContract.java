@@ -24,7 +24,7 @@ public interface ProfileContract {
     interface Presenter extends IBasePresenter,OnFinishProfileListener{
         void getInfor();
         void uploadAvatar(File file);
-        void update(String name,  String address, String password);
+        void update(String name,String email,  String address, String password);
         void signUp(String name, String address, String password);
 
     }
@@ -32,7 +32,7 @@ public interface ProfileContract {
     interface Interactor {
         void doGetInfor(String profileInfor);
         void doUpdateAvatar(File file, MultipartBody.Part part);
-        void update(String name, String address, String password);
+        void update(String name,String email, String address, String password);
         void signUp(String name, String address, String password);
 
     }

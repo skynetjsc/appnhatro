@@ -67,7 +67,7 @@ public class ProfileRemoteImpl extends Interactor implements ProfileContract.Int
     }
 
     @Override
-    public void update(String name, String address, String password) {
+    public void update(String name,String email, String address, String password) {
         Profile profile = AppController.getInstance().getmProfileUser();
 
         if (profile == null) {
@@ -83,6 +83,7 @@ public class ProfileRemoteImpl extends Interactor implements ProfileContract.Int
         map.put("type", ApiUtil.createPartFromString(profile.getType() + ""));
         map.put("id", ApiUtil.createPartFromString(profile.getId()));
         map.put("name", ApiUtil.createPartFromString(name));
+        map.put("email", ApiUtil.createPartFromString(email));
         if (!password.isEmpty())
             map.put("password", ApiUtil.createPartFromString(password));
 

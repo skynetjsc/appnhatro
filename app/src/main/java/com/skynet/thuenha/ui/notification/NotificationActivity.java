@@ -20,6 +20,7 @@ import com.skynet.thuenha.models.Notification;
 import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.ui.DetailNotificationActivity.DetailNotificationActivity;
 import com.skynet.thuenha.ui.base.BaseFragment;
+import com.skynet.thuenha.ui.home.HomeFragment;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 import com.skynet.thuenha.utils.AppConstant;
 
@@ -45,6 +46,7 @@ public class NotificationActivity extends BaseFragment implements ICallback, Not
     RecyclerView rcvNotification;
     Profile profileModel;
     List<Notification> listGroupServices = new ArrayList<>();
+    private ICallback mListener;
 
     public static NotificationActivity newInstance() {
 
@@ -150,10 +152,11 @@ public class NotificationActivity extends BaseFragment implements ICallback, Not
     @Override
     public void onCallBack(int pos) {
         Intent i = new Intent(getActivity(), DetailNotificationActivity.class);
-//        if (listGroupServices.get(pos).isRead() == 0) {
-//            AppController.getInstance().getmProfileUser().setNoty(AppController.getInstance().getmProfileUser().getNoty() - 1);
+        if (listGroupServices.get(pos).isRead() == 0) {
+            AppController.getInstance().getmProfileUser().setNoty(AppController.getInstance().getmProfileUser().getNoty() - 1);
 //            ((MainActivity) getActivity()).setBadget(AppController.getInstance().getmProfileUser().getNoty());
-//        }
+            mListener.onCallBack(1);
+        }
         i.putExtra(AppConstant.MSG, this.listGroupServices.get(pos).getId());
         startActivityForResult(i, 1000);
     }
@@ -172,4 +175,22 @@ public class NotificationActivity extends BaseFragment implements ICallback, Not
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         return rootView;
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof HomeFragment.OnFragmentHomeCallBack) {
+            mListener = (ICallback) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentHomeCallBack");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
 }

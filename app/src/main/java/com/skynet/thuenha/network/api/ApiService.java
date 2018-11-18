@@ -139,7 +139,9 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("message.php")
-    Call<ApiResponse<Message>> sendMessageTo(@Field("id_post") int id_post, @Field("id_user") int idUser, @Field("id_host") int idShop, @Field("time") String time, @Field("content") String content, @Field("type") int typeUser);
+    Call<ApiResponse<Message>> sendMessageTo(@Field("id_post") int id_post, @Field("id_user") int idUser,
+                                             @Field("id_host") int idShop, @Field("time") String time,
+                                             @Field("content") String content, @Field("type") int typeUser, @Field("attach") int attach);
 
     @GET("notification.php")
     Call<ApiResponse<List<Notification>>> getListNotification(@Query("id") String uid, @Query("type") int type);
@@ -172,6 +174,17 @@ public interface ApiService {
                                           @Part("district_id") RequestBody district_id, @Part("address") RequestBody address, @Part("content") RequestBody content,
                                           @Part("id_utility") RequestBody id_utility, @Part("number_bed") RequestBody number_bed, @Part("number_wc") RequestBody number_wc,
                                           @Part List<MultipartBody.Part> listFile);
+
+    @FormUrlEncoded
+    @POST("edit-post.php")
+    Call<ApiResponse<Integer>> edtPost(@Field("id") int idPost,@Field("host_id") String host_id, @Field("id_service") int idServiceBody,
+                                          @Field("title") String title,
+                                          @Field("price") double price, @Field("area") double area,
+                                          @Field("city_id") int city_id,
+                                          @Field("district_id") int district_id, @Field("address") String address,
+                                          @Field("content") String content,
+                                          @Field("id_utility") String id_utility, @Field("number_bed") int number_bed,
+                                          @Field("number_wc") int number_wc);
 
     @Multipart
     @POST("update_profile.php")

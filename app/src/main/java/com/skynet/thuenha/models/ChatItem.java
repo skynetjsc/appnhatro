@@ -22,6 +22,8 @@ public class ChatItem {
     String name,avt;
     @SerializedName("content")
     List<Message> content;
+    @SerializedName("post")
+    Post post;
 
     public Profile getUse() {
         return use;
@@ -33,6 +35,14 @@ public class ChatItem {
 
     public void setContent(List<Message> content) {
         this.content = content;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public int getUserRead() {

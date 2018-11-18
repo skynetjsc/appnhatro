@@ -16,7 +16,10 @@ import android.widget.Toast;
 import com.blankj.utilcode.util.LogUtils;
 import com.google.gson.Gson;
 import com.skynet.thuenha.R;
+import com.skynet.thuenha.application.AppController;
+import com.skynet.thuenha.interfaces.ICallback;
 import com.skynet.thuenha.models.Message;
+import com.skynet.thuenha.models.Post;
 import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.network.socket.SocketConstants;
 import com.skynet.thuenha.network.socket.SocketResponse;
@@ -33,7 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ChatActivity extends BaseActivity implements ChattingContract.View {
+public class ChatActivity extends BaseActivity implements ChattingContract.View, ICallback {
     @BindView(R.id.rcv_chat)
     RecyclerView mRcv;
     @BindView(R.id.tvTitle_toolbar)
@@ -46,10 +49,11 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
     private ChattingContract.Presenter presenter;
     private String idShop;
     private Profile shop, user;
-    private int IdPost;
+    private int IdPost, attach = 0;
     private AdapterChat mAdapterChat;
     private List<Message> mList = new ArrayList<>();
     private String urlAvt;
+    private Post post;
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -90,11 +94,15 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
             IdPost = getIntent().getBundleExtra(AppConstant.BUNDLE).getInt("idPost");
             msg = getIntent().getBundleExtra(AppConstant.BUNDLE).getString("msgs");
             urlAvt = getIntent().getBundleExtra(AppConstant.BUNDLE).getString("avt");
+            attach = getIntent().getBundleExtra(AppConstant.BUNDLE).getInt("attach");
             idShop = shop.getId();
-            if (shop.getName() != null)
+            if (AppController.getInstance().getmProfileUser().getType() == 1)
                 textToolbar.setText(shop.getName());
+            else
+                textToolbar.setText(user.getName());
+
         }
-        mAdapterChat = new AdapterChat(mList, this, urlAvt);
+        mAdapterChat = new AdapterChat(mList, this, urlAvt, post, this);
 
         AppConstant.ID_CHAT = idShop;
         LogUtils.e(AppConstant.ID_CHAT);
@@ -193,7 +201,10 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
 //                        }
 //                    }
 //                }));
-                presenter.sendMessage(IdPost, Integer.parseInt(user.getId()), Integer.parseInt(shop.getId()), content, getmSocket());
+                presenter.sendMessage(IdPost, Integer.parseInt(user.getId()),
+                        Integer.parseInt(shop.getId()), content, getmSocket(), attach
+                );
+                attach = 0;
                 break;
         }
     }
@@ -210,7 +221,7 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
 //                }
 //            }
 //        }));
-        presenter.getMessages(Integer.parseInt(user.getId()),Integer.parseInt(shop.getId()), IdPost);
+        presenter.getMessages(Integer.parseInt(user.getId()), Integer.parseInt(shop.getId()), IdPost);
     }
 
     @Override
@@ -252,9 +263,10 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
     }
 
     @Override
-    public void onSuccessGetMessages(List<Message> list) {
+    public void onSuccessGetMessages(List<Message> list, Post post) {
+        this.post = post;
         mList.addAll(list);
-        mAdapterChat = new AdapterChat(mList, ChatActivity.this, urlAvt);
+        mAdapterChat = new AdapterChat(mList, ChatActivity.this, urlAvt, post, this);
         mRcv.setAdapter(mAdapterChat);
         setResult(RESULT_OK);
         if (mAdapterChat.getItemCount() > 0)
@@ -272,7 +284,12 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
         if (mAdapterChat.getItemCount() > 0)
             mRcv.smoothScrollToPosition(mAdapterChat.getItemCount());
         setResult(RESULT_OK);
-
+        getmSocket().sendMessage(
+                AppController.getInstance().getmProfileUser().getType() == 1 ? user.getName() : shop.getName(),
+                user.getId(),
+                shop.getId(),
+                IdPost,
+                message.getContent(),AppController.getInstance().getmProfileUser().getType());
     }
 
     @Override
@@ -314,5 +331,14 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
     @Override
     public void onErrorAuthorization() {
         showDialogExpired();
+    }
+
+    @Override
+    public void onCallBack(int pos) {
+        if (IdPost != 0) {
+            Intent i = new Intent(ChatActivity.this, DetailPostActivity.class);
+            i.putExtra(AppConstant.MSG, IdPost);
+            startActivity(i);
+        }
     }
 }

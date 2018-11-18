@@ -22,6 +22,12 @@ public class Profile implements Parcelable {
     @SerializedName("number")
     private int number;
     @Expose
+    @SerializedName("noty")
+    private int noty;
+    @Expose
+    @SerializedName("message")
+    private int message;
+    @Expose
     @SerializedName("type")
     private int type;
     @Expose
@@ -126,6 +132,22 @@ public class Profile implements Parcelable {
 
     public String getDepartment_id() {
         return department_id;
+    }
+
+    public int getNoty() {
+        return noty;
+    }
+
+    public void setNoty(int noty) {
+        this.noty = noty;
+    }
+
+    public int getMessage() {
+        return message;
+    }
+
+    public void setMessage(int message) {
+        this.message = message;
     }
 
     public void setDepartment_id(String department_id) {
@@ -329,6 +351,8 @@ public class Profile implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.active);
         dest.writeInt(this.number);
+        dest.writeInt(this.noty);
+        dest.writeInt(this.message);
         dest.writeInt(this.type);
         dest.writeInt(this.point);
         dest.writeInt(this.number_post);
@@ -359,6 +383,8 @@ public class Profile implements Parcelable {
     protected Profile(Parcel in) {
         this.active = in.readInt();
         this.number = in.readInt();
+        this.noty = in.readInt();
+        this.message = in.readInt();
         this.type = in.readInt();
         this.point = in.readInt();
         this.number_post = in.readInt();

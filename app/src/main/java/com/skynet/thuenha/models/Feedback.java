@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Feedback {
+    private boolean isChecked;
     @SerializedName("comment")
     List<Comment> listComment;
     @Expose
@@ -44,6 +45,14 @@ public class Feedback {
     @Expose
     @SerializedName("id")
     private int id;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public int getIs_like() {
         return is_like;

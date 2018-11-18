@@ -16,6 +16,7 @@ public interface MakeAPostContract {
         void onSucessGetUtility(List<Utility> list);
 
         void onSucessSubmitPost(int idPost);
+        void onSucessEditPost(int idPost);
 
         void onSucessGetPriceService(double price);
 
@@ -30,6 +31,10 @@ public interface MakeAPostContract {
                         String address, List<Utility> listUtility, String content, String numberBed,
                         String numberWC, List<File> listPhotos);
 
+        void edtPost(int idPost, int idService, String title, String price, String area, int city, int district,
+                     String address, List<Utility> listUtility, String content, String numberBed,
+                     String numberWC, List<File> listPhotos);
+
         void getPriceService(int idService);
 
     }
@@ -43,6 +48,10 @@ public interface MakeAPostContract {
                         String address, String listUtility, String content, int numberBed,
                         int numberWC, List<File> listPhotos);
 
+        void edtPost(int idPost, int idService, String title, double price, double area, int city, int district,
+                     String address, String listUtility, String content, int numberBed,
+                     int numberWC, List<File> listPhotos);
+
         void getPriceService(int idService);
 
     }
@@ -53,6 +62,7 @@ public interface MakeAPostContract {
         void onSucessGetUtility(List<Utility> list);
 
         void onSucessSubmitPost(int idPost);
+        void onSucessEditPost(int idPost);
 
         void onSucessGetPriceService(double price);
 
