@@ -106,7 +106,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         if (AppController.getInstance().getmProfileUser().getType() == 2) {
             startActivity(new Intent(getActivity(), MakeAPostActivity.class));
         } else {
-            showToast("Tài khoản của bạn không thể đăng bài vào lúc này. Vui lòng đăng nhập với tư cách người cho thuê!", AppConstant.POSITIVE);
+            showToast("Tài khoản của bạn không thể thực hiện chức năng này. Vui lòng đăng nhập với tư cách người cho thuê!", AppConstant.POSITIVE);
         }
     }
 

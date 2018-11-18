@@ -27,6 +27,7 @@ import com.skynet.thuenha.R;
 import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.interfaces.SnackBarCallBack;
 import com.skynet.thuenha.models.Address;
+import com.skynet.thuenha.models.DetailPost;
 import com.skynet.thuenha.models.Service;
 import com.skynet.thuenha.models.Utility;
 import com.skynet.thuenha.ui.base.BaseActivity;
@@ -41,6 +42,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -133,6 +135,7 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
     private DialogTwoButtonUtil dialogConfirmPrice;
     private int idService = -1;
     private List<Utility> listUtilityRequest = new ArrayList<>();
+    private DetailPost postToEdit;
 
     @Override
     protected int initLayout() {
@@ -141,6 +144,19 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
 
     @Override
     protected void initVariables() {
+        if (getIntent() != null && getIntent().getBundleExtra(AppConstant.BUNDLE) != null)
+            postToEdit = getIntent().getBundleExtra(AppConstant.BUNDLE).getParcelable(AppConstant.MSG);
+        if (postToEdit != null) {
+            tvToolbar.setText("Chỉnh sửa bài đăng");
+            price = postToEdit.getPost().getPrice();
+            edtPrice.setText(String.format("%,.0f", postToEdit.getPost().getPrice()));
+            edtAddress.setText(postToEdit.getPost().getAddress());
+            edtArea.setText(postToEdit.getPost().getArea() + "");
+            edtBed.setText(postToEdit.getPost().getNumber_bed() + "");
+            edtWc.setText(postToEdit.getPost().getNumber_wc() + "");
+            edtTitle.setText(postToEdit.getPost().getTitle());
+            editText3.setText(postToEdit.getPost().getContent());
+        }
         presenter = new MakeAPostPresenter(this);
         dialogLoading = new ProgressDialogCustom(this);
         presenter.getService();
@@ -197,6 +213,16 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
     @Override
     public void onSucessGetUtility(List<Utility> list) {
         this.listUtilities = list;
+        if (postToEdit != null && postToEdit.getListUtilies() != null) {
+            for (Utility utility : this.listUtilities) {
+                for (Utility utilityEdt : postToEdit.getListUtilies()) {
+                    if (utilityEdt.getId() == utility.getId()) {
+                        utility.setChecked(true);
+                        break;
+                    }
+                }
+            }
+        }
         rcvUtility.setAdapter(new AdapterUtility(this.listUtilities, this));
     }
 

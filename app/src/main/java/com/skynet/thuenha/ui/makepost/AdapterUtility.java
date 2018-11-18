@@ -57,25 +57,28 @@ public class AdapterUtility extends RecyclerView.Adapter<AdapterUtility.ViewHold
         if (list.get(i).getImg() != null && !list.get(i).getImg().isEmpty()) {
             Picasso.with(context).load(list.get(i).getImg()).fit().centerInside().into(viewHolder.img);
         }
-        viewHolder.tvNumber.setText("+" + list.get(i).getNumber());
-        if (list.get(i).getNumber() >= 1) {
-            viewHolder.tvNumber.setVisibility(View.VISIBLE);
-
-        } else {
+        //todo comment for number of utility
+//        viewHolder.tvNumber.setText("+" + list.get(i).getNumber());
+//        if (list.get(i).getNumber() >= 1) {
+//           // viewHolder.tvNumber.setVisibility(View.VISIBLE);
+//        } else {
             viewHolder.tvNumber.setVisibility(View.INVISIBLE);
-        }
+//        }
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list.get(i).setNumber(list.get(i).getNumber() + 1);
-                list.get(i).setChecked(true);
-                cache.put(i, true);
-                if (list.get(i).getNumber() > 4) {
-                    list.get(i).setNumber(0);
-                    list.get(i).setChecked(false);
-                    cache.put(i, false);
-
-                }
+                //todo comment for number of utility
+//                list.get(i).setNumber(list.get(i).getNumber() + 1);
+//                list.get(i).setChecked(true);
+//                cache.put(i, true);
+//                if (list.get(i).getNumber() > 4) {
+//                    list.get(i).setNumber(0);
+//                    list.get(i).setChecked(false);
+//                    cache.put(i, false);
+//
+//                }
+                cache.put(i,!cache.get(i));
+                list.get(i).setChecked(cache.get(i));
                 notifyItemChanged(i);
             }
         });

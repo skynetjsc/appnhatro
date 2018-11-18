@@ -10,11 +10,15 @@ import android.widget.TextView;
 
 
 import com.skynet.thuenha.R;
+import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.interfaces.ICallback;
 import com.skynet.thuenha.models.Message;
 import com.skynet.thuenha.utils.AppConstant;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -25,8 +29,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolerMessa
     List<Message> mMessages;
     Context context;
     ICallback onResponse;
-    String ava_user;
-    String ava_driver;
+    String ava;
     int layoutId;
 
     public AdapterChat(List<Message> list, Context context, ICallback onResponse) {
@@ -35,8 +38,9 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolerMessa
         this.onResponse = onResponse;
     }
 
-    public AdapterChat(List<Message> list, Context applicationContext) {
-        this.mMessages = list;
+    public AdapterChat(List<Message> list, Context applicationContext, String urll) {
+        this.mMessages = list;        this.ava = urll;
+
         this.context = applicationContext;
     }
 
@@ -51,13 +55,26 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolerMessa
         Message message = mMessages.get(position);
         if (holder != null) {
             holder.mContent.setText(message.getContent());
-            holder.mTime.setText(mMessages.get(position).getTime().split(" ")[1].substring(0,mMessages.get(position).getTime().split(" ")[1].lastIndexOf(':')));
+            holder.mTime.setText(mMessages.get(position).getTime().split(" ")[1].substring(0, mMessages.get(position).getTime().split(" ")[1].lastIndexOf(':')));
 //            if(position == getItemCount()-1){
 //                holder.mTime.setVisibility(View.VISIBLE);
 //            }else{
 //                holder.mTime.setVisibility(View.INVISIBLE);
 //
 //            }
+            if (getItemViewType(position) == AppConstant.TYPE_USER) {
+
+                if (AppController.getInstance().getmProfileUser().getAvatar() != null
+                        && !AppController.getInstance().getmProfileUser().getAvatar().isEmpty()) {
+                    Picasso.with(context).load(AppController.getInstance().getmProfileUser().getAvatar()).fit().centerCrop().into(holder.mAvatar);
+                }
+            } else {
+                if (ava != null
+                        && !ava.isEmpty()) {
+                    Picasso.with(context).load(ava).fit().centerCrop().into(holder.mAvatar);
+                }
+
+            }
         }
     }
 
@@ -68,7 +85,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolerMessa
 
     @Override
     public int getItemViewType(int position) {
-        return mMessages.get(position).getType() ;
+        return mMessages.get(position).getType();
     }
 
     public class ViewHolerMessage extends RecyclerView.ViewHolder {
@@ -80,6 +97,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolerMessa
             super(itemView);
             mContent = (TextView) itemView.findViewById(R.id.content_txt);
             mTime = (TextView) itemView.findViewById(R.id.time_tt);
+            mAvatar = (CircleImageView) itemView.findViewById(R.id.avt);
         }
     }
 }

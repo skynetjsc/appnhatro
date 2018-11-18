@@ -122,8 +122,8 @@ public class ListChatFragment extends BaseFragment implements ListChatContract.V
         Bundle b = new Bundle();
         b.putParcelable(AppConstant.INTENT, chatItem.getShop());
         b.putInt("idPost", chatItem.getId_post());
+        b.putString("avt", chatItem.getShop().getAvatar());
         i.putExtra(AppConstant.BUNDLE, b);
-
         startActivityForResult(i, 1000);
     }
 
@@ -135,7 +135,11 @@ public class ListChatFragment extends BaseFragment implements ListChatContract.V
 
     @Override
     public void onClickConfirm(ChatItem chatItem) {
-        presenter.confirmHired(chatItem.getId_post(), AppController.getInstance().getmProfileUser().getType() == 1 ? chatItem.getShop().getId() : chatItem.getUse().getId());
+        if (AppController.getInstance().getmProfileUser().getType() == 2)
+            presenter.confirmHired(chatItem.getId_post(), AppController.getInstance().getmProfileUser().getType() == 1 ? chatItem.getShop().getId() : chatItem.getUse().getId());
+        else
+            showToast("Tài khoản của bạn không thể thực hiện chức năng này. Vui lòng đăng nhập với tư cách người cho thuê!", AppConstant.POSITIVE);
+
     }
 
     @Override

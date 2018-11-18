@@ -1,10 +1,13 @@
 package com.skynet.thuenha.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class DetailPost {
+public class DetailPost implements Parcelable {
     @SerializedName("post")
     Post post;
     @SerializedName("is_pay")
@@ -106,4 +109,51 @@ public class DetailPost {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.post, flags);
+        dest.writeInt(this.isPay);
+        dest.writeInt(this.is_favourite);
+        dest.writeDouble(this.priceBuy);
+        dest.writeString(this.avatar);
+        dest.writeParcelable(this.host, flags);
+        dest.writeString(this.city);
+        dest.writeString(this.district);
+        dest.writeTypedList(this.listUtilies);
+        dest.writeStringList(this.image);
+    }
+
+    public DetailPost() {
+    }
+
+    protected DetailPost(Parcel in) {
+        this.post = in.readParcelable(Post.class.getClassLoader());
+        this.isPay = in.readInt();
+        this.is_favourite = in.readInt();
+        this.priceBuy = in.readDouble();
+        this.avatar = in.readString();
+        this.host = in.readParcelable(Profile.class.getClassLoader());
+        this.city = in.readString();
+        this.district = in.readString();
+        this.listUtilies = in.createTypedArrayList(Utility.CREATOR);
+        this.image = in.createStringArrayList();
+    }
+
+    public static final Parcelable.Creator<DetailPost> CREATOR = new Parcelable.Creator<DetailPost>() {
+        @Override
+        public DetailPost createFromParcel(Parcel source) {
+            return new DetailPost(source);
+        }
+
+        @Override
+        public DetailPost[] newArray(int size) {
+            return new DetailPost[size];
+        }
+    };
 }

@@ -21,6 +21,7 @@ import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.network.socket.SocketConstants;
 import com.skynet.thuenha.network.socket.SocketResponse;
 import com.skynet.thuenha.ui.base.BaseActivity;
+import com.skynet.thuenha.ui.detailPost.DetailPostActivity;
 import com.skynet.thuenha.ui.views.ChatParentLayout;
 import com.skynet.thuenha.utils.AppConstant;
 
@@ -48,6 +49,7 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
     private int IdPost;
     private AdapterChat mAdapterChat;
     private List<Message> mList = new ArrayList<>();
+    private String urlAvt;
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -70,6 +72,7 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
             }
         }
     };
+    private String msg;
 
     @Override
     protected int initLayout() {
@@ -84,17 +87,22 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
         if (getIntent() != null) {
             shop = getIntent().getBundleExtra(AppConstant.BUNDLE).getParcelable(AppConstant.INTENT);
             IdPost = getIntent().getBundleExtra(AppConstant.BUNDLE).getInt("idPost");
+            msg = getIntent().getBundleExtra(AppConstant.BUNDLE).getString("msgs");
+            urlAvt = getIntent().getBundleExtra(AppConstant.BUNDLE).getString("avt");
             idShop = shop.getId();
             if (shop.getName() != null)
                 textToolbar.setText(shop.getName());
         }
-        mAdapterChat = new AdapterChat(mList, this);
+        mAdapterChat = new AdapterChat(mList, this, urlAvt);
 
         AppConstant.ID_CHAT = idShop;
         LogUtils.e(AppConstant.ID_CHAT);
         getMessage();
 
-
+        if (msg != null && !msg.isEmpty()) {
+            mMessage.setText(msg);
+//            onClicked(findViewById(R.id.send_imv));
+        }
         mChatLL.setOnKeyBoardChangeListener(new ChatParentLayout.OnKeyBoardChangeListener() {
             @Override
             public void onShow(int keyboardHeight) {
@@ -184,7 +192,7 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
 //                        }
 //                    }
 //                }));
-                presenter.sendMessage(IdPost,idShop, content, getmSocket());
+                presenter.sendMessage(IdPost, idShop, content, getmSocket());
                 break;
         }
     }
@@ -201,7 +209,7 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
 //                }
 //            }
 //        }));
-        presenter.getMessages(idShop,IdPost);
+        presenter.getMessages(idShop, IdPost);
     }
 
     @Override
@@ -231,7 +239,7 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
         super.onStart();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(SocketConstants.SOCKET_CHAT);
-        registerReceiver(receiver,intentFilter );
+        registerReceiver(receiver, intentFilter);
         LogUtils.e("register receiver");
     }
 
@@ -245,11 +253,13 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
     @Override
     public void onSuccessGetMessages(List<Message> list) {
         mList.addAll(list);
-        mAdapterChat = new AdapterChat(mList, ChatActivity.this);
+        mAdapterChat = new AdapterChat(mList, ChatActivity.this, urlAvt);
         mRcv.setAdapter(mAdapterChat);
         setResult(RESULT_OK);
         if (mAdapterChat.getItemCount() > 0)
             mRcv.smoothScrollToPosition(mAdapterChat.getItemCount());
+
+
     }
 
     @Override
@@ -289,6 +299,15 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View 
     public void onError(String message) {
         LogUtils.e(message);
 
+    }
+
+    @OnClick(R.id.imgBtn_info)
+    public void onClickInfo() {
+        if (IdPost != 0) {
+            Intent i = new Intent(ChatActivity.this, DetailPostActivity.class);
+            i.putExtra(AppConstant.MSG, IdPost);
+            startActivity(i);
+        }
     }
 
     @Override

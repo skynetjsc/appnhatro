@@ -1,7 +1,9 @@
 package com.skynet.thuenha.ui.detailPost;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,8 +24,10 @@ import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.interfaces.SnackBarCallBack;
 import com.skynet.thuenha.models.DetailPost;
 import com.skynet.thuenha.ui.base.BaseActivity;
+import com.skynet.thuenha.ui.chatting.ChatActivity;
 import com.skynet.thuenha.ui.detailPost.viewProfile.ProfileViewerFragment;
 import com.skynet.thuenha.ui.listviewer.ListViewerFragment;
+import com.skynet.thuenha.ui.makepost.MakeAPostActivity;
 import com.skynet.thuenha.ui.views.DialogTwoButtonUtil;
 import com.skynet.thuenha.ui.views.LockableScrollView;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
@@ -44,7 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.view.Gravity.LEFT;
 
-public class DetailPostActivity extends BaseActivity implements DetailPostContract.View, CompoundButton.OnCheckedChangeListener, SwipeRefreshLayout.OnRefreshListener,OnPageClickListener, DialogTwoButtonUtil.DialogOneButtonClickListener {
+public class DetailPostActivity extends BaseActivity implements DetailPostContract.View, CompoundButton.OnCheckedChangeListener, SwipeRefreshLayout.OnRefreshListener, OnPageClickListener, DialogTwoButtonUtil.DialogOneButtonClickListener {
     @BindView(R.id.indicator_default_circle)
     InfiniteIndicator indicatorDefaultCircle;
     @BindView(R.id.btn_back)
@@ -343,10 +347,34 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                             .commit();
                 }
                 break;
-            case R.id.btnChat:
-                break;
-            case R.id.btnGo:
-                break;
+            case R.id.btnChat: {
+                if (detailPost.getHost() == null) return;
+                Intent i = new Intent(DetailPostActivity.this, ChatActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable(AppConstant.INTENT, detailPost.getHost());
+                b.putInt("idPost", detailPost.getPost().getId());
+                b.putString("avt", detailPost.getHost().getAvatar());
+                b.putString("msgs", "Chào anh/chị em muốn hỏi\n" +
+                        "căn hộ nhà mình còn không\n" +
+                        "vậy ạ!");
+                i.putExtra(AppConstant.BUNDLE, b);
+                startActivityForResult(i, 1000);
+
+            }
+            break;
+            case R.id.btnGo: {
+                if (detailPost.getHost() == null) return;
+                Intent i = new Intent(DetailPostActivity.this, ChatActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable(AppConstant.INTENT, detailPost.getHost());
+                b.putInt("idPost", detailPost.getPost().getId());
+                b.putString("msgs", "Chào anh/chị em muốn hỏi\n" +
+                        "căn hộ nhà mình em có thể\n" +
+                        "xem nhà lúc nào thì tiện ạ!");
+                i.putExtra(AppConstant.BUNDLE, b);
+                startActivityForResult(i, 1000);
+            }
+            break;
             case R.id.btnPaid:
                 if (dialogConfirmPrice != null && !dialogConfirmPrice.isShowing())
                     dialogConfirmPrice.show();
@@ -373,6 +401,12 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     public void onViewOwnerClicked(View view) {
         switch (view.getId()) {
             case R.id.btnEdit:
+                Intent intent = new Intent(DetailPostActivity.this, MakeAPostActivity.class);
+                Bundle b = new Bundle();
+                b.putParcelable(AppConstant.MSG, detailPost);
+                intent.putExtra(AppConstant.BUNDLE, b);
+                intent.putExtra(AppConstant.MSG,detailPost.getPost().getId_service());
+                startActivityForResult(intent, 1000);
                 break;
             case R.id.btnRent:
                 presenter.rentThisPost(getIntent().getExtras().getInt(AppConstant.MSG));
@@ -381,6 +415,14 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                 presenter.deleteThisPost(getIntent().getExtras().getInt(AppConstant.MSG));
 
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == RESULT_OK) {
+            onRefresh();
         }
     }
 
