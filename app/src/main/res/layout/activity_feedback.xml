@@ -39,6 +39,26 @@
 
         </android.support.v7.widget.RecyclerView>
 
+        <TextView
+            android:id="@+id/tvReply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_rep_feeback"
+            android:drawablePadding="@dimen/dp8"
+            android:drawableRight="@drawable/ic_clear_black_16dp"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp8"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp8"
+            android:paddingTop="@dimen/dp8"
+            android:text="Trả lời"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_chat_layout"
+            app:layout_constraintStart_toStartOf="@+id/bottom_chat_layout" />
+
         <LinearLayout
             android:id="@+id/bottom_chat_layout"
             android:layout_width="0dp"

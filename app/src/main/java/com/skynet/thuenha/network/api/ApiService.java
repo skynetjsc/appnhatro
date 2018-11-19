@@ -162,7 +162,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("feedback.php")
     Call<ApiResponse> makeNewFeedback(@Field("user_id") String user_id, @Field("type") int type,
-                                      @Field("comment") String comment);
+                                      @Field("content") String comment);
 
     @GET("notification_detail.php")
     Call<ApiResponse<Notification>> getDetailNotification(@Query("id") String id, @Query("type") int type, @Query("user_id") String shID);

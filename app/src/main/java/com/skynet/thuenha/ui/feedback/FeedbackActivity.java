@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,10 +13,13 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.skynet.thuenha.R;
+import com.skynet.thuenha.application.AppController;
+import com.skynet.thuenha.models.Comment;
 import com.skynet.thuenha.models.Feedback;
 import com.skynet.thuenha.ui.base.BaseActivity;
 import com.skynet.thuenha.utils.AppConstant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,6 +29,8 @@ import butterknife.OnClick;
 public class FeedbackActivity extends BaseActivity implements FeedbackContract.View, SwipeRefreshLayout.OnRefreshListener, AdapterFeedback.feedbackCallback {
     @BindView(R.id.tvToolbar)
     TextView tvToolbar;
+    @BindView(R.id.tvReply)
+    TextView tvReply;
 
     @BindView(R.id.rcv)
     RecyclerView rcv;
@@ -38,6 +44,9 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.V
     @BindView(R.id.bottom_chat_layout)
     LinearLayout bottomChatLayout;
     private List<Feedback> list;
+    private Feedback fbReply;
+    private int fbReplyPost;
+    private AdapterFeedback adapterFb;
 
     @Override
     protected int initLayout() {
@@ -72,17 +81,21 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.V
     @Override
     public void onSucessGetListFeedback(List<Feedback> list) {
         this.list = list;
-        rcv.setAdapter(new AdapterFeedback(this.list, this, this));
+        adapterFb = new AdapterFeedback(this.list, this, this);
+        rcv.setAdapter(adapterFb);
+        rcv.smoothScrollToPosition(list.size() - 1);
     }
 
     @Override
     public void onCommentSucess() {
+        messageTxt.setText("");
 
     }
 
     @Override
     public void onSucessMakeNewFeedback(String comment) {
-
+        onRefresh();
+        messageTxt.setText("");
     }
 
     @Override
@@ -132,9 +145,21 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.V
 
     }
 
-    @Override
-    public void clickRep(Feedback fb) {
+    @OnClick(R.id.tvReply)
+    public void onClick() {
+        tvReply.setVisibility(View.GONE);
+        fbReply = null;
+        fbReplyPost = 0;
 
+    }
+
+    @Override
+    public void clickRep(Feedback fb, int pos) {
+        fbReplyPost = pos;
+        fbReply = fb;
+        tvReply.setText("Trả lời " + fb.getName());
+        tvReply.setVisibility(View.VISIBLE);
+        messageTxt.setText("");
     }
 
     @Override
@@ -146,7 +171,25 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.V
 
     @OnClick(R.id.send_imv)
     public void onViewEdtClicked() {
-        if (!messageTxt.getText().toString().isEmpty())
-            presenter.makeNewFeedback(messageTxt.getText().toString());
+        if (!messageTxt.getText().toString().isEmpty()) {
+            if (fbReply != null) {
+                presenter.commentFeedback(fbReply.getId(), messageTxt.getText().toString());
+                if (fbReply.getListComment() == null) {
+                    fbReply.setListComment(new ArrayList<Comment>());
+                }
+                Comment comment = new Comment();
+                comment.setComment(messageTxt.getText().toString());
+                comment.setType(2);
+                comment.setDate("");
+                comment.setName(AppController.getInstance().getmProfileUser().getName());
+                comment.setAvatar(AppController.getInstance().getmProfileUser().getAvatar());
+                fbReply.getListComment().add(comment);
+                adapterFb.notifyItemChanged(fbReplyPost);
+
+                onClick();
+            } else
+                presenter.makeNewFeedback(messageTxt.getText().toString());
+
+        }
     }
 }

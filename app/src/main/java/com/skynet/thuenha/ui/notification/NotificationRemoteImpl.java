@@ -2,6 +2,7 @@ package com.skynet.thuenha.ui.notification;
 
 
 import com.google.android.gms.common.api.Api;
+import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.models.Notification;
 import com.skynet.thuenha.network.api.ApiResponse;
 import com.skynet.thuenha.network.api.ApiService;
@@ -31,7 +32,7 @@ public class NotificationRemoteImpl extends Interactor implements NotificationCo
 
     @Override
     public void doGetAllService(String idShop) {
-        getmService().getListNotification(idShop, 2).enqueue(new CallBackBase<ApiResponse<List<Notification>>>() {
+        getmService().getListNotification(idShop, AppController.getInstance().getmProfileUser().getType()).enqueue(new CallBackBase<ApiResponse<List<Notification>>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<List<Notification>>> call, Response<ApiResponse<List<Notification>>> response) {
                 if (response.isSuccessful() && response.body() != null) {

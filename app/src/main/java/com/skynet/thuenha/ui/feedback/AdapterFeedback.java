@@ -2,6 +2,7 @@ package com.skynet.thuenha.ui.feedback;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -14,12 +15,14 @@ import android.widget.TextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.skynet.thuenha.R;
+import com.skynet.thuenha.models.Comment;
 import com.skynet.thuenha.models.Feedback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,7 +41,17 @@ public class AdapterFeedback extends RecyclerView.Adapter<AdapterFeedback.ViewHo
         cache = new SparseBooleanArray();
         for (int i = 0; i < list.size(); i++) {
             cache.put(i, list.get(i).getIs_like() == 1);
+            if (!list.get(i).getResponse().isEmpty()) {
+                Comment comment = new Comment();
+                comment.setType(1);
+                comment.setComment(list.get(i).getResponse());
+                comment.setDate(list.get(i).getDate_response());
+                if (list.get(i).getListComment() == null)
+                    list.get(i).setListComment(new ArrayList<Comment>());
+                list.get(i).getListComment().add(0,comment);
+            }
         }
+
     }
 
     @NonNull
@@ -61,12 +74,27 @@ public class AdapterFeedback extends RecyclerView.Adapter<AdapterFeedback.ViewHo
         viewHolder.tvContent.setText(list.get(i).getContent());
         viewHolder.tvLike.setText(list.get(i).getLike_feedback() + "");
         viewHolder.cbLike.setChecked(cache.get(i));
-        viewHolder.tvComment.setText(list.get(i).getListComment().size() + " Bình luận");
 
+        if (list.get(i).getListComment() != null) {
+            int count = list.get(i).getListComment().size();
+            viewHolder.rcvComment.setLayoutManager(new LinearLayoutManager(context));
+            viewHolder.rcvComment.setHasFixedSize(true);
+//            if (!list.get(i).getResponse().isEmpty()) {
+//                count++;
+//                Comment comment = new Comment();
+//                comment.setType(1);
+//                comment.setComment(list.get(i).getResponse());
+//                comment.setDate(list.get(i).getDate_response());
+//                list.get(i).getListComment().add(comment);
+//            }
+            viewHolder.tvComment.setText(count + " Bình luận");
+            viewHolder.rcvComment.setAdapter(new AdapterComment(list.get(i).getListComment(), context));
+        }
         viewHolder.tvLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewHolder.cbLike.toggle();
+
             }
         });
         viewHolder.cbLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -74,6 +102,25 @@ public class AdapterFeedback extends RecyclerView.Adapter<AdapterFeedback.ViewHo
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 cache.put(i, isChecked);
                 iCallback.clickLike(list.get(i), isChecked);
+                if (isChecked) {
+                    list.get(i).setLike_feedback(list.get(i).getLike_feedback() + 1);
+                } else {
+                    list.get(i).setLike_feedback(list.get(i).getLike_feedback() - 1);
+                }
+                viewHolder.tvLike.setText(list.get(i).getLike_feedback() + "");
+
+            }
+        });
+        viewHolder.tvComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewHolder.expandLayout.toggle();
+            }
+        });
+        viewHolder.tvRep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iCallback.clickRep(list.get(i),i);
             }
         });
     }
@@ -117,7 +164,7 @@ public class AdapterFeedback extends RecyclerView.Adapter<AdapterFeedback.ViewHo
 
         void clickComment(Feedback fb);
 
-        void clickRep(Feedback fb);
+        void clickRep(Feedback fb,int pos);
 
     }
 }

@@ -60,19 +60,20 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View,
             LogUtils.e("OnReceive from UI ");
             if (intent != null) {
                 SocketResponse data = new Gson().fromJson(intent.getExtras().getString(AppConstant.MSG), SocketResponse.class);
-//                if (data != null) {
-////                    Message message = new Message();
-////                    message.setContent(data.getContentMessage());
-////                    message.setShId(data.getShop().getId());
-////                    message.setUId(data.getUser().getId());
-////                    message.setType(2);
-//                    mList.add(data.getMessage());
-//                    mAdapterChat.notifyItemInserted(mAdapterChat.getItemCount() -1);
-////                    mRcv.setAdapter(mAdapterChat);
-//                    if (mAdapterChat.getItemCount() > 0)
-//                        mRcv.smoothScrollToPosition(mAdapterChat.getItemCount() );
-////                    }
-//                }
+                if (data != null) {
+                    Message message = new Message();
+                    message.setContent(data.getContent());
+                    message.setTime("");
+                    message.setType(Integer.parseInt(data.getType()));
+                    mList.add(message);
+                    mAdapterChat.notifyItemInserted(mAdapterChat.getItemCount()-1);
+//                    mRcv.setAdapter(mAdapterChat);
+                    if (mAdapterChat.getItemCount() > 0)
+                        mRcv.smoothScrollToPosition(mAdapterChat.getItemCount() );
+//                    }
+
+//                    getMessage();
+                }
             }
         }
     };
@@ -201,9 +202,11 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View,
 //                        }
 //                    }
 //                }));
-                presenter.sendMessage(IdPost, Integer.parseInt(user.getId()),
-                        Integer.parseInt(shop.getId()), content, getmSocket(), attach
-                );
+                if (user != null && shop != null && IdPost != 0 && user.getId() != null && shop.getId() != null)
+
+                    presenter.sendMessage(IdPost, Integer.parseInt(user.getId()),
+                            Integer.parseInt(shop.getId()), content, getmSocket(), attach
+                    );
                 attach = 0;
                 break;
         }
@@ -221,7 +224,8 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View,
 //                }
 //            }
 //        }));
-        presenter.getMessages(Integer.parseInt(user.getId()), Integer.parseInt(shop.getId()), IdPost);
+        if (user != null && shop != null && IdPost != 0 && user.getId() != null && shop.getId() != null)
+            presenter.getMessages(Integer.parseInt(user.getId()), Integer.parseInt(shop.getId()), IdPost);
     }
 
     @Override
@@ -289,7 +293,7 @@ public class ChatActivity extends BaseActivity implements ChattingContract.View,
                 user.getId(),
                 shop.getId(),
                 IdPost,
-                message.getContent(),AppController.getInstance().getmProfileUser().getType());
+                message.getContent(), AppController.getInstance().getmProfileUser().getType());
     }
 
     @Override

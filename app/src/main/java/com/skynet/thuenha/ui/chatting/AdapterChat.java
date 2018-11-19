@@ -60,7 +60,8 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolerMessa
         Message message = mMessages.get(position);
         if (holder != null) {
             holder.mContent.setText(message.getContent());
-            holder.mTime.setText(mMessages.get(position).getTime().split(" ")[1].substring(0, mMessages.get(position).getTime().split(" ")[1].lastIndexOf(':')));
+            if (!mMessages.get(position).getTime().isEmpty())
+                holder.mTime.setText(mMessages.get(position).getTime().split(" ")[1].substring(0, mMessages.get(position).getTime().split(" ")[1].lastIndexOf(':')));
 //            if(position == getItemCount()-1){
 //                holder.mTime.setVisibility(View.VISIBLE);
 //            }else{

@@ -1,21 +1,29 @@
 package com.skynet.thuenha.ui.main;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.interfaces.ICallback;
+import com.skynet.thuenha.network.socket.SocketResponse;
 import com.skynet.thuenha.ui.base.BaseActivity;
 import com.skynet.thuenha.ui.chosseAddress.ChooseAddressFragment;
+import com.skynet.thuenha.ui.detailPost.viewProfile.ProfileViewerFragment;
 import com.skynet.thuenha.ui.home.HomeFragment;
+import com.skynet.thuenha.ui.notification.NotificationActivity;
+import com.skynet.thuenha.ui.updateProfile.ProfileUpdateFragment;
 import com.skynet.thuenha.ui.views.ViewpagerNotSwipe;
+import com.skynet.thuenha.utils.AppConstant;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +48,28 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     @Override
     protected void initVariables() {
 //        showDialogExpired();
+        if (getIntent() != null && getIntent().getStringExtra(AppConstant.NOTIFICATION_SOCKET) != null) {
+            String json = getIntent().getStringExtra(AppConstant.NOTIFICATION_SOCKET);
+            if (json != null) {
+                SocketResponse response = new Gson().fromJson(json, SocketResponse.class);
+                if (response != null) {
+                    if (response.getType().equals("-1")) {
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        NotificationActivity fragmentSearch = NotificationActivity.newInstance();
+                        fragmentManager.beginTransaction().replace(R.id.layoutRootViewpager, fragmentSearch, fragmentSearch.getClass().getSimpleName())
+                                .addToBackStack(null)
+                                .commit();
+                    } else if (response.getType().equals("3")) {
+                        viewpager.setCurrentItem(1);
+
+                    } else {
+                        viewpager.setCurrentItem(2);
+
+                    }
+                }
+            }
+
+        }
     }
 
     @Override
@@ -65,6 +95,10 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
             addBadgeAt(2, count);
         else if (badge != null)
             badge.hide(true);
+
+        if (AppController.getInstance().getmProfileUser().getName().isEmpty() || AppController.getInstance().getmProfileUser().getEmail().isEmpty()) {
+            startActivity(new Intent(MainActivity.this, ProfileUpdateFragment.class));
+        }
     }
 
     private void addBadgeAt(int position, int number) {

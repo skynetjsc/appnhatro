@@ -66,7 +66,7 @@ public class SocketClient extends Service {
     }
 
 
-    public void sendMessage(String sendFrom, String idUser, String idHost, int idPost, String content,int type) {
+    public void sendMessage(String sendFrom, String idUser, String idHost, int idPost, String content, int type) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("sendFrom", sendFrom);
@@ -77,6 +77,21 @@ public class SocketClient extends Service {
             jsonObject.put("type", type);
             socket.emit("tn_chat", jsonObject);
             LogUtils.e("send socket chat to " + sendFrom);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendViewPost(int idPost, String idUser, String sendFrom, String idHost) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("idUser", idUser);
+            jsonObject.put("sendFrom", sendFrom);
+            jsonObject.put("idHost", idHost);
+            jsonObject.put("idPost", idPost);
+            jsonObject.put("type", 3);
+            socket.emit("view_post", jsonObject);
+            LogUtils.e("sendViewPost to " + idHost);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -180,13 +195,38 @@ public class SocketClient extends Service {
                         Gson gson = new Gson();
                         SocketResponse l = gson.fromJson(args[0].toString(), SocketResponse.class);
                         Profile profile = AppController.getInstance().getmProfileUser();
-                        if (profile != null && profile.getActive() == 1 ) {
-                            if(profile.getType() == 1){
-                                if(!l.getIdUser().equals(profile.getId())){
+                        if (profile != null && profile.getActive() == 1) {
+                            if (profile.getType() == 1) {
+                                if (!l.getIdUser().equals(profile.getId())) {
                                     return;
                                 }
-                            }else{
-                                if(!l.getIdHost().equals(profile.getId())){
+                            } else {
+                                if (!l.getIdHost().equals(profile.getId())) {
+                                    return;
+                                }
+                            }
+                            Intent intent1 = new Intent();
+                            intent1.setAction(SocketConstants.SOCKET_CHAT);
+                            intent1.putExtra(AppConstant.MSG, args[0].toString());
+                            SocketClient.this.sendBroadcast(intent1);
+                            notification = CommomUtils.createNotificationWithMsg(getApplicationContext(), "Thông báo", "Bạn có tin nhắn mới", new Gson().toJson(l));
+                            showNotificationInStack(0);
+                            LogUtils.e("send_tn_chat", args[0].toString());
+                        }
+                    }
+                });
+                socket.off("send_view_post");
+                socket.on("send_view_post", new Emitter.Listener() {
+                    @Override
+                    public void call(Object... args) {
+                        Gson gson = new Gson();
+                        SocketResponse l = gson.fromJson(args[0].toString(), SocketResponse.class);
+                        Profile profile = AppController.getInstance().getmProfileUser();
+                        if (profile != null && profile.getActive() == 1) {
+                            if (profile.getType() == 1) {
+                                    return;
+                            } else {
+                                if (!l.getIdHost().equals(profile.getId())) {
                                     return;
                                 }
                             }
@@ -194,9 +234,9 @@ public class SocketClient extends Service {
                             intent1.setAction(SocketConstants.SOCKET_CHAT);
                             intent1.putExtra(AppConstant.HELPER_AGREE, args[0].toString());
                             SocketClient.this.sendBroadcast(intent1);
-                            notification = CommomUtils.createNotificationWithMsg(getApplicationContext(), "Thông báo", "Bạn có tin nhắn mới", new Gson().toJson(l));
+                            notification = CommomUtils.createNotificationWithMsg(getApplicationContext(), "Lượt xem mới", l.getSendFrom()+" vừa xem tin đăng của bạn.", new Gson().toJson(l));
                             showNotificationInStack(0);
-                            LogUtils.e("send_tn_chat", args[0].toString());
+                            LogUtils.e("send_view_post", args[0].toString());
                         }
                     }
                 });
