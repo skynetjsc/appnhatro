@@ -258,15 +258,15 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     private void bindHostData(DetailPost detailPost) {
         if (detailPost.getHost() == null) return;
         tvNameHost.setText(detailPost.getHost().getName());
-        tvNumberPostHost.setText(detailPost.getHost().getNumber_post() + " phòng cho thuê");
+        tvNumberPostHost.setText(detailPost.getHost().getPhone());
         Picasso.with(this).load(detailPost.getHost().getAvatar()).fit().centerCrop().into(circleImageView);
     }
 
     @Override
     public void onSuccessPaid() {
         showToast("Đã mua lượt xem thành công!", AppConstant.POSITIVE);
-        if (AppController.getInstance().getmProfileUser().getType() == 1  )
-            getmSocket().sendViewPost(detailPost.getPost().getId(), AppController.getInstance().getmProfileUser().getId(), AppController.getInstance().getmProfileUser().getName(), detailPost.getPost().getHost_id()+"");
+        if (AppController.getInstance().getmProfileUser().getType() == 1)
+            getmSocket().sendViewPost(detailPost.getPost().getId(), AppController.getInstance().getmProfileUser().getId(), AppController.getInstance().getmProfileUser().getName(), detailPost.getPost().getHost_id() + "");
     }
 
     @Override
@@ -284,7 +284,6 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                 finish();
             }
         });
-
     }
 
     @Override
@@ -328,6 +327,9 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     public void onError(String message) {
         LogUtils.e(message);
         showToast(message, AppConstant.NEGATIVE);
+        if (message.equals("")) {
+
+        }
     }
 
     @Override
@@ -351,13 +353,13 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
             case R.id.btn_share:
                 break;
             case R.id.layoutHost:
-                if (detailPost != null && detailPost.getHost() != null) {
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    ProfileViewerFragment fragmentSearch = ProfileViewerFragment.newInstance(detailPost.getHost().getId());
-                    fragmentManager.beginTransaction().replace(R.id.layoutRootDetailPost, fragmentSearch, fragmentSearch.getClass().getSimpleName())
-                            .addToBackStack(null)
-                            .commit();
-                }
+//                if (detailPost != null && detailPost.getHost() != null) {
+//                    FragmentManager fragmentManager = getSupportFragmentManager();
+//                    ProfileViewerFragment fragmentSearch = ProfileViewerFragment.newInstance(detailPost.getHost().getId());
+//                    fragmentManager.beginTransaction().replace(R.id.layoutRootDetailPost, fragmentSearch, fragmentSearch.getClass().getSimpleName())
+//                            .addToBackStack(null)
+//                            .commit();
+//                }
                 break;
             case R.id.btnChat: {
                 if (detailPost.getHost() == null) return;
@@ -384,7 +386,6 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                 b.putParcelable("user", AppController.getInstance().getmProfileUser());
                 b.putInt("idPost", detailPost.getPost().getId());
                 b.putInt("attach", detailPost.getPost().getId());
-
                 b.putString("avt", AppController.getInstance().getmProfileUser().getType() == 1 ? detailPost.getHost().getAvatar() : AppController.getInstance().getmProfileUser().getAvatar());
                 b.putString("msgs", "Chào anh/chị em muốn hỏi\n" +
                         "căn hộ nhà mình em có thể\n" +

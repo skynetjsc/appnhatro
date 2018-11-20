@@ -134,7 +134,7 @@
                     android:paddingRight="@dimen/dp16"
                     android:textColor="@color/black"
                     android:paddingTop="@dimen/dp8"
-                    android:text="Hà nội" />
+                    android:text="Tỉnh thành" />
 
                 <TextView
                     android:id="@+id/tvDistrict"

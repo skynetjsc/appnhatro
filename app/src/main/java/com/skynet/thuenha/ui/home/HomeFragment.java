@@ -98,7 +98,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
 
@@ -213,7 +212,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         listService = services;
         adapterSlide.setUrlPhotos(listBanner);
         rcv.setAdapter(new AdapterService(listService, getContext(), onClickService));
-
     }
 
     @Override

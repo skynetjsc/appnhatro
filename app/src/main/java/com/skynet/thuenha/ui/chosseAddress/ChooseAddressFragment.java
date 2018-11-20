@@ -131,6 +131,8 @@ public class ChooseAddressFragment extends BaseFragment implements ChooseAddress
 
             }
         });
+        spiner.performClick();
+
     }
 
     @Override
