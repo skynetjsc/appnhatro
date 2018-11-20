@@ -28,7 +28,7 @@ public class DetailNotificationRemoteImpl extends Interactor implements DetailNo
             return;
         }
 
-        getmService().getDetailNotification(id,2,AppController.getInstance().getmProfileUser().getId()).enqueue(new CallBackBase<ApiResponse<Notification>>() {
+        getmService().getDetailNotification(id,AppController.getInstance().getmProfileUser().getType(),AppController.getInstance().getmProfileUser().getId()).enqueue(new CallBackBase<ApiResponse<Notification>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<Notification>> call, Response<ApiResponse<Notification>> response) {
                 if (response.isSuccessful() && response.body() != null) {

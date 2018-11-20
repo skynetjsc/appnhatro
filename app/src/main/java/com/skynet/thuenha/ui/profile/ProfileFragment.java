@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,10 @@ import com.skynet.thuenha.ui.listviewer.ListViewerFragment;
 import com.skynet.thuenha.ui.search.FragmentSearch;
 import com.skynet.thuenha.ui.splash.SplashActivity;
 import com.skynet.thuenha.ui.updateProfile.ProfileUpdateFragment;
+import com.skynet.thuenha.ui.views.AlertDialogCustom;
+import com.skynet.thuenha.ui.views.DialogInput;
+import com.skynet.thuenha.ui.views.DialogOneButtonUtil;
+import com.skynet.thuenha.ui.views.DialogTwoButtonUtil;
 import com.skynet.thuenha.utils.AppConstant;
 import com.squareup.picasso.Picasso;
 
@@ -122,6 +127,22 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
                 startActivityForResult(new Intent(getActivity(), ProfileUpdateFragment.class), 1000);
                 break;
             case R.id.tvInput:
+                String content = "";
+                if (AppController.getInstance().getmProfileUser().getType() == 1) {
+                    content = "NGUOITHUE " + AppController.getInstance().getmProfileUser().getPhone();
+                } else {
+                    content = "CHUNHA " + AppController.getInstance().getmProfileUser().getPhone();
+
+                }
+                new DialogInput(getContext(), R.drawable.ic_question, "HƯỚNG DẪN NẠP TIỀN",
+                        Html.fromHtml(
+                                String.format(
+                                        getString(R.string.ck), content)), new DialogInput.DialogOneButtonClickListener() {
+                    @Override
+                    public void okClick() {
+
+                    }
+                }).show();
                 break;
             case R.id.btnLogout:
                 Intent intent = new Intent(getActivity(), SplashActivity.class);

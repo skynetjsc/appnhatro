@@ -19,4 +19,5 @@ bạn sẽ bị trừ <b><font color=#d52a3f>%,.0fđ</font>/lượt </b>xem<br><
     <string name="content_confirm_post"><![CDATA[Thực hiện đăng tin bạn sẽ mất phí tối đa <b><font color=#d52a3f>%,.0fđ</font>/lượt </b>. Chi phí sẽ được trừ vào số tiền trong tài khoản của bạn.<br><br>Mọi thắc mắc vui lòng liên hệ <br><b>0987875427</b>]]></string>
     <string name="area_unit">m²</string>
     <string name="nh_p_n_i_dung">Nhập nội dung</string>
+    <string name="ck"><![CDATA[**Chuyển khoản ngân hàng**<br><br>STK : <b>0611001913170</b><br>CHU TK:<b> Nguyễn Mạnh Cường</b><br>NGÂN HÀNG: <b>Ngân hàng Vietcombank chi nhánh Ba Đình</b><br>NỘI DUNG: <b>%s</b><br><br>**Ghi chú : Xác nhận trong 60s, nếu có bất cứ thắc mắc vui lòng liên hệ <b>0987875427</b>]]></string>
 </resources>

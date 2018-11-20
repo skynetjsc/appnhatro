@@ -46,7 +46,7 @@ public class AdapterComment extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public int getItemViewType(int position) {
         if (position < getItemCount())
             return listComment.get(position).getType();
-        return 1;
+        return listComment.get(listComment.size()-1).getType();
     }
 
     @Override
