@@ -25,6 +25,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.google.gson.Gson;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.application.AppController;
+import com.skynet.thuenha.interfaces.ICallback;
 import com.skynet.thuenha.interfaces.SnackBarCallBack;
 import com.skynet.thuenha.models.Address;
 import com.skynet.thuenha.models.DetailPost;
@@ -33,6 +34,7 @@ import com.skynet.thuenha.models.Utility;
 import com.skynet.thuenha.ui.base.BaseActivity;
 import com.skynet.thuenha.ui.chosseAddress.ChooseAddressFragment;
 import com.skynet.thuenha.ui.detailPost.DetailPostActivity;
+import com.skynet.thuenha.ui.views.DialogInput;
 import com.skynet.thuenha.ui.views.DialogTwoButtonUtil;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 import com.skynet.thuenha.utils.AppConstant;
@@ -52,7 +54,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import me.iwf.photopicker.PhotoPicker;
 
-public class MakeAPostActivity extends BaseActivity implements MakeAPostContract.View, ChooseAddressFragment.CallBackChooseAddress, DialogTwoButtonUtil.DialogOneButtonClickListener {
+public class MakeAPostActivity extends BaseActivity implements MakeAPostContract.View, ChooseAddressFragment.CallBackChooseAddress, DialogTwoButtonUtil.DialogOneButtonClickListener, ICallback {
     MakeAPostContract.Presenter presenter;
     ProgressDialogCustom dialogLoading;
     @BindView(R.id.tvToolbar)
@@ -204,11 +206,12 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
             for (Service s : listServices) {
                 if (s.getId() == getIntent().getExtras().getInt(AppConstant.MSG, -1)) {
                     s.setChecked(true);
+                    presenter.getPriceServiceToChooseService(s.getId());
                     break;
                 }
             }
         }
-        rcvTypeService.setAdapter(new AdapterService(this.listServices, this));
+        rcvTypeService.setAdapter(new AdapterService(this.listServices, this, this));
     }
 
     @Override
@@ -265,7 +268,33 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
     }
 
     @Override
+    public void onSucessGetPriceToChooseService(double price) {
+        if (AppController.getInstance().getmProfileUser().getAccountWallet() < price) {
+            showToast("Tài khoản của bạn không đủ " + price + "vnđ để đăng tin này. Vui lòng nạp thêm tiền!", AppConstant.NEGATIVE);
+            String content = "";
+            if (AppController.getInstance().getmProfileUser().getType() == 1) {
+                content = "NGUOITHUE " + AppController.getInstance().getmProfileUser().getPhone();
+            } else {
+                content = "CHUNHA " + AppController.getInstance().getmProfileUser().getPhone();
+
+            }
+            new DialogInput(this, R.drawable.ic_question, "HƯỚNG DẪN NẠP TIỀN",
+                    Html.fromHtml(
+                            String.format(
+                                    getString(R.string.ck), content)), new DialogInput.DialogOneButtonClickListener() {
+                @Override
+                public void okClick() {
+
+                }
+            }).show();
+        } else {
+//            showToast("Tài khoản của bạn không đủ " + price + "vnđ để đăng tin này. Vui lòng nạp thêm tiền!", AppConstant.NEGATIVE);
+        }
+    }
+
+    @Override
     public void onSucessGetPriceService(double price) {
+
         dialogConfirmPrice = new DialogTwoButtonUtil(this, R.drawable.ic_question, "Xác nhận đăng tin",
                 Html.fromHtml(String.format(getString(R.string.content_confirm_post), price)),
                 this);
@@ -520,5 +549,10 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
                 edtArea.getText().toString(), myCity.getId(), myDistrict.getId(),
                 edtAddress.getText().toString(), listUtilityRequest, editText3.getText().toString(), edtBed.getText().toString(), edtWc.getText().toString(), listImage
         );
+    }
+
+    @Override
+    public void onCallBack(int pos) {
+        presenter.getPriceServiceToChooseService(listServices.get(pos).getId());
     }
 }

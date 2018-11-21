@@ -14,10 +14,10 @@ public class SearchPresenter extends Presenter<SearchContract.View> implements S
     }
 
     @Override
-    public void getAllPostByService(int idService) {
+    public void getAllPostByService(int idService,int id) {
         if (isAvaliableView()) {
             view.showProgress();
-            interactor.getAllPostByService(idService);
+            interactor.getAllPostByService(idService,id);
         }
     }
 

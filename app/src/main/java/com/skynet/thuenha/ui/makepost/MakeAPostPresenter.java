@@ -75,15 +75,23 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
                 return;
             }
             view.showProgress();
-            interactor.edtPost(idPost,idService, title, priceD, areaD, city, district, address, jsonUtility, content, numberBedD, numberWcD, listPhotos);
+            interactor.edtPost(idPost, idService, title, priceD, areaD, city, district, address, jsonUtility, content, numberBedD, numberWcD, listPhotos);
         }
     }
 
     @Override
     public void getPriceService(int idService) {
-        if(isAvaliableView()){
+        if (isAvaliableView()) {
             view.showProgress();
             interactor.getPriceService(idService);
+        }
+    }
+
+    @Override
+    public void getPriceServiceToChooseService(int idService) {
+        if (isAvaliableView()) {
+            view.showProgress();
+            interactor.getPriceServiceToChooseService(idService);
         }
     }
 
@@ -96,6 +104,14 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
     public void onSucessGetService(List<Service> list) {
         if (isAvaliableView() && list != null) {
             view.onSucessGetService(list);
+        }
+    }
+
+    @Override
+    public void onSucessGetPriceToChooseService(double price) {
+        if (isAvaliableView()) {
+            view.hiddenProgress();
+            view.onSucessGetPriceToChooseService(price);
         }
     }
 
@@ -125,7 +141,7 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
 
     @Override
     public void onSucessGetPriceService(double price) {
-        if(isAvaliableView()){
+        if (isAvaliableView()) {
             view.hiddenProgress();
             view.onSucessGetPriceService(price);
         }
@@ -133,7 +149,7 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
 
     @Override
     public void onErrorApi(String message) {
-        if(isAvaliableView()){
+        if (isAvaliableView()) {
             view.hiddenProgress();
             view.onErrorApi(message);
         }
@@ -141,7 +157,7 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
 
     @Override
     public void onError(String message) {
-        if(isAvaliableView()){
+        if (isAvaliableView()) {
             view.hiddenProgress();
             view.onError(message);
         }
@@ -149,7 +165,7 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
 
     @Override
     public void onErrorAuthorization() {
-        if(isAvaliableView()){
+        if (isAvaliableView()) {
             view.hiddenProgress();
             view.onErrorAuthorization();
         }

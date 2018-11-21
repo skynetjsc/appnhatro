@@ -27,15 +27,18 @@ public class AdapterService extends RecyclerView.Adapter<AdapterService.ViewHold
     SparseBooleanArray cache;
     int oldPosition = -1;
     ViewHolder oldHolder;
+    ICallback iCallback;
 
-    public AdapterService(List<Service> list, Context context) {
+    public AdapterService(List<Service> list, Context context, ICallback iCallback) {
         this.list = list;
         this.context = context;
         cache = new SparseBooleanArray();
+        this.iCallback = iCallback;
         for (int i = 0; i < list.size(); i++) {
             cache.put(i, list.get(i).isChecked());
         }
     }
+
 
     public void updateAdapter() {
         cache.clear();
@@ -73,6 +76,8 @@ public class AdapterService extends RecyclerView.Adapter<AdapterService.ViewHold
                     }
                     oldHolder = viewHolder;
                     oldPosition = i;
+                    if (iCallback!=null)
+                        iCallback.onCallBack(i);
                 }
 
 

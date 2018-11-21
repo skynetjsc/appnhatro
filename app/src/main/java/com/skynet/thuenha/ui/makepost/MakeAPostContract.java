@@ -17,6 +17,7 @@ public interface MakeAPostContract {
 
         void onSucessSubmitPost(int idPost);
         void onSucessEditPost(int idPost);
+        void onSucessGetPriceToChooseService(double price);
 
         void onSucessGetPriceService(double price);
 
@@ -36,6 +37,8 @@ public interface MakeAPostContract {
                      String numberWC, List<File> listPhotos);
 
         void getPriceService(int idService);
+        void getPriceServiceToChooseService(int idService);
+
 
     }
 
@@ -53,11 +56,13 @@ public interface MakeAPostContract {
                      int numberWC, List<File> listPhotos);
 
         void getPriceService(int idService);
+        void getPriceServiceToChooseService(int idService);
 
     }
 
     interface Listener extends OnFinishListener {
         void onSucessGetService(List<Service> list);
+        void onSucessGetPriceToChooseService(double price);
 
         void onSucessGetUtility(List<Utility> list);
 

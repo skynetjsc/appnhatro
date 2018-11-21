@@ -49,6 +49,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     TextView tvCity;
     @BindView(R.id.tvDistrict)
     TextView tvDistrict;
+    @BindView(R.id.tvWallet)
+    TextView tvWallet;
     @BindView(R.id.cardSearch)
     CardView cardSearch;
     Unbinder unbinder1;
@@ -104,7 +106,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @OnClick(R.id.button3)
     public void onClickMakePost() {
         if (AppController.getInstance().getmProfileUser().getType() == 2) {
-            startActivity(new Intent(getActivity(), MakeAPostActivity.class));
+//            startActivity(new Intent(getActivity(), MakeAPostActivity.class));
+            Intent i = new Intent(getActivity(), MakeAPostActivity.class);
+            if (listService != null && listService.size() > 0)
+                i.putExtra(AppConstant.MSG, listService.get(0).getId());
+            startActivity(i);
         } else {
             showToast("Tài khoản của bạn không thể thực hiện chức năng này. Vui lòng đăng nhập với tư cách người cho thuê!", AppConstant.POSITIVE);
         }
@@ -141,6 +147,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         if (AppController.getInstance().getmProfileUser().getType() == 2) {
             cardSearch.setVisibility(View.GONE);
         }
+
+        tvWallet.setText(String.format("Số dư TK: %,.0fvnđ", AppController.getInstance().getmProfileUser().getAccountWallet()));
+
     }
 
     @Override

@@ -3,7 +3,8 @@ package com.skynet.thuenha.ui.search;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -17,11 +18,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.google.gson.Gson;
+import com.jaygoo.widget.OnRangeChangedListener;
+import com.jaygoo.widget.RangeSeekBar;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.application.AppController;
 import com.skynet.thuenha.interfaces.ICallback;
+import com.skynet.thuenha.models.Address;
+import com.skynet.thuenha.models.Filter;
 import com.skynet.thuenha.models.Post;
 import com.skynet.thuenha.ui.base.BaseFragment;
+import com.skynet.thuenha.ui.chosseAddress.ChooseAddressActivity;
+import com.skynet.thuenha.ui.chosseAddress.ChooseAddressFragment;
 import com.skynet.thuenha.ui.detailPost.DetailPostActivity;
 import com.skynet.thuenha.ui.filter.FilterActivity;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
@@ -36,7 +44,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class FragmentSearch extends BaseFragment implements SearchContract.View, ICallback {
+public class FragmentSearch extends BaseFragment implements SearchContract.View, ICallback, OnRangeChangedListener {
     @BindView(R.id.editText)
     EditText editText;
     @BindView(R.id.rcv)
@@ -50,10 +58,29 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     ImageView filter;
     @BindView(R.id.dot_filter)
     ImageView dot_filter;
+    @BindView(R.id.tvCity)
+    TextView tvCity;
+    @BindView(R.id.tvDistrict)
+    TextView tvDistrict;
+    @BindView(R.id.cardSearch)
+    CardView cardSearch;
+    @BindView(R.id.textView30)
+    TextView textView30;
+    @BindView(R.id.rangeSeekBar)
+    RangeSeekBar rangeSeekBar;
+    @BindView(R.id.textView31)
+    TextView textView31;
+    @BindView(R.id.textView32)
+    TextView textView32;
+    @BindView(R.id.tvPrice)
+    TextView tvPrice;
     private SearchContract.Presenter presenter;
     private ProgressDialogCustom dialogLoading;
     private List<Post> listPost;
     private Timer timer;
+    private Address myCity;
+    private Address myDistrict;
+    private float max, min;
 
     public static FragmentSearch newInstance(int id) {
         Bundle args = new Bundle();
@@ -73,7 +100,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
         ButterKnife.bind(this, view);
         rcv.setLayoutManager(new LinearLayoutManager(getMyContext()));
         rcv.setHasFixedSize(true);
-
+        rangeSeekBar.setOnRangeChangedListener(this);
     }
 
     @Override
@@ -84,7 +111,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
             dot_filter.setVisibility(View.VISIBLE);
             presenter.getAllPostByFilter();
         } else {
-            presenter.getAllPostByService(getArguments().getInt("idService"));
+            presenter.getAllPostByService(getArguments().getInt("idService"), 0);
             dot_filter.setVisibility(View.GONE);
         }
         editText.addTextChangedListener(new TextWatcher() {
@@ -163,7 +190,6 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -171,6 +197,14 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     public void onDestroyView() {
         presenter.onDestroyView();
         super.onDestroyView();
+    }
+
+    @OnClick(R.id.imageView11)
+    public void onCLick() {
+        tvCity.setText("Tỉnh thành");
+        tvDistrict.setText("Tìm kiếm theo khu vực");
+        presenter.getAllPostByService(getArguments().getInt("idService"), 0);
+
     }
 
     @OnClick({R.id.back, R.id.filter})
@@ -194,10 +228,32 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
                 presenter.getAllPostByFilter();
             } else {
                 dot_filter.setVisibility(View.GONE);
-                presenter.getAllPostByService(getArguments().getInt("idService"));
+                presenter.getAllPostByService(getArguments().getInt("idService"), 0);
 
             }
         }
+        if (requestCode == 100 && resultCode == getActivity().RESULT_OK) {
+            setupAddress();
+            if (AppController.getInstance().getFilter() != null) {
+                dot_filter.setVisibility(View.VISIBLE);
+                presenter.getAllPostByFilter();
+            } else {
+                dot_filter.setVisibility(View.GONE);
+                presenter.getAllPostByService(getArguments().getInt("idService"), 1);
+
+            }
+        }
+    }
+
+    public void setupAddress() {
+        if (AppController.getInstance().getmSetting().getString(AppConstant.city) != null && !AppController.getInstance().getmSetting().getString(AppConstant.city).isEmpty())
+            myCity = new Gson().fromJson(AppController.getInstance().getmSetting().getString(AppConstant.city), Address.class);
+        if (AppController.getInstance().getmSetting().getString(AppConstant.district) != null && !AppController.getInstance().getmSetting().getString(AppConstant.district).isEmpty())
+            myDistrict = new Gson().fromJson(AppController.getInstance().getmSetting().getString(AppConstant.district), Address.class);
+        if (myCity != null)
+            tvCity.setText(myCity.getName());
+        if (myDistrict != null)
+            tvDistrict.setText(myDistrict.getName());
     }
 
     @Override
@@ -205,5 +261,41 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
         Intent i = new Intent(getActivity(), DetailPostActivity.class);
         i.putExtra(AppConstant.MSG, listPost.get(pos).getId());
         startActivity(i);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @OnClick(R.id.cardSearch)
+    public void clickSearch() {
+        startActivityForResult(new Intent(getActivity(), ChooseAddressActivity.class), 100);
+
+    }
+
+
+    @Override
+    public void onRangeChanged(RangeSeekBar view, float leftValue, float rightValue, boolean isFromUser) {
+        min = leftValue;
+        max = rightValue;
+    }
+
+    @Override
+    public void onStartTrackingTouch(RangeSeekBar view, boolean isLeft) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(RangeSeekBar view, boolean isLeft) {
+        Filter filter = AppController.getInstance().getFilter();
+        if (filter == null) filter = new Filter(0, min, max, "");
+        filter.setMax(max);
+        filter.setMin(min);
+        AppController.getInstance().setFilter(filter);
+        LogUtils.e(min + " ----------- " + max + "is from user");
+        tvPrice.setText(String.format("Mức giá trung bình: %,.0fvnđ", ((min + max) / 2)));
+        presenter.getAllPostByFilter();
     }
 }

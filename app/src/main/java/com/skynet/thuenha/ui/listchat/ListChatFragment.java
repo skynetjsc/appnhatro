@@ -101,7 +101,7 @@ public class ListChatFragment extends BaseFragment implements ListChatContract.V
 
     @OnClick(R.id.noti)
     public void onClickNoti() {
-        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         NotificationActivity fragmentSearch = NotificationActivity.newInstance();
         fragmentManager.beginTransaction().replace(R.id.layoutRootChat, fragmentSearch, fragmentSearch.getClass().getSimpleName())
                 .addToBackStack(null)

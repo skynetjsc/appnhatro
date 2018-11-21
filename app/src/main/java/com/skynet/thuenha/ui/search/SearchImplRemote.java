@@ -36,12 +36,16 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
     }
 
     @Override
-    public void getAllPostByService(int idService) {
+    public void getAllPostByService(int idService, int idDistrict) {
         if (AppController.getInstance().getmProfileUser() == null) {
             listener.onErrorAuthorization();
             return;
         }
-        getmService().getListPost(AppController.getInstance().getmProfileUser().getId(), idService, district != null ? district.getId() : 1).enqueue(new CallBackBase<ApiResponse<List<Post>>>() {
+        int id = idDistrict;
+        if (id != 0) {
+            id = district != null ? district.getId() : 0;
+        }
+        getmService().getListPost(AppController.getInstance().getmProfileUser().getId(), idService, id).enqueue(new CallBackBase<ApiResponse<List<Post>>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<List<Post>>> call, Response<ApiResponse<List<Post>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -65,35 +69,37 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
     @Override
     public void getAllPostByFilter() {
         Filter filter = AppController.getInstance().getFilter();
-        if (filter == null) return;
+        if (filter == null) {
+            return;
+        }
         if (AppController.getInstance().getmProfileUser() == null) {
             listener.onErrorAuthorization();
             return;
         }
         getmService().getListFilterPost(AppController.getInstance().getmProfileUser().getId(),
                 filter.getIdService() == 0 ? "" : filter.getIdService() + "",
-                filter.getMin() == 0 ?  "" : filter.getMin()+"",
-                filter.getMax() == 0 ?  "" : filter.getMax()+"",
+                filter.getMin() == 0 ? "" : filter.getMin() + "",
+                filter.getMax() == 0 ? "" : filter.getMax() + "",
                 filter.getListIdUtility(), district != null ? district.getId() : 1)
                 .enqueue(new CallBackBase<ApiResponse<List<Post>>>() {
-            @Override
-            public void onRequestSuccess(Call<ApiResponse<List<Post>>> call, Response<ApiResponse<List<Post>>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
-                        listener.onSucessGetPost(response.body().getData());
-                    } else {
-                        new ExceptionHandler<List<Post>>(listener, response.body()).excute();
+                    @Override
+                    public void onRequestSuccess(Call<ApiResponse<List<Post>>> call, Response<ApiResponse<List<Post>>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
+                                listener.onSucessGetPost(response.body().getData());
+                            } else {
+                                new ExceptionHandler<List<Post>>(listener, response.body()).excute();
+                            }
+                        } else {
+                            listener.onError(response.message());
+                        }
                     }
-                } else {
-                    listener.onError(response.message());
-                }
-            }
 
-            @Override
-            public void onRequestFailure(Call<ApiResponse<List<Post>>> call, Throwable t) {
-                listener.onErrorApi(t.getMessage());
-            }
-        });
+                    @Override
+                    public void onRequestFailure(Call<ApiResponse<List<Post>>> call, Throwable t) {
+                        listener.onErrorApi(t.getMessage());
+                    }
+                });
     }
 
     @Override
@@ -111,8 +117,8 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
             search = getmService().searchListPost(AppController.getInstance().getmProfileUser().getId(),
                     filter.getIdService() == 0 ? "" : filter.getIdService() + "",
                     district != null ? district.getId() : 1, query,
-                    filter.getMin() == 0 ?  "500000" : filter.getMin()+"",
-                    filter.getMax() == 0 ?  "20000000" : filter.getMax()+"",
+                    filter.getMin() == 0 ? "500000" : filter.getMin() + "",
+                    filter.getMax() == 0 ? "20000000" : filter.getMax() + "",
                     filter.getListIdUtility());
         }
         search.enqueue(new CallBackBase<ApiResponse<List<Post>>>() {

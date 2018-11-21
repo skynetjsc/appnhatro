@@ -192,4 +192,30 @@ public class MakeAPostImplRemote extends Interactor implements MakeAPostContract
             }
         });
     }
+
+    @Override
+    public void getPriceServiceToChooseService(int idService) {
+        getmService().getPrice(idService).enqueue(new CallBackBase<ApiResponse<PriceService>>() {
+            @Override
+            public void onRequestSuccess(Call<ApiResponse<PriceService>> call, Response<ApiResponse<PriceService>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
+                        if (response.body().getData() != null)
+                            listener.onSucessGetPriceToChooseService(response.body().getData().getValue());
+                        else
+                            listener.onSucessGetPriceToChooseService(5000);
+                    } else {
+                        new ExceptionHandler<PriceService>(listener, response.body()).excute();
+                    }
+                } else {
+                    listener.onError(response.message());
+                }
+            }
+
+            @Override
+            public void onRequestFailure(Call<ApiResponse<PriceService>> call, Throwable t) {
+
+            }
+        });
+    }
 }

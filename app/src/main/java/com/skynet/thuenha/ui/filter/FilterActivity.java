@@ -150,7 +150,7 @@ public class FilterActivity extends BaseActivity implements FilterContract.View,
                 }
             }
         }
-        adapterService = new AdapterService(this.listServices, this);
+        adapterService = new AdapterService(this.listServices, this,null);
         rcvTypeService.setAdapter(adapterService);
     }
 

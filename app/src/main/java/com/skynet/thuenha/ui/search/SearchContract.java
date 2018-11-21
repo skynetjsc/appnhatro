@@ -14,7 +14,7 @@ public interface SearchContract {
     }
 
     interface Presenter extends IBasePresenter, Listener {
-        void getAllPostByService(int idService);
+        void getAllPostByService(int idService,int idDistrict);
         void getAllPostByFilter();
 
         void queryPostByService(int idService, String query);
@@ -22,7 +22,7 @@ public interface SearchContract {
     }
 
     interface Interactor {
-        void getAllPostByService(int idService);
+        void getAllPostByService(int idService,int idDistrict);
         void getAllPostByFilter();
         void queryPostByService(int idService, String query);
 
