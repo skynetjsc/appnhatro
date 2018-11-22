@@ -42,8 +42,15 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
             try {
                 priceD = Double.parseDouble(price);
                 areaD = Double.parseDouble(area);
-                numberBedD = Integer.parseInt(numberBed);
-                numberWcD = Integer.parseInt(numberWC);
+                if (!numberBed.isEmpty())
+                    numberBedD = Integer.parseInt(numberBed);
+                else
+                    numberBedD=0;
+                if (!numberWC.isEmpty())
+                    numberWcD = Integer.parseInt(numberWC);
+                else
+                    numberWcD=0;
+
                 jsonUtility = new Gson().toJson(listUtility);
                 LogUtils.e("Json utility \n " + jsonUtility);
             } catch (Exception e) {

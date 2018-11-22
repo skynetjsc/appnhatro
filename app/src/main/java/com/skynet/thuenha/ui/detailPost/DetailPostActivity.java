@@ -220,7 +220,7 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
         tvStatus.setText(detailPost.getPost().getActive().equals("1") ? "Đang còn" : "Hết phòng");
         tvArea.setText(String.format("%,.0fm²", detailPost.getPost().getArea()));
         tvContent.setText(detailPost.getPost().getContent());
-        if (detailPost.getImage() != null)
+        if (detailPost.getImage() != null && detailPost.getImage().size() > 0)
             initData(detailPost.getImage());
         if (detailPost.getListUtilies() != null) {
             recyclerView.setAdapter(new AdapterUtility(detailPost.getListUtilies(), this));

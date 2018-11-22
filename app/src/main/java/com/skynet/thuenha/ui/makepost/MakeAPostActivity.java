@@ -406,10 +406,10 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
                     );
                     return;
                 }
-                if (listImage.size() == 0) {
-                    showToast("Hãy cung cấp ảnh căn hộ để thu hút thêm khách hàng.", AppConstant.NEGATIVE);
-                    return;
-                }
+//                if (listImage.size() == 0) {
+//                    showToast("Hãy cung cấp ảnh căn hộ để thu hút thêm khách hàng.", AppConstant.NEGATIVE);
+//                    return;
+//                }
                 presenter.getPriceService(idService);
 
                 break;
@@ -454,7 +454,7 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
 //                            .forResult(REQUEST_CODE_CHOOSE);
 
                     PhotoPicker.builder()
-                            .setPhotoCount(1)
+                            .setPhotoCount(10-listImage.size())
                             .setShowCamera(true)
                             .setShowGif(true)
                             .setPreviewEnabled(false)
@@ -509,16 +509,22 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
             if (data != null) {
                 ArrayList<String> photos =
                         data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
-                File fileImage = new File(photos.get(0));
-                if (!fileImage.exists()) {
-                    Toast.makeText(this, "File không tồn tại.", Toast.LENGTH_SHORT).show();
-                    return;
+                for (String urlPath :photos) {
+                    File fileImage = new File(urlPath);
+                    if (!fileImage.exists()) {
+                        Toast.makeText(this, "File không tồn tại.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    listImage.add(fileImage);
                 }
-                CropImage.activity(Uri.fromFile(fileImage))
-                        .setAspectRatio(2, 1)
-                        .setRequestedSize(800, 400, CropImageView.RequestSizeOptions.RESIZE_EXACT)
+                adapterPhoto.notifyItemInserted(adapterPhoto.getItemCount() - 1);
+                recyclerView2.smoothScrollToPosition(adapterPhoto.getItemCount() - 1);
 
-                        .start(this);
+//                CropImage.activity(Uri.fromFile(fileImage))
+//                        .setAspectRatio(2, 1)
+//                        .setRequestedSize(800, 400, CropImageView.RequestSizeOptions.RESIZE_EXACT)
+//
+//                        .start(this);
             }
 
 //            File fileImage = CommomUtils.scanFileMetisse(this, Matisse.obtainResult(data).get(0));

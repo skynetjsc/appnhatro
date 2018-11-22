@@ -175,6 +175,13 @@ public interface ApiService {
                                           @Part("id_utility") RequestBody id_utility, @Part("number_bed") RequestBody number_bed, @Part("number_wc") RequestBody number_wc,
                                           @Part List<MultipartBody.Part> listFile);
 
+    @Multipart
+    @POST("post.php")
+    Call<ApiResponse<Integer>> submitPost(@Part("host_id") RequestBody host_id, @Part("id_service") RequestBody idServiceBody, @Part("title") RequestBody title,
+                                          @Part("price") RequestBody price, @Part("area") RequestBody area, @Part("city_id") RequestBody city_id,
+                                          @Part("district_id") RequestBody district_id, @Part("address") RequestBody address, @Part("content") RequestBody content,
+                                          @Part("id_utility") RequestBody id_utility, @Part("number_bed") RequestBody number_bed, @Part("number_wc") RequestBody number_wc);
+
     @FormUrlEncoded
     @POST("edit-post.php")
     Call<ApiResponse<Integer>> edtPost(@Field("id") int idPost,@Field("host_id") String host_id, @Field("id_service") int idServiceBody,

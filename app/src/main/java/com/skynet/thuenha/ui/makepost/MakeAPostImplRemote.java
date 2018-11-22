@@ -108,14 +108,25 @@ public class MakeAPostImplRemote extends Interactor implements MakeAPostContract
         RequestBody paramcontent = RequestBody.create(MediaType.parse("text/plain"), content);
         RequestBody paramnumberBed = RequestBody.create(MediaType.parse("text/plain"), numberBed + "");
         RequestBody paramnumberWC = RequestBody.create(MediaType.parse("text/plain"), numberWC + "");
-        List<MultipartBody.Part> parts = new ArrayList<>();
-        for (File file : listPhotos) {
-            RequestBody requestImageFile = RequestBody.create(MediaType.parse("image/*"), file);
-            parts.add(MultipartBody.Part.createFormData("img[]", file.getName(), requestImageFile));
+        List<MultipartBody.Part> parts;
+        Call<ApiResponse<Integer>> call;
+
+        if (listPhotos != null) {
+            parts = new ArrayList<>();
+            for (File file : listPhotos) {
+                RequestBody requestImageFile = RequestBody.create(MediaType.parse("image/*"), file);
+                parts.add(MultipartBody.Part.createFormData("img[]", file.getName(), requestImageFile));
+            }
+            call = getmService().submitPost(paramidHost, paramidService, paramtitle,
+                    paramprice, paramarea, paramcity, paramdistrict, paramaddress,
+                    paramcontent, paramlistUtility, paramnumberBed, paramnumberWC, parts);
+        } else {
+            call = getmService().submitPost(paramidHost, paramidService, paramtitle,
+                    paramprice, paramarea, paramcity, paramdistrict, paramaddress,
+                    paramcontent, paramlistUtility, paramnumberBed, paramnumberWC);
         }
-        getmService().submitPost(paramidHost, paramidService, paramtitle,
-                paramprice, paramarea, paramcity, paramdistrict, paramaddress,
-                paramcontent, paramlistUtility, paramnumberBed, paramnumberWC, parts).enqueue(new CallBackBase<ApiResponse<Integer>>() {
+
+        call.enqueue(new CallBackBase<ApiResponse<Integer>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<Integer>> call, Response<ApiResponse<Integer>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -144,7 +155,7 @@ public class MakeAPostImplRemote extends Interactor implements MakeAPostContract
             listener.onErrorAuthorization();
             return;
         }
-        getmService().edtPost(idPost,profile.getId(),idService, title,
+        getmService().edtPost(idPost, profile.getId(), idService, title,
                 price, area, city, district, address,
                 content, listUtility, numberBed, numberWC).enqueue(new CallBackBase<ApiResponse<Integer>>() {
             @Override
