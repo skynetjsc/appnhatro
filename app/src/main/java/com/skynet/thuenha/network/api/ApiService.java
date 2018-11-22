@@ -196,4 +196,6 @@ public interface ApiService {
 
     @GET("term.php")
     Call<ApiResponse<Term>> getTerm();
+    @GET("privacy.php")
+    Call<ApiResponse<Term>> getPrivacy();
 }

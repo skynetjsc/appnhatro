@@ -83,7 +83,13 @@ public class ListChatAdapter extends RecyclerSwipeAdapter<ListChatAdapter.ViewHo
                 mItemManger.closeAllItems();
             }
         });
-        mItemManger.bindView(viewHolder.itemView,i);
+        viewHolder.tvOpen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewHolder.swipe.toggle();
+            }
+        });
+        mItemManger.bindView(viewHolder.itemView, i);
     }
 
     @Override
@@ -105,6 +111,8 @@ public class ListChatAdapter extends RecyclerSwipeAdapter<ListChatAdapter.ViewHo
         TextView tvContent;
         @BindView(R.id.tvTime)
         TextView tvTime;
+        @BindView(R.id.tvOpen)
+        TextView tvOpen;
         @BindView(R.id.tvOptionLeft)
         TextView tvOptionLeft;
         @BindView(R.id.tvOptionRight)

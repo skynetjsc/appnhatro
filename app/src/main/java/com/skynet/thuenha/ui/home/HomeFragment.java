@@ -2,6 +2,7 @@ package com.skynet.thuenha.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +27,7 @@ import com.skynet.thuenha.ui.base.BaseFragment;
 import com.skynet.thuenha.ui.chosseAddress.ChooseAddressFragment;
 import com.skynet.thuenha.ui.feedback.FeedbackActivity;
 import com.skynet.thuenha.ui.makepost.MakeAPostActivity;
+import com.skynet.thuenha.ui.notification.NotificationActivity;
 import com.skynet.thuenha.ui.search.FragmentSearch;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 import com.skynet.thuenha.ui.views.SlideView;
@@ -147,9 +149,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         if (AppController.getInstance().getmProfileUser().getType() == 2) {
             cardSearch.setVisibility(View.GONE);
         }
-
-        tvWallet.setText(String.format("Số dư TK: %,.0fvnđ", AppController.getInstance().getmProfileUser().getAccountWallet()));
-
+            String type = (AppController.getInstance().getmProfileUser().getType()==1 ? "Người thuê":"Chủ nhà");
+        tvWallet.setText(String.format("Số dư TK: %,.0fvnđ\nTài khoản: %s", AppController.getInstance().getmProfileUser().getAccountWallet(),type));
+//        tvWallet.setTextColor(Color.RED);
     }
 
     @Override
@@ -199,10 +201,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         mListener = null;
     }
 
-    @OnClick(R.id.cardSearch)
+    @OnClick(R.id.tvNoti)
     public void onClickSearch() {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        ChooseAddressFragment fragmentSearch = ChooseAddressFragment.newInstance(myCity);
+        NotificationActivity fragmentSearch = NotificationActivity.newInstance();
         fragmentManager.beginTransaction().replace(R.id.layoutRoot, fragmentSearch, fragmentSearch.getClass().getSimpleName())
                 .addToBackStack(null)
                 .commit();

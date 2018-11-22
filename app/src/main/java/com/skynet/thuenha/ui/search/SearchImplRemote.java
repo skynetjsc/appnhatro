@@ -25,9 +25,7 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
 
     public SearchImplRemote(SearchContract.Listener listener) {
         this.listener = listener;
-        String json = AppController.getInstance().getmSetting().getString(AppConstant.district);
-        if (json != null && !json.isEmpty())
-            district = new Gson().fromJson(json, Address.class);
+
     }
 
     @Override
@@ -41,6 +39,9 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
             listener.onErrorAuthorization();
             return;
         }
+        String json = AppController.getInstance().getmSetting().getString(AppConstant.district);
+        if (json != null && !json.isEmpty())
+            district = new Gson().fromJson(json, Address.class);
         int id = idDistrict;
         if (id != 0) {
             id = district != null ? district.getId() : 0;
@@ -68,6 +69,9 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
 
     @Override
     public void getAllPostByFilter() {
+        String json = AppController.getInstance().getmSetting().getString(AppConstant.district);
+        if (json != null && !json.isEmpty())
+            district = new Gson().fromJson(json, Address.class);
         Filter filter = AppController.getInstance().getFilter();
         if (filter == null) {
             return;
@@ -104,6 +108,9 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
 
     @Override
     public void queryPostByService(int idService, String query) {
+        String json = AppController.getInstance().getmSetting().getString(AppConstant.district);
+        if (json != null && !json.isEmpty())
+            district = new Gson().fromJson(json, Address.class);
         if (AppController.getInstance().getmProfileUser() == null) {
             listener.onErrorAuthorization();
             return;

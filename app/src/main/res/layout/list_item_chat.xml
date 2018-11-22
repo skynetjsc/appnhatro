@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp16"
-  >
+    android:layout_marginBottom="@dimen/dp16">
 
     <com.daimajia.swipe.SwipeLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-     >
+        android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="160dp"
             android:layout_height="match_parent"
@@ -85,8 +84,8 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="16dp"
                     android:gravity="left|center_vertical"
-                    android:text="TextView"
                     android:singleLine="true"
+                    android:text="TextView"
                     app:layout_constraintBottom_toTopOf="@+id/tvTime"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/circleImageView2"
@@ -101,9 +100,22 @@
                     android:gravity="left|center_vertical"
                     android:text="TextView"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvOpen"
                     app:layout_constraintStart_toEndOf="@+id/circleImageView2"
                     app:layout_constraintTop_toBottomOf="@+id/tvContent" />
+
+                <TextView
+                    android:id="@+id/tvOpen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:drawableLeft="@drawable/chevron_double_left"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Tùy chọn"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTime"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvTime" />
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>
 

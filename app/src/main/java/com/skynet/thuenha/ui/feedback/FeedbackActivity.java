@@ -83,7 +83,8 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.V
         this.list = list;
         adapterFb = new AdapterFeedback(this.list, this, this);
         rcv.setAdapter(adapterFb);
-        rcv.smoothScrollToPosition(list.size() - 1);
+        if (list.size() > 0)
+            rcv.smoothScrollToPosition(list.size() - 1);
     }
 
     @Override

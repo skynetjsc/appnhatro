@@ -15,7 +15,9 @@ import android.widget.Toast;
 import com.blankj.utilcode.util.LogUtils;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.ui.base.BaseActivity;
+import com.skynet.thuenha.ui.login.LoginActivity;
 import com.skynet.thuenha.ui.privacy.PrivacyActivity;
+import com.skynet.thuenha.ui.privacy.TermActivity;
 import com.skynet.thuenha.ui.verifyaccount.VerifyAccountActivity;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 import com.skynet.thuenha.utils.AppConstant;
@@ -138,7 +140,7 @@ public class FragmentSignUp extends BaseActivity implements SignUpContract.View 
 
     }
 
-    @OnClick({R.id.imgBtn_back_toolbar, R.id.signup_txt, R.id.privacy})
+    @OnClick({R.id.imgBtn_back_toolbar, R.id.signup_txt, R.id.privacy,R.id.term})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBtn_back_toolbar:
@@ -151,7 +153,9 @@ public class FragmentSignUp extends BaseActivity implements SignUpContract.View 
                 break;
             case R.id.privacy:
                 startActivity(new Intent(FragmentSignUp.this, PrivacyActivity.class));
-
+                break;
+            case R.id.term:
+                startActivity(new Intent(FragmentSignUp.this, TermActivity.class));
                 break;
         }
     }

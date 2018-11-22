@@ -15,6 +15,7 @@ import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.ui.base.BaseActivity;
 import com.skynet.thuenha.ui.forgotPassword.ForgotPwActivity;
 import com.skynet.thuenha.ui.privacy.PrivacyActivity;
+import com.skynet.thuenha.ui.privacy.TermActivity;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 import com.skynet.thuenha.utils.AppConstant;
 
@@ -60,7 +61,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         return R.id.layoutRoot;
     }
 
-    @OnClick({R.id.login_btn, R.id.forget_txt, R.id.privacy})
+    @OnClick({R.id.login_btn, R.id.forget_txt, R.id.privacy, R.id.term})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login_btn:
@@ -71,6 +72,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 break;
             case R.id.privacy:
                 startActivity(new Intent(LoginActivity.this, PrivacyActivity.class));
+                break;
+                case R.id.term:
+                startActivity(new Intent(LoginActivity.this, TermActivity.class));
                 break;
         }
     }

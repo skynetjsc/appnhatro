@@ -358,6 +358,7 @@ Nếu bạn quan tâm vui lòng bấm vào liên hệ bên duới."
                                     android:paddingTop="@dimen/dp10"
                                     android:text="Đi xem"
                                     android:textColor="@android:color/white"
+                                    android:visibility="gone"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.models.Term;
 import com.skynet.thuenha.network.api.ApiResponse;
@@ -20,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class PrivacyActivity extends BaseActivity {
+public class TermActivity extends BaseActivity {
     @BindView(R.id.imgBtn_back_toolbar)
     ImageView imgBtnBackToolbar;
     @BindView(R.id.tvTitle_toolbar)
@@ -35,7 +34,7 @@ public class PrivacyActivity extends BaseActivity {
 
     @Override
     protected void initVariables() {
-        ApiUtil.createNotTokenApi().getPrivacy().enqueue(new CallBackBase<ApiResponse<Term>>() {
+        ApiUtil.createNotTokenApi().getTerm().enqueue(new CallBackBase<ApiResponse<Term>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<Term>> call, Response<ApiResponse<Term>> response) {
                 if (response.isSuccessful() && response.body().getData() != null) {
@@ -53,7 +52,8 @@ public class PrivacyActivity extends BaseActivity {
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
-        tvTitleToolbar.setText("Chính sách");
+        tvTitleToolbar.setText("Điều khoản");
+
     }
 
     @Override
