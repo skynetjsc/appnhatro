@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.skynet.thuenha.R;
+import com.skynet.thuenha.interfaces.ICallback;
+import com.skynet.thuenha.models.Image;
 import com.skynet.thuenha.models.Utility;
 import com.squareup.picasso.Picasso;
 
@@ -23,10 +25,12 @@ import butterknife.ButterKnife;
 
 public class AdapterPhoto extends RecyclerView.Adapter<AdapterPhoto.ViewHolder> {
 
-    List<File> list;
+    List<Image> list;
     Context context;
+    ICallback iCallback;
 
-    public AdapterPhoto(List<File> list, Context context) {
+    public AdapterPhoto(List<Image> list, Context context, ICallback iCallback) {
+        this.iCallback = iCallback;
         this.list = list;
         this.context = context;
     }
@@ -39,16 +43,17 @@ public class AdapterPhoto extends RecyclerView.Adapter<AdapterPhoto.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
+        if (list.get(i).getImg() != null && !list.get(i).getImg().isEmpty()) {
+            Picasso.with(context).load(list.get(i).getImg()).fit().centerCrop().into(viewHolder.img);
 
-        if (list.get(i) != null && list.get(i).exists()) {
-            Picasso.with(context).load(list.get(i)).fit().centerCrop().into(viewHolder.img);
+        } else if (list.get(i) != null && list.get(i).getFile() != null && list.get(i).getFile().exists()) {
+            Picasso.with(context).load(list.get(i).getFile()).fit().centerCrop().into(viewHolder.img);
         }
         viewHolder.clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list.remove(i);
-                notifyItemRemoved(i);
-                notifyItemRangeChanged(i, list.size());
+                iCallback.onCallBack(i);
+
             }
         });
 
@@ -65,6 +70,7 @@ public class AdapterPhoto extends RecyclerView.Adapter<AdapterPhoto.ViewHolder> 
         ImageView img;
         @BindView(R.id.clear)
         ImageView clear;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

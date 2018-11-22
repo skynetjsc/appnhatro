@@ -27,6 +27,8 @@ public class DetailPost implements Parcelable {
     String district;
     @SerializedName("utility")
     List<Utility> listUtilies;
+    @SerializedName("image_test")
+    List<Image> image_test;
     @SerializedName("image")
     List<String> image;
 
@@ -110,6 +112,17 @@ public class DetailPost implements Parcelable {
         this.avatar = avatar;
     }
 
+    public List<Image> getImage_test() {
+        return image_test;
+    }
+
+    public void setImage_test(List<Image> image_test) {
+        this.image_test = image_test;
+    }
+
+    public DetailPost() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -126,10 +139,8 @@ public class DetailPost implements Parcelable {
         dest.writeString(this.city);
         dest.writeString(this.district);
         dest.writeTypedList(this.listUtilies);
+        dest.writeTypedList(this.image_test);
         dest.writeStringList(this.image);
-    }
-
-    public DetailPost() {
     }
 
     protected DetailPost(Parcel in) {
@@ -142,10 +153,11 @@ public class DetailPost implements Parcelable {
         this.city = in.readString();
         this.district = in.readString();
         this.listUtilies = in.createTypedArrayList(Utility.CREATOR);
+        this.image_test = in.createTypedArrayList(Image.CREATOR);
         this.image = in.createStringArrayList();
     }
 
-    public static final Parcelable.Creator<DetailPost> CREATOR = new Parcelable.Creator<DetailPost>() {
+    public static final Creator<DetailPost> CREATOR = new Creator<DetailPost>() {
         @Override
         public DetailPost createFromParcel(Parcel source) {
             return new DetailPost(source);

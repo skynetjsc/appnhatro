@@ -6,6 +6,7 @@ import android.provider.MediaStore;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.skynet.thuenha.application.AppController;
+import com.skynet.thuenha.models.Image;
 import com.skynet.thuenha.models.Post;
 import com.skynet.thuenha.models.PriceService;
 import com.skynet.thuenha.models.Profile;
@@ -90,7 +91,7 @@ public class MakeAPostImplRemote extends Interactor implements MakeAPostContract
     @Override
     public void submitPost(int idService, String title, double price, double area, int city,
                            int district, String address, String listUtility, String content,
-                           int numberBed, int numberWC, List<File> listPhotos) {
+                           int numberBed, int numberWC, List<Image> listPhotos) {
         Profile profile = AppController.getInstance().getmProfileUser();
         if (profile == null) {
             listener.onErrorAuthorization();
@@ -113,9 +114,9 @@ public class MakeAPostImplRemote extends Interactor implements MakeAPostContract
 
         if (listPhotos != null) {
             parts = new ArrayList<>();
-            for (File file : listPhotos) {
-                RequestBody requestImageFile = RequestBody.create(MediaType.parse("image/*"), file);
-                parts.add(MultipartBody.Part.createFormData("img[]", file.getName(), requestImageFile));
+            for (Image img : listPhotos) {
+                RequestBody requestImageFile = RequestBody.create(MediaType.parse("image/*"), img.getFile());
+                parts.add(MultipartBody.Part.createFormData("img[]", img.getFile().getName(), requestImageFile));
             }
             call = getmService().submitPost(paramidHost, paramidService, paramtitle,
                     paramprice, paramarea, paramcity, paramdistrict, paramaddress,
@@ -149,7 +150,7 @@ public class MakeAPostImplRemote extends Interactor implements MakeAPostContract
 
     @Override
     public void edtPost(int idPost, int idService, String title, double price, double area, int city, int district, String address,
-                        String listUtility, String content, int numberBed, int numberWC, List<File> listPhotos) {
+                        String listUtility, String content, int numberBed, int numberWC, List<Image> listPhotos) {
         Profile profile = AppController.getInstance().getmProfileUser();
         if (profile == null) {
             listener.onErrorAuthorization();
@@ -202,6 +203,66 @@ public class MakeAPostImplRemote extends Interactor implements MakeAPostContract
 
             }
         });
+    }
+
+    @Override
+    public void deletePhoto(int idPhoto) {
+        getmService().deletePhoto(idPhoto).enqueue(new CallBackBase<ApiResponse>() {
+            @Override
+            public void onRequestSuccess(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
+                            listener.onSucessDeletePhoto();
+                    } else {
+                        new ExceptionHandler<PriceService>(listener, response.body()).excute();
+                    }
+                } else {
+                    listener.onError(response.message());
+                }
+            }
+
+            @Override
+            public void onRequestFailure(Call<ApiResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void addPhoto(List<Image> listPhotos, int idPost) {
+        RequestBody idPostParam = RequestBody.create(MediaType.parse("text/plain"), idPost + "");
+
+        List<MultipartBody.Part> parts;
+        Call<ApiResponse<List<Image>>> call;
+        if (listPhotos != null) {
+            parts = new ArrayList<>();
+            for (Image img : listPhotos) {
+                RequestBody requestImageFile = RequestBody.create(MediaType.parse("image/*"), img.getFile());
+                parts.add(MultipartBody.Part.createFormData("img[]", img.getFile().getName(), requestImageFile));
+            }
+            call = getmService().addPhoto(idPostParam, parts);
+            call.enqueue(new CallBackBase<ApiResponse<List<Image>>>() {
+                @Override
+                public void onRequestSuccess(Call<ApiResponse<List<Image>>> call, Response<ApiResponse<List<Image>>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
+                            listener.onSucessAddPhoto(response.body().getData());
+                        } else {
+                            new ExceptionHandler<List<Image>>(listener, response.body()).excute();
+                        }
+                    } else {
+                        listener.onError(response.message());
+                    }
+                }
+
+                @Override
+                public void onRequestFailure(Call<ApiResponse<List<Image>>> call, Throwable t) {
+                    LogUtils.e(t.getMessage());
+                    listener.onErrorApi(t.getMessage());
+                }
+            });
+        }
+
     }
 
     @Override

@@ -16,6 +16,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import com.skynet.thuenha.interfaces.ICallback;
 import com.skynet.thuenha.interfaces.SnackBarCallBack;
 import com.skynet.thuenha.models.Address;
 import com.skynet.thuenha.models.DetailPost;
+import com.skynet.thuenha.models.Image;
 import com.skynet.thuenha.models.Service;
 import com.skynet.thuenha.models.Utility;
 import com.skynet.thuenha.ui.base.BaseActivity;
@@ -132,12 +134,33 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
     private List<Service> listServices;
     private List<Utility> listUtilities;
     private List<Utility> listUtilityRequest = new ArrayList<>();
-    private List<File> listImage;
+    private List<Image> listImage;
     private AdapterPhoto adapterPhoto;
     private double price = 0;
     private DialogTwoButtonUtil dialogConfirmPrice;
     private int idService = -1;
     private DetailPost postToEdit;
+
+    private ICallback iCallbackDeletePhoto = new ICallback() {
+        @Override
+        public void onCallBack(final int pos) {
+            if (pos != -1 && postToEdit != null && postToEdit.getImage_test() != null && pos < postToEdit.getImage_test().size()) {
+                new DialogTwoButtonUtil(MakeAPostActivity.this, R.drawable.ic_question, "Xóa ảnh bài đăng", "Nếu như xóa ảnh sẽ không thể được khôi phục lại. Bạn có chắc chắn muốn xóa ?", new DialogTwoButtonUtil.DialogOneButtonClickListener() {
+                    @Override
+                    public void okClick() {
+                        presenter.deletePhoto(postToEdit.getImage_test().get(pos).getId());
+                        listImage.remove(pos);
+                        adapterPhoto.notifyItemRemoved(pos);
+                        adapterPhoto.notifyItemRangeChanged(pos, adapterPhoto.getItemCount());
+                    }
+                }).show();
+            } else {
+                listImage.remove(pos);
+                adapterPhoto.notifyItemRemoved(pos);
+                adapterPhoto.notifyItemRangeChanged(pos, adapterPhoto.getItemCount());
+            }
+        }
+    };
 
     @Override
     protected int initLayout() {
@@ -146,6 +169,9 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
 
     @Override
     protected void initVariables() {
+        listImage = new ArrayList<>();
+        adapterPhoto = new AdapterPhoto(listImage, this, iCallbackDeletePhoto);
+        recyclerView2.setAdapter(adapterPhoto);
         if (getIntent() != null && getIntent().getBundleExtra(AppConstant.BUNDLE) != null)
             postToEdit = getIntent().getBundleExtra(AppConstant.BUNDLE).getParcelable(AppConstant.MSG);
         if (postToEdit != null) {
@@ -158,14 +184,16 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
             edtWc.setText(postToEdit.getPost().getNumber_wc() + "");
             edtTitle.setText(postToEdit.getPost().getTitle());
             editText3.setText(postToEdit.getPost().getContent());
+            if (postToEdit.getImage_test() != null && !postToEdit.getImage_test().isEmpty()) {
+                listImage.addAll(postToEdit.getImage_test());
+                adapterPhoto.notifyDataSetChanged();
+            }
         }
         presenter = new MakeAPostPresenter(this);
         dialogLoading = new ProgressDialogCustom(this);
         presenter.getService();
         presenter.getUtility();
-        listImage = new ArrayList<>();
-        adapterPhoto = new AdapterPhoto(listImage, this);
-        recyclerView2.setAdapter(adapterPhoto);
+
     }
 
     @Override
@@ -299,6 +327,19 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
                 Html.fromHtml(String.format(getString(R.string.content_confirm_post), price)),
                 this);
         dialogConfirmPrice.show();
+    }
+
+    @Override
+    public void onSucessDeletePhoto() {
+
+    }
+
+    @Override
+    public void onSucessAddPhoto(List<Image> photo) {
+        listImage.clear();
+        listImage.addAll(photo);
+        adapterPhoto.notifyDataSetChanged();
+
     }
 
     @Override
@@ -454,7 +495,7 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
 //                            .forResult(REQUEST_CODE_CHOOSE);
 
                     PhotoPicker.builder()
-                            .setPhotoCount(10-listImage.size())
+                            .setPhotoCount(10 - listImage.size())
                             .setShowCamera(true)
                             .setShowGif(true)
                             .setPreviewEnabled(false)
@@ -509,17 +550,26 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
             if (data != null) {
                 ArrayList<String> photos =
                         data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
-                for (String urlPath :photos) {
+                List<Image> listPickup = new ArrayList<>();
+                for (String urlPath : photos) {
                     File fileImage = new File(urlPath);
                     if (!fileImage.exists()) {
                         Toast.makeText(this, "File không tồn tại.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    listImage.add(fileImage);
+
+                    Image image = new Image();
+                    image.setId(-1);
+                    image.setFile(fileImage);
+                    listPickup.add(image);
                 }
+
+                listImage.addAll(listPickup);
                 adapterPhoto.notifyItemInserted(adapterPhoto.getItemCount() - 1);
                 recyclerView2.smoothScrollToPosition(adapterPhoto.getItemCount() - 1);
-
+                if (postToEdit != null && postToEdit.getPost() != null) {
+                    presenter.addPhoto(listPickup, postToEdit.getPost().getId());
+                }
 //                CropImage.activity(Uri.fromFile(fileImage))
 //                        .setAspectRatio(2, 1)
 //                        .setRequestedSize(800, 400, CropImageView.RequestSizeOptions.RESIZE_EXACT)
@@ -535,16 +585,16 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
         }
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-                File file = new File(resultUri.getPath());
-                listImage.add(file);
-                adapterPhoto.notifyItemInserted(adapterPhoto.getItemCount() - 1);
-                recyclerView2.smoothScrollToPosition(adapterPhoto.getItemCount() - 1);
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-            }
+//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+//            if (resultCode == RESULT_OK) {
+//                Uri resultUri = result.getUri();
+//                File file = new File(resultUri.getPath());
+//                listImage.add(file);
+//                adapterPhoto.notifyItemInserted(adapterPhoto.getItemCount() - 1);
+//                recyclerView2.smoothScrollToPosition(adapterPhoto.getItemCount() - 1);
+//            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+//                Exception error = result.getError();
+//            }
 
         }
     }

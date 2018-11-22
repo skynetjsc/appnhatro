@@ -96,9 +96,9 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         else if (badge != null)
             badge.hide(true);
 
-        if (AppController.getInstance().getmProfileUser().getName().isEmpty() || AppController.getInstance().getmProfileUser().getEmail().isEmpty()) {
-            startActivity(new Intent(MainActivity.this, ProfileUpdateFragment.class));
-        }
+//        if (AppController.getInstance().getmProfileUser().getName().isEmpty() || AppController.getInstance().getmProfileUser().getEmail().isEmpty()) {
+//            startActivity(new Intent(MainActivity.this, ProfileUpdateFragment.class));
+//        }
     }
 
     private void addBadgeAt(int position, int number) {

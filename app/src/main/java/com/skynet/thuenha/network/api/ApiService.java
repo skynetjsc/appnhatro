@@ -5,6 +5,7 @@ import com.skynet.thuenha.models.ChatItem;
 import com.skynet.thuenha.models.DetailPost;
 import com.skynet.thuenha.models.Feedback;
 import com.skynet.thuenha.models.HomeResponse;
+import com.skynet.thuenha.models.Image;
 import com.skynet.thuenha.models.Message;
 import com.skynet.thuenha.models.Notification;
 import com.skynet.thuenha.models.Post;
@@ -51,6 +52,15 @@ public interface ApiService {
 
     @GET("price.php")
     Call<ApiResponse<PriceService>> getPrice(@Query("id_service") int id_service);
+
+    @Multipart
+    @POST("update_image.php")
+    Call<ApiResponse<List<Image>>> addPhoto(@Part("id") RequestBody id_post,
+                                            @Part List<MultipartBody.Part> listFile);
+
+    @FormUrlEncoded
+    @POST("delete_image.php")
+    Call<ApiResponse> deletePhoto(@Field("id") int idPhoto);
 
     @GET("login.php")
     Call<ApiResponse<Profile>> login(@Query("username") String username, @Query("password") String password, @Query("type") int type);
@@ -184,14 +194,14 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("edit-post.php")
-    Call<ApiResponse<Integer>> edtPost(@Field("id") int idPost,@Field("host_id") String host_id, @Field("id_service") int idServiceBody,
-                                          @Field("title") String title,
-                                          @Field("price") double price, @Field("area") double area,
-                                          @Field("city_id") int city_id,
-                                          @Field("district_id") int district_id, @Field("address") String address,
-                                          @Field("content") String content,
-                                          @Field("id_utility") String id_utility, @Field("number_bed") int number_bed,
-                                          @Field("number_wc") int number_wc);
+    Call<ApiResponse<Integer>> edtPost(@Field("id") int idPost, @Field("host_id") String host_id, @Field("id_service") int idServiceBody,
+                                       @Field("title") String title,
+                                       @Field("price") double price, @Field("area") double area,
+                                       @Field("city_id") int city_id,
+                                       @Field("district_id") int district_id, @Field("address") String address,
+                                       @Field("content") String content,
+                                       @Field("id_utility") String id_utility, @Field("number_bed") int number_bed,
+                                       @Field("number_wc") int number_wc);
 
     @Multipart
     @POST("update_profile.php")
@@ -203,6 +213,7 @@ public interface ApiService {
 
     @GET("term.php")
     Call<ApiResponse<Term>> getTerm();
+
     @GET("privacy.php")
     Call<ApiResponse<Term>> getPrivacy();
 }

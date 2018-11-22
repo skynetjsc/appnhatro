@@ -52,6 +52,20 @@ public class DialogTwoButtonUtil extends Dialog {
         mContentTextView.setText(content);
         title.setText(titleContent);
     }
+    public DialogTwoButtonUtil(@NonNull Context context, int resourceHeader, String titleContent, String content, DialogOneButtonClickListener listener) {
+        super(context);
+        this.mContext = context;
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.dialog_price_confirm);
+        getWindow().setBackgroundDrawable(
+                new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        this.mListener = listener;
+
+        initView();
+        imageView.setImageResource(resourceHeader);
+        mContentTextView.setText(content);
+        title.setText(titleContent);
+    }
 
     private void initView() {
         imageView = (ImageView) findViewById(R.id.imgHeader);

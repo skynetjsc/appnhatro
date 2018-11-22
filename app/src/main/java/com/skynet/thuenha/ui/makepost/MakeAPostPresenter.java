@@ -2,6 +2,7 @@ package com.skynet.thuenha.ui.makepost;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.google.gson.Gson;
+import com.skynet.thuenha.models.Image;
 import com.skynet.thuenha.models.Service;
 import com.skynet.thuenha.models.Utility;
 import com.skynet.thuenha.ui.base.Presenter;
@@ -34,7 +35,7 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
     @Override
     public void submitPost(int idService, String title, String price, String area, int city,
                            int district, String address, List<Utility> listUtility, String content,
-                           String numberBed, String numberWC, List<File> listPhotos) {
+                           String numberBed, String numberWC, List<Image> listPhotos) {
         if (isAvaliableView()) {
             double priceD, areaD;
             int numberBedD, numberWcD;
@@ -45,11 +46,11 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
                 if (!numberBed.isEmpty())
                     numberBedD = Integer.parseInt(numberBed);
                 else
-                    numberBedD=0;
+                    numberBedD = 0;
                 if (!numberWC.isEmpty())
                     numberWcD = Integer.parseInt(numberWC);
                 else
-                    numberWcD=0;
+                    numberWcD = 0;
 
                 jsonUtility = new Gson().toJson(listUtility);
                 LogUtils.e("Json utility \n " + jsonUtility);
@@ -64,7 +65,7 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
     }
 
     @Override
-    public void edtPost(int idPost, int idService, String title, String price, String area, int city, int district, String address, List<Utility> listUtility, String content, String numberBed, String numberWC, List<File> listPhotos) {
+    public void edtPost(int idPost, int idService, String title, String price, String area, int city, int district, String address, List<Utility> listUtility, String content, String numberBed, String numberWC, List<Image> listPhotos) {
         if (isAvaliableView()) {
             double priceD, areaD;
             int numberBedD, numberWcD;
@@ -99,6 +100,22 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
         if (isAvaliableView()) {
             view.showProgress();
             interactor.getPriceServiceToChooseService(idService);
+        }
+    }
+
+    @Override
+    public void deletePhoto(int idPhoto) {
+        if (isAvaliableView()) {
+//            view.showProgress();
+            interactor.deletePhoto(idPhoto);
+        }
+    }
+
+    @Override
+    public void addPhoto(List<Image> image, int idPost) {
+        if (isAvaliableView()) {
+            view.showProgress();
+            interactor.addPhoto(image, idPost);
         }
     }
 
@@ -151,6 +168,23 @@ public class MakeAPostPresenter extends Presenter<MakeAPostContract.View> implem
         if (isAvaliableView()) {
             view.hiddenProgress();
             view.onSucessGetPriceService(price);
+        }
+    }
+
+    @Override
+    public void onSucessDeletePhoto() {
+        if (isAvaliableView()) {
+//            view.hiddenProgress();
+            view.onSucessDeletePhoto();
+        }
+    }
+
+    @Override
+    public void onSucessAddPhoto(List<Image> photo) {
+        if (isAvaliableView()) {
+            view.hiddenProgress();
+            if (photo != null)
+                view.onSucessAddPhoto(photo);
         }
     }
 

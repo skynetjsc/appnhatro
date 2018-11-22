@@ -1,5 +1,6 @@
 package com.skynet.thuenha.ui.makepost;
 
+import com.skynet.thuenha.models.Image;
 import com.skynet.thuenha.models.Service;
 import com.skynet.thuenha.models.Utility;
 import com.skynet.thuenha.ui.base.BaseView;
@@ -16,11 +17,16 @@ public interface MakeAPostContract {
         void onSucessGetUtility(List<Utility> list);
 
         void onSucessSubmitPost(int idPost);
+
         void onSucessEditPost(int idPost);
+
         void onSucessGetPriceToChooseService(double price);
 
         void onSucessGetPriceService(double price);
 
+        void onSucessDeletePhoto();
+
+        void onSucessAddPhoto(List<Image> photo);
     }
 
     interface Presenter extends IBasePresenter, Listener {
@@ -30,14 +36,19 @@ public interface MakeAPostContract {
 
         void submitPost(int idService, String title, String price, String area, int city, int district,
                         String address, List<Utility> listUtility, String content, String numberBed,
-                        String numberWC, List<File> listPhotos);
+                        String numberWC, List<Image> listPhotos);
 
         void edtPost(int idPost, int idService, String title, String price, String area, int city, int district,
                      String address, List<Utility> listUtility, String content, String numberBed,
-                     String numberWC, List<File> listPhotos);
+                     String numberWC, List<Image> listPhotos);
 
         void getPriceService(int idService);
+
         void getPriceServiceToChooseService(int idService);
+
+        void deletePhoto(int idPhoto);
+
+        void addPhoto(List<Image> image,int idPost);
 
 
     }
@@ -49,27 +60,37 @@ public interface MakeAPostContract {
 
         void submitPost(int idService, String title, double price, double area, int city, int district,
                         String address, String listUtility, String content, int numberBed,
-                        int numberWC, List<File> listPhotos);
+                        int numberWC, List<Image> listPhotos);
 
         void edtPost(int idPost, int idService, String title, double price, double area, int city, int district,
                      String address, String listUtility, String content, int numberBed,
-                     int numberWC, List<File> listPhotos);
+                     int numberWC, List<Image> listPhotos);
 
         void getPriceService(int idService);
+
+        void deletePhoto(int idPhoto);
+
+        void addPhoto(List<Image> image,int idPost);
+
         void getPriceServiceToChooseService(int idService);
 
     }
 
     interface Listener extends OnFinishListener {
         void onSucessGetService(List<Service> list);
+
         void onSucessGetPriceToChooseService(double price);
 
         void onSucessGetUtility(List<Utility> list);
 
         void onSucessSubmitPost(int idPost);
+
         void onSucessEditPost(int idPost);
 
         void onSucessGetPriceService(double price);
 
+        void onSucessDeletePhoto();
+
+        void onSucessAddPhoto(List<Image> photo);
     }
 }
