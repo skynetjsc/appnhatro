@@ -15,12 +15,12 @@ public interface ListChatContract {
     }
     interface Presenter extends IBasePresenter,Listener{
         void getListChat();
-        void confirmHired(int idPost,String idHost);
+        void confirmHired(int idPost,String idHost,String idRent);
         void deleteChat(String idHost,int idPost);
     }
     interface Interactor {
         void getListChat();
-        void confirmHired(int idPost,String idHost);
+        void confirmHired(int idPost,String idHost,String idRent);
         void deleteChat(String idHost,int idPost);
     }
     interface Listener extends OnFinishListener{

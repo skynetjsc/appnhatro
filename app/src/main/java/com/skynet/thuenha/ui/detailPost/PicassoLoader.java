@@ -1,10 +1,14 @@
 package com.skynet.thuenha.ui.detailPost;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
+import com.skynet.thuenha.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+import com.squareup.picasso.Target;
 
 import java.io.File;
 
@@ -37,6 +41,7 @@ public class PicassoLoader implements ImageLoader {
                 .fit()
                 .centerCrop()
                 .tag(context)
+                .placeholder(R.drawable.animate_loading)
                 .into(targetView);
 
     }

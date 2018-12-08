@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         ButterKnife.bind(this);
         bnve.enableAnimation(false);
         bnve.enableShiftingMode(false);
-        bnve.setTextVisibility(false);
+        bnve.setTextVisibility(true);
         bnve.enableItemShiftingMode(false);
         adapter = new AdapterViewpager(getSupportFragmentManager());
         viewpager.setAdapter(adapter);
@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     @Override
     protected void onResume() {
         super.onResume();
-        int count = AppController.getInstance().getmProfileUser().getMessage() + AppController.getInstance().getmProfileUser().getNoty();
+        int count = AppController.getInstance().getmProfileUser().getMessage();
         if (count > 0)
             addBadgeAt(2, count);
         else if (badge != null)

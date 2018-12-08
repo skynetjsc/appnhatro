@@ -1,7 +1,9 @@
 package com.skynet.thuenha.ui.profile;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
@@ -27,12 +29,17 @@ public class AdapterPostProfile extends RecyclerView.Adapter<AdapterPostProfile.
     List<Post> list;
     Context context;
     ICallbackTwoM iCallback;
+    SparseBooleanArray sparseBooleanArray;
 
     public AdapterPostProfile(List<Post> list, Context context, ICallbackTwoM iCallback) {
         this.list = list;
         this.context = context;
         this.iCallback = iCallback;
-
+        sparseBooleanArray = new SparseBooleanArray();
+        for (int i = 0; i < this.list.size(); i++) {
+            sparseBooleanArray.put(i, list.get(i).getPrice() == 0);
+            list.get(i).setColor(list.get(i).getPrice() == 0 ? ContextCompat.getColor(context, R.color.green) : Color.BLACK);
+        }
     }
 
     @NonNull
@@ -43,7 +50,8 @@ public class AdapterPostProfile extends RecyclerView.Adapter<AdapterPostProfile.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-        viewHolder.tvName.setText(String.format("%,.0fđ/tháng", list.get(i).getPrice()));
+        viewHolder.tvName.setText(list.get(i).getPrice() == 0 ? "Giá liên hệ":String.format("%,.0fVNĐ/Tháng", list.get(i).getPrice()));
+            viewHolder.tvName.setTextColor(sparseBooleanArray.get(i) ? ContextCompat.getColor(context, R.color.green) : Color.BLACK);
         viewHolder.tvAddress.setText(list.get(i).getAddress());
         viewHolder.tvArea.setText(String.format("%,.0f", list.get(i).getArea()) + context.getString(R.string.area_unit));
         viewHolder.tvBed.setText(list.get(i).getNumber_bed()+"");

@@ -56,7 +56,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import me.iwf.photopicker.PhotoPicker;
 
-public class MakeAPostActivity extends BaseActivity implements MakeAPostContract.View, ChooseAddressFragment.CallBackChooseAddress, DialogTwoButtonUtil.DialogOneButtonClickListener, ICallback {
+public class MakeAPostActivity extends BaseActivity implements MakeAPostContract.View, View.OnFocusChangeListener,ChooseAddressFragment.CallBackChooseAddress, DialogTwoButtonUtil.DialogOneButtonClickListener, ICallback {
     MakeAPostContract.Presenter presenter;
     ProgressDialogCustom dialogLoading;
     @BindView(R.id.tvToolbar)
@@ -220,6 +220,11 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
                 }
             }
         });
+//        edtPrice.setOnFocusChangeListener(this);
+        edtArea.setOnFocusChangeListener(this);
+        edtTitle.setOnFocusChangeListener(this);
+        edtWc.setOnFocusChangeListener(this);
+        edtBed.setOnFocusChangeListener(this);
     }
 
     @Override
@@ -610,5 +615,10 @@ public class MakeAPostActivity extends BaseActivity implements MakeAPostContract
     @Override
     public void onCallBack(int pos) {
         presenter.getPriceServiceToChooseService(listServices.get(pos).getId());
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        ((EditText) v).selectAll();
     }
 }

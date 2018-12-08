@@ -78,6 +78,7 @@
             android:background="#fb7a32"
             android:hint="@string/nh_p_n_i_dung"
             android:paddingLeft="25dp"
+            android:inputType="textCapWords|textCapSentences"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="14sp" />

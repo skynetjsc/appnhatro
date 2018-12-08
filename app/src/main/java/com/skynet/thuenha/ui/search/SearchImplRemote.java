@@ -83,8 +83,8 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
         getmService().getListFilterPost(AppController.getInstance().getmProfileUser().getId(),
                 filter.getIdService() == 0 ? "" : filter.getIdService() + "",
                 filter.getMin() == 0 ? "" : filter.getMin() + "",
-                filter.getMax() == 0 ? "" : filter.getMax() + "",
-                filter.getListIdUtility(), district != null ? district.getId() : 1)
+                filter.getMax() == 0 ? "" : filter.getMax() + "", filter.getPrice() == 0 ? "" : filter.getPrice() + "",
+                filter.getListIdUtility(), district != null ? district.getId() : 0)
                 .enqueue(new CallBackBase<ApiResponse<List<Post>>>() {
                     @Override
                     public void onRequestSuccess(Call<ApiResponse<List<Post>>> call, Response<ApiResponse<List<Post>>> response) {

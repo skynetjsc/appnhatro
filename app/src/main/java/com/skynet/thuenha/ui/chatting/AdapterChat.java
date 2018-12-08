@@ -3,6 +3,7 @@ package com.skynet.thuenha.ui.chatting;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +73,10 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolerMessa
                 holder.layoutPost.setVisibility(View.VISIBLE);
                 holder.tvAddressPost.setText(post.getAddress());
                 holder.tvNamePost.setText(post.getTitle());
-                holder.tvPricePost.setText(String.format("%,.0fđ/tháng", post.getPrice()));
+                holder.tvPricePost.setText(post.getPrice() == 0 ? "Giá liên hệ":String.format("%,.0fVNĐ/Tháng", post.getPrice()));
+                if(post.getPrice() == 0){
+                    holder.tvPricePost.setTextColor(ContextCompat.getColor(context,R.color.green));
+                }
                 if (post.getAvatar() != null
                         && !post.getAvatar().isEmpty()) {
                     Transformation transformation = new RoundedTransformationBuilder()

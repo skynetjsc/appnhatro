@@ -12,7 +12,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tilte_search"><![CDATA[Có <font color=#d52a3f>%d</font> tin đăng]]></string>
+    <string name="tilte_search"><![CDATA[%s có <font color=#d52a3f>%d</font> tin đăng]]></string>
     <string name="content_confirm"><![CDATA[Bạn có muốn xem toàn bộ thông tin
 chi tiết tin đăng này không?. Nếu đồng ý
 bạn sẽ bị trừ <b><font color=#d52a3f>%,.0fđ</font>/lượt </b>xem<br><br>Mọi thắc mắc vui lòng liên hệ<br><b>0987875427</b>]]></string>

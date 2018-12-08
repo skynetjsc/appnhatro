@@ -3,18 +3,18 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="Trang chủ" />
     <item
         android:id="@+id/nav_fav"
-        android:title="fav"
+        android:title="Yêu thích"
         android:icon="@drawable/ic_heart_outline" />
     <item
         android:id="@+id/nav_noti"
-        android:title="noti"
-        android:icon="@drawable/ic_profile" />
+        android:title="Tin nhắn"
+        android:icon="@drawable/ic_icons8_weixin" />
     <item
         android:id="@+id/nav_profile"
-        android:title="profile"
+        android:title="Cá nhân"
         android:icon="@drawable/ic_feed" />
 
 </menu>

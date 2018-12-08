@@ -25,6 +25,7 @@ import com.skynet.thuenha.interfaces.SnackBarCallBack;
 import com.skynet.thuenha.models.DetailPost;
 import com.skynet.thuenha.ui.base.BaseActivity;
 import com.skynet.thuenha.ui.chatting.ChatActivity;
+import com.skynet.thuenha.ui.choosewhorent.ListViewerActivity;
 import com.skynet.thuenha.ui.detailPost.viewProfile.ProfileViewerFragment;
 import com.skynet.thuenha.ui.listviewer.ListViewerFragment;
 import com.skynet.thuenha.ui.makepost.MakeAPostActivity;
@@ -32,6 +33,7 @@ import com.skynet.thuenha.ui.views.DialogTwoButtonUtil;
 import com.skynet.thuenha.ui.views.LockableScrollView;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 import com.skynet.thuenha.utils.AppConstant;
+import com.skynet.thuenha.utils.CommomUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -101,6 +103,8 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     TextView btnChat;
     @BindView(R.id.btnGo)
     TextView btnGo;
+    @BindView(R.id.tvEmptyPhoto)
+    TextView tvEmptyPhoto;
     @BindView(R.id.cbBottom)
     CheckBox cbBottom;
     @BindView(R.id.constraintLayout)
@@ -164,6 +168,12 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
         for (String img : listImg) {
             pageViews.add(new Page("A", img, this));
         }
+        if (pageViews.size() == 0) {
+            tvEmptyPhoto.setVisibility(View.VISIBLE);
+        } else {
+            tvEmptyPhoto.setVisibility(View.GONE);
+
+        }
         indicatorDefaultCircle.notifyDataChange(pageViews);
     }
 
@@ -216,12 +226,14 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
         tvName.setText(detailPost.getPost().getTitle());
         if (detailPost.getPost().getAddress() != null)
             tvAddress.setText(detailPost.getPost().getAddress() + "," + detailPost.getDistrict() + "," + detailPost.getCity());
-        tvPrice.setText(String.format("%,.0fđ/Tháng", detailPost.getPost().getPrice()));
+        tvPrice.setText(detailPost.getPost().getPrice() == 0 ? "Liên hệ" : String.format("%,.0fđ/Tháng", detailPost.getPost().getPrice()));
         tvStatus.setText(detailPost.getPost().getActive().equals("1") ? "Đang còn" : "Hết phòng");
         tvArea.setText(String.format("%,.0fm²", detailPost.getPost().getArea()));
         tvContent.setText(detailPost.getPost().getContent());
         if (detailPost.getImage() != null && detailPost.getImage().size() > 0)
             initData(detailPost.getImage());
+        else
+            tvEmptyPhoto.setVisibility(View.VISIBLE);
         if (detailPost.getListUtilies() != null) {
             recyclerView.setAdapter(new AdapterUtility(detailPost.getListUtilies(), this));
         }
@@ -401,6 +413,12 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
         }
     }
 
+    @OnClick(R.id.imageView6)
+    public void onClickCall() {
+        if (detailPost.getHost() == null) return;
+        CommomUtils.dialPhoneNumber(this, detailPost.getHost().getPhone());
+    }
+
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
@@ -428,7 +446,9 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
                 startActivityForResult(intent, 1000);
                 break;
             case R.id.btnRent:
-                presenter.rentThisPost(getIntent().getExtras().getInt(AppConstant.MSG));
+                Intent i = new Intent(DetailPostActivity.this, ListViewerActivity.class);
+                i.putExtra(AppConstant.MSG, getIntent().getExtras().getInt(AppConstant.MSG));
+                startActivityForResult(i, 100);
                 break;
             case R.id.tvDelete:
                 presenter.deleteThisPost(getIntent().getExtras().getInt(AppConstant.MSG));
@@ -442,6 +462,9 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000 && resultCode == RESULT_OK) {
             onRefresh();
+        }
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+            presenter.rentThisPost(data.getExtras().getString(AppConstant.MSG), getIntent().getExtras().getInt(AppConstant.MSG));
         }
     }
 

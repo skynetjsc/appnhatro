@@ -107,13 +107,13 @@ public class DetailPostImplRemote extends Interactor implements DetailPostContra
     }
 
     @Override
-    public void rentThisPost(int idPost) {
+    public void rentThisPost(String idRent,int idPost) {
         Profile profile = AppController.getInstance().getmProfileUser();
         if (profile == null) {
             listener.onErrorAuthorization();
             return;
         }
-        getmService().rentPost(profile.getId(), idPost).enqueue(new CallBackBase<ApiResponse>() {
+        getmService().rentPost(idRent,profile.getId(), idPost).enqueue(new CallBackBase<ApiResponse>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {

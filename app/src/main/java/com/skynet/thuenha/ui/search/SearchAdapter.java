@@ -1,8 +1,11 @@
 package com.skynet.thuenha.ui.search;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +25,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     List<Post> list;
     Context context;
     ICallback iCallback;
+    SparseBooleanArray sparseBooleanArray;
 
     public SearchAdapter(List<Post> list, Context context, ICallback iCallback) {
         this.list = list;
         this.context = context;
         this.iCallback = iCallback;
+        sparseBooleanArray = new SparseBooleanArray();
+        for (int i = 0; i < this.list.size(); i++) {
+            sparseBooleanArray.put(i, list.get(i).getPrice() == 0);
+            list.get(i).setColor(list.get(i).getPrice() == 0 ? ContextCompat.getColor(context, R.color.green) : Color.BLACK);
+        }
     }
 
     @NonNull
@@ -40,7 +49,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         viewHolder.address.setText(list.get(i).getAddress());
         viewHolder.name.setText(list.get(i).getTitle());
         viewHolder.time.setText(list.get(i).getDate());
-        viewHolder.textView8.setText(String.format("%,.0fVNĐ/Tháng", list.get(i).getPrice()));
+        viewHolder.textView8.setText(list.get(i).getPrice() == 0 ? "Giá liên hệ" : String.format("%,.0fVNĐ/Tháng", list.get(i).getPrice()));
+//        if (list.get(i).getPrice() == 0) {
+            viewHolder.textView8.setTextColor(sparseBooleanArray.get(i) ? ContextCompat.getColor(context, R.color.green) : Color.BLACK);
+//        }
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

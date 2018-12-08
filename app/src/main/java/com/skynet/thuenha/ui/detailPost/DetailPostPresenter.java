@@ -43,10 +43,10 @@ public class DetailPostPresenter extends Presenter<DetailPostContract.View> impl
     }
 
     @Override
-    public void rentThisPost(int idPost) {
+    public void rentThisPost(String idRent,int idPost) {
         if (isAvaliableView()) {
             view.showProgress();
-            interactor.rentThisPost(idPost);
+            interactor.rentThisPost(idRent,idPost);
         }
     }
 

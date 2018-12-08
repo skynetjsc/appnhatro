@@ -24,7 +24,7 @@ public interface DetailPostContract {
         void toggleFav(int idPost, boolean isFav);
 
         void deleteThisPost(int idPost);
-        void rentThisPost(int idPost);
+        void rentThisPost(String idRent,int idPost);
     }
 
     interface Interactor {
@@ -33,7 +33,7 @@ public interface DetailPostContract {
         void paidForThisPost(int idPost);
 
         void deleteThisPost(int idPost);
-        void rentThisPost(int idPost);
+        void rentThisPost(String idRent,int idPost);
 
         void toggleFav(int idPost, boolean isFav);
     }

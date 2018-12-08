@@ -11,7 +11,7 @@
     android:focusedByDefault="true">
 
     <requestFocus />
-b
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
@@ -42,12 +42,16 @@ b
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <TextView
                     android:id="@+id/filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp16"
-                    android:src="@drawable/ic_filterbtn" />
+                    android:text="Lọc"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:drawablePadding="@dimen/dp8"
+                    android:drawableRight="@drawable/ic_filterbtn" />
 
                 <ImageView
                     android:id="@+id/dot_filter"
@@ -130,7 +134,7 @@ b
                 android:layout_marginTop="8dp"
                 android:textSize="12sp"
 
-                android:text="Trong khoảng giá"
+                android:text="Tìm theo giá tiền"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardSearch" />
 
@@ -140,6 +144,7 @@ b
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
+                android:visibility="gone"
                 android:layout_marginTop="8dp"
                 android:elevation="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -160,6 +165,7 @@ b
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="500,000vnđ"
+                android:visibility="gone"
                 android:textSize="12sp"
 
                 android:textStyle="bold"
@@ -175,20 +181,24 @@ b
                 android:text="20,000,000vnđ"
                 android:textStyle="bold"
                 android:textSize="12sp"
+                android:visibility="gone"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tvPrice"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="Mức giá trung bình"
+                android:hint="Mức giá trung bình (vnđ)"
+                android:inputType="number"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rangeSeekBar" />
 

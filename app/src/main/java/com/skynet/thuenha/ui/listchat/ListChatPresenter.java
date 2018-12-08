@@ -22,10 +22,10 @@ public class ListChatPresenter extends Presenter<ListChatContract.View> implemen
     }
 
     @Override
-    public void confirmHired(int idPost, String idHost) {
+    public void confirmHired(int idPost, String idHost,String idRent) {
         if (isAvaliableView()) {
             view.showProgress();
-            interactor.confirmHired(idPost, idHost);
+            interactor.confirmHired(idPost, idHost,idRent);
         }
     }
 

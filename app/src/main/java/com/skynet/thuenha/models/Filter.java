@@ -2,14 +2,23 @@ package com.skynet.thuenha.models;
 
 public class Filter {
     int idService;
-    float min,max;
+    float min, max, price;
     String listIdUtility;
 
     public Filter(int idService, float min, float max, String listIdUtility) {
         this.idService = idService;
         this.min = min;
         this.max = max;
+        this.price = (min + max) / 2;
         this.listIdUtility = listIdUtility;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public int getIdService() {

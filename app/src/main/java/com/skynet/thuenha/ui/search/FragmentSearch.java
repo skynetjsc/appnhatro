@@ -55,7 +55,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     @BindView(R.id.title)
     TextView title;
     @BindView(R.id.filter)
-    ImageView filter;
+    TextView filter;
     @BindView(R.id.dot_filter)
     ImageView dot_filter;
     @BindView(R.id.tvCity)
@@ -73,7 +73,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     @BindView(R.id.textView32)
     TextView textView32;
     @BindView(R.id.tvPrice)
-    TextView tvPrice;
+    EditText tvPrice;
     private SearchContract.Presenter presenter;
     private ProgressDialogCustom dialogLoading;
     private List<Post> listPost;
@@ -82,9 +82,10 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     private Address myDistrict;
     private float max, min;
 
-    public static FragmentSearch newInstance(int id) {
+    public static FragmentSearch newInstance(int id, String title) {
         Bundle args = new Bundle();
         args.putInt("idService", id);
+        args.putString("title", title);
         FragmentSearch fragment = new FragmentSearch();
         fragment.setArguments(args);
         return fragment;
@@ -109,6 +110,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
         dialogLoading = new ProgressDialogCustom(getMyContext());
         if (AppController.getInstance().getFilter() != null) {
             dot_filter.setVisibility(View.VISIBLE);
+            tvPrice.setText(AppController.getInstance().getFilter().getPrice()+"");
             presenter.getAllPostByFilter();
         } else {
             presenter.getAllPostByService(getArguments().getInt("idService"), 0);
@@ -146,13 +148,59 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
 
             }
         });
+        tvPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (timer != null) {
+                    timer.cancel();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(final Editable editable) {
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        // do your actual work here
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (tvPrice.getText().toString().isEmpty() && myDistrict == null) {
+                                    Filter filter = AppController.getInstance().getFilter();
+                                    if (filter == null) filter = new Filter(0, min, max, "");
+                                    filter.setPrice(0);
+                                    presenter.getAllPostByService(getArguments().getInt("idService"), 0);
+                                    return;
+                                }
+                                Filter filter = AppController.getInstance().getFilter();
+                                if (filter == null) filter = new Filter(0, min, max, "");
+                                filter.setMax(max);
+                                filter.setMin(min);
+                                AppController.getInstance().setFilter(filter);
+                                filter.setPrice(Float.parseFloat(tvPrice.getText().toString().isEmpty() ? "0" : tvPrice.getText().toString()));
+                                LogUtils.e(min + " ----------- " + max + "is from user");
+                                presenter.getAllPostByFilter();
+
+                            }
+                        });
+                    }
+                }, 600); // 600ms delay before the timer executes the „run“ method from TimerTask
+
+            }
+        });
     }
 
     @Override
     public void onSucessGetPost(List<Post> list) {
         listPost = list;
         rcv.setAdapter(new SearchAdapter(list, getMyContext(), this));
-        title.setText(Html.fromHtml(String.format(getString(R.string.tilte_search), listPost.size())));
+        title.setText(Html.fromHtml(String.format(getString(R.string.tilte_search), getArguments().getString("title"), listPost.size())));
     }
 
     @Override
@@ -179,6 +227,12 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     public void onError(String message) {
         LogUtils.e(message);
         showToast(message, AppConstant.NEGATIVE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+       // AppController.getInstance().setFilter(null);
     }
 
     @Override
@@ -295,7 +349,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
         filter.setMin(min);
         AppController.getInstance().setFilter(filter);
         LogUtils.e(min + " ----------- " + max + "is from user");
-        tvPrice.setText(String.format("Mức giá trung bình: %,.0fvnđ", ((min + max) / 2)));
+//        tvPrice.setText(String.format("Mức giá trung bình: %,.0fvnđ", ((min + max) / 2)));
         presenter.getAllPostByFilter();
     }
 }

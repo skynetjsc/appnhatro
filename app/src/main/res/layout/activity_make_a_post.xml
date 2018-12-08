@@ -80,6 +80,7 @@
                     android:layout_marginEnd="16dp"
                     android:hint="Tối đa 50 ký tự"
                     android:maxLength="50"
+                    android:inputType="textCapWords|textCapSentences"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView14"
                     app:layout_constraintTop_toBottomOf="@+id/textView14" />
@@ -284,7 +285,7 @@
                     android:layout_marginEnd="8dp"
                     android:ems="10"
                     android:hint="VD: T10 ,Timecity"
-                    android:inputType="textPersonName"
+                   android:inputType="textCapWords|textCapSentences"
                     android:singleLine="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView23"
@@ -339,6 +340,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:hint="Mô tả chi tiết về phòng/căn hộ của bạn"
+                    android:inputType="textCapWords|textCapSentences"
+
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textSize="14sp"
@@ -361,7 +364,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="Tối đa 10 ảnh (mỗi ảnh không quá 3mb)"
+                    android:text="Tối đa 10 ảnh (Chụp ngang máy để đc ảnh đẹp hơn)"
                     app:layout_constraintStart_toStartOf="@+id/textView26"
                     app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
@@ -434,6 +437,7 @@
                     android:ems="10"                    android:textSize="14sp"
 
                     android:hint="Số phòng ngủ"
+
                     android:inputType="number"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

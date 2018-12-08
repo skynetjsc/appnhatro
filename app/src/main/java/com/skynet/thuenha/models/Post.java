@@ -33,6 +33,9 @@ public class Post implements Parcelable {
     @SerializedName("price")
     private double price;
     @Expose
+    @SerializedName("color")
+    private int color;
+    @Expose
     @SerializedName("area")
     private double area;
     @Expose
@@ -68,6 +71,14 @@ public class Post implements Parcelable {
     @Expose
     @SerializedName("number_wc")
     private int number_wc;
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
 
     public int getNumber_seen() {
         return number_seen;

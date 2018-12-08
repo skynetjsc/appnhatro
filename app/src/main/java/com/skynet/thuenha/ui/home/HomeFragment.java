@@ -76,7 +76,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         public void onCallBack(int pos) {
             if (AppController.getInstance().getmProfileUser().getType() == 1) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentSearch fragmentSearch = FragmentSearch.newInstance(listService.get(pos).getId());
+                FragmentSearch fragmentSearch = FragmentSearch.newInstance(listService.get(pos).getId(),listService.get(pos).getName());
                 fragmentManager.beginTransaction().replace(R.id.layoutRoot, fragmentSearch, fragmentSearch.getClass().getSimpleName())
                         .addToBackStack(null)
                         .commit();

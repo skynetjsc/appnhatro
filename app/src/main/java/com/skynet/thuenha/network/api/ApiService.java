@@ -79,7 +79,7 @@ public interface ApiService {
 
     @GET("filter.php")
     Call<ApiResponse<List<Post>>> getListFilterPost(@Query("user_id") String user_id, @Query("id_service") String phone, @Query("price_min") String min,
-                                                    @Query("price_max") String max, @Query("id_utility") String id_utility, @Query("id_district") int idDistric);
+                                                    @Query("price_max") String max,   @Query("price") String price, @Query("id_utility") String id_utility, @Query("id_district") int idDistric);
 
     @GET("list_chat.php")
     Call<ApiResponse<List<ChatItem>>> getListChat(@Query("id_user") String phone, @Query("type") int type);
@@ -122,7 +122,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("rent.php")
-    Call<ApiResponse> rentPost(@Field("host_id") String host_id, @Field("post_id") int post_id);
+    Call<ApiResponse> rentPost(@Field("user_id") String user_id,@Field("host_id") String host_id, @Field("post_id") int post_id);
 
     @FormUrlEncoded
     @POST("delete_message.php")
@@ -151,7 +151,8 @@ public interface ApiService {
     @POST("message.php")
     Call<ApiResponse<Message>> sendMessageTo(@Field("id_post") int id_post, @Field("id_user") int idUser,
                                              @Field("id_host") int idShop, @Field("time") String time,
-                                             @Field("content") String content, @Field("type") int typeUser, @Field("attach") int attach);
+                                             @Field("content") String content, @Field("type") int typeUser,
+                                             @Field("attach") int attach);
 
     @GET("notification.php")
     Call<ApiResponse<List<Notification>>> getListNotification(@Query("id") String uid, @Query("type") int type);

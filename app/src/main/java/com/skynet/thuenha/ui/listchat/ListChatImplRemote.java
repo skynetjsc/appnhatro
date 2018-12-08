@@ -57,13 +57,13 @@ public class ListChatImplRemote extends Interactor implements ListChatContract.I
     }
 
     @Override
-    public void confirmHired(int idPost, String idHost) {
+    public void confirmHired(int idPost, String idHost,String idRent) {
         Profile profile = AppController.getInstance().getmProfileUser();
         if (profile == null) {
             listener.onErrorAuthorization();
             return;
         }
-        getmService().rent(idHost, profile.getId(), idPost).enqueue(new CallBackBase<ApiResponse>() {
+        getmService().rent(idRent, profile.getId(), idPost).enqueue(new CallBackBase<ApiResponse>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
