@@ -2,19 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home"
-        android:title="Trang chủ" />
+        android:icon="@drawable/ic_bottom_newest"
+        android:title="Mới nhất" />
     <item
-        android:id="@+id/nav_fav"
+        android:id="@+id/nav_chat"
+        android:title="Cửa hàng"
+        android:icon="@drawable/seletor_shop" />
+    <item
+        android:id="@+id/nav_group"
+        android:title="Danh mục"
+        android:icon="@drawable/ic_c_bottom_category" />
+    <item
+        android:id="@+id/nav_explore"
         android:title="Yêu thích"
-        android:icon="@drawable/ic_heart_outline" />
-    <item
-        android:id="@+id/nav_noti"
-        android:title="Tin nhắn"
-        android:icon="@drawable/ic_icons8_weixin" />
-    <item
-        android:id="@+id/nav_profile"
-        android:title="Cá nhân"
-        android:icon="@drawable/ic_feed" />
+        android:icon="@drawable/ic_c_bottom_fav" />
+
 
 </menu>

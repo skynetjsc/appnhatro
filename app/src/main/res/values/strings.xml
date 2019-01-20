@@ -1,23 +1,33 @@
 <resources>
-    <string name="app_name">Thue Nha</string>
+    <string name="app_name">Mumgo.vn</string>
     <string name="action_settings">Settings</string>
     <string name="no_connection">No connection…</string>
     <string name="b_n_kh_ng_th_t_i_b_i_h_c_m_i_b_i_v_ch_ng_t_i_kh_ng_k_t_n_i_c_v_i_h_th_ng_trung_t_m_vui_l_ng_ki_m_tra_l_i_internet_3g_4g_wifi">Không thể tải dữ liệu mới, bởi vì chúng tôi không kết nối được với hệ thống trung tâm, vui lòng kiểm tra lại internet 3G/4G/wifi..</string>
     <string name="expired_token">Tài khoản của bạn đã hết hạn. Vui lòng đăng nhập lại!</string>
     <string name="enter">OK</string>
-    <string name="phone_invalid">Số điện thoại không hợp lệ</string>
     <string name="privacy_title">Chính sách và điều khoản</string>
-    <string name="msg_verify">Mã xác thực vừa đuợc gửi đến số điện thoại %s. Vui lòng nhập mã.</string>
-    <string name="forgot_password_title">Lấy lại mật khẩu</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tilte_search"><![CDATA[%s có <font color=#d52a3f>%d</font> tin đăng]]></string>
-    <string name="content_confirm"><![CDATA[Bạn có muốn xem toàn bộ thông tin
-chi tiết tin đăng này không?. Nếu đồng ý
-bạn sẽ bị trừ <b><font color=#d52a3f>%,.0fđ</font>/lượt </b>xem<br><br>Mọi thắc mắc vui lòng liên hệ<br><b>0987875427</b>]]></string>
-    <string name="content_confirm_post"><![CDATA[Thực hiện đăng tin bạn sẽ mất phí tối đa <b><font color=#d52a3f>%,.0fđ</font>/lượt </b>. Chi phí sẽ được trừ vào số tiền trong tài khoản của bạn.<br><br>Mọi thắc mắc vui lòng liên hệ <br><b>0987875427</b>]]></string>
-    <string name="area_unit">m²</string>
-    <string name="nh_p_n_i_dung">Nhập nội dung</string>
-    <string name="ck"><![CDATA[**Chuyển khoản ngân hàng**<br><br>STK : <b>0611001913170</b><br>CHU TK:<b> Nguyễn Mạnh Cường</b><br>NGÂN HÀNG: <b>Ngân hàng Vietcombank chi nhánh Ba Đình</b><br>NỘI DUNG: <b>%s</b><br><br>**Ghi chú : Xác nhận trong 60s, nếu có bất cứ thắc mắc vui lòng liên hệ <b>0987875427</b>]]></string>
+    <string name="slash_msg">Công cụ giúp kết nối bạn bè, chia sẻ nội dung, trò chuyện nhóm và cá nhân hiệu quả</string>
+    <string name="splash_title">Chào mừng bạn đến với LIAN Chat</string>
+    <string name="confirm_delete"><![CDATA[Bạn có chắc chắn sẽ <font color="#d0021b"><b>Xóa</b></font> cuộc hội
+thoại của bạn với <font color="#4a4a4a"><b>%s</b></font> ?]]></string>
+    <string name="confirm_leave"><![CDATA[Bạn có chắc chắn sẽ rời khỏi nhóm <br><font color="#4a4a4a"><b>%s</b></font> ]]></string>
+    <string name="confirm_add"><![CDATA[<font color="#d0021b"><b>%s</b></font> đã gửi lời mời kết bạn ?]]></string>
+    <string name="invite_form">%s đã mời bạn tham gia Lian. Tải xuống app Lian tại đây :\n
+http://play.google.com/store/apps/details?id=%s
+    </string>
+    <string name="confirm_delete_post"><![CDATA[Bạn có chắc chắn sẽ <font color="#d0021b"><b>Xóa</b></font> bài viết này ?]]></string>
+    <string name="confirm_delete_photo"><![CDATA[Bạn có chắc chắn sẽ <font color="#d0021b"><b>Xóa</b></font> ảnh này ?]]></string>
+    <string name="madein"><![CDATA[<font color="#000000">Xuất sứ: </font> %s]]></string>
+    <string name="buylease"><![CDATA[<font color="#000000">Mua tối thiểu: </font> %s]]></string>
+    <string name="pricedisplay"><![CDATA[<font color="#000000">Giá hiển thị: </font> Bằng giá cửa hàng]]></string>
+    <string name="shiptime"><![CDATA[<font color="#000000">Giao sớm nhất: </font> %s]]></string>
+    <string name="what_do_u_think">Bạn đang nghĩ gì vậy?</string>
+    <string name="open_drawer">Open</string>
+    <string name="close_drawer">Close</string>
+    <array name="gender">
+        <item >Nam</item>
+        <item >Nữ</item>
+    </array>
 </resources>

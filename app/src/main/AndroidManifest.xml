@@ -1,60 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.skynet.thuenha">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.skynet.mumgo">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <application
-        android:name=".application.AppController"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
+        android:name=".application.AppController"
+        android:largeHeap="true"
         android:theme="@style/AppTheme.NoActionBar"
-        android:usesCleartextTraffic="true">
-        <activity
-            android:name=".ui.main.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ui.splash.SplashActivity">
+        tools:targetApi="m"
+        tools:ignore="GoogleAppIndexingWarning">
+        <uses-library android:name="org.apache.http.legacy"
+            android:required="false"/>
+        <activity android:name=".ui.main.MainActivity"         android:theme="@style/AppTheme.NoActionBar"
+            >
+
+        </activity>
+        <activity android:name=".ui.splash.SplashActivity"
+            android:theme="@style/AppThemeAuth.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.splash.AuthActivity" />
-        <activity android:name=".ui.login.LoginActivity" />
-        <activity android:name=".ui.signup.FragmentSignUp" />
+        <activity android:name=".ui.privacy.TermActivity" />
         <activity android:name=".ui.privacy.PrivacyActivity" />
-        <activity android:name=".ui.verifyaccount.VerifyAccountActivity" />
-        <activity android:name=".ui.forgotPassword.ForgotPwActivity" />
-        <activity android:name=".ui.chosseAddress.ChooseAddressActivity"></activity>
-        <activity android:name=".ui.detailPost.DetailPostActivity" />
-        <activity android:name=".ui.chatting.ChatActivity" />
-        <activity android:name=".ui.DetailNotificationActivity.DetailNotificationActivity" />
-        <activity android:name=".ui.makepost.MakeAPostActivity" />
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.skynet.thuenha.provider"
+            android:name=".ui.views.GenericFileProvider"
+            android:authorities="com.skynet.mumgo.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
+                android:resource="@xml/provider_paths"/>
         </provider>
 
         <activity
@@ -66,11 +59,35 @@
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".ui.filter.FilterActivity" />
-        <activity android:name=".ui.updateProfile.ProfileUpdateFragment" />
-        <activity android:name=".ui.feedback.FeedbackActivity" />
-        <activity android:name=".ui.privacy.TermActivity" />
-        <activity android:name=".ui.choosewhorent.ListViewerActivity" />
+        <activity android:name=".ui.DetailNotificationActivity.DetailNotificationActivity" />
+        <activity android:name=".ui.base.ActivityNetwork" />
+
+        <activity android:name=".ui.profile.ProfileActivity"  android:theme="@style/AppThemeAuth.NoActionBar"/>
+        <activity android:name=".ui.auth.AuthActivity" android:theme="@style/AppThemeAuth2.NoActionBar"/>
+        <activity android:name=".ui.auth.login.LoginActivity"   android:theme="@style/AppThemeAuth.NoActionBar"/>
+        <activity android:name=".ui.auth.signup.ActivitySignUp"  android:theme="@style/AppThemeAuth.NoActionBar"/>
+        <activity android:name=".ui.auth.verifyaccount.VerifyAccountActivity"  android:theme="@style/AppThemeAuth.NoActionBar"/>
+        <activity android:name=".ui.auth.updateProfile.ActivityProfileUpdate"  android:theme="@style/AppThemeAuth.NoActionBar"/>
+        <activity android:name=".ui.auth.updateProfile.SearchMapAdressActivity"  android:theme="@style/AppThemeAuth.NoActionBar"/>
+        <activity android:name=".ui.auth.forgotPassword.ForgotPwActivity"  android:theme="@style/AppThemeAuth.NoActionBar"/>
+        <activity android:name=".ui.detailshop.DetailShopActivity" android:theme="@style/AppThemeAuth.NoActionBar"/>
+        <activity android:name=".ui.detailProduct.ActivityDetailProduct"  android:theme="@style/AppThemeAuth.NoActionBar"/>
+        <activity android:name=".ui.cart.CartActivity" />
+        <activity android:name=".ui.checkout.CheckoutActivity" android:theme="@style/AppTheme.NoActionBar.Chat"/>
+        <activity android:name=".ui.choosepayment.ChoosepaymetnActivity" />
+        <activity android:name=".ui.enterpin.EnterpinActivity" android:theme="@style/AppThemeAuth.NoActionBar" />
+        <activity android:name=".ui.listProduct.ListProductActivity" />
+        <activity android:name=".ui.history.ListHistoryActivity" />
+        <activity android:name=".ui.detailhistory.HistoryDetailActivity" />
+        <activity android:name=".ui.chatting.ChatActivity" />
+        <activity android:name=".ui.listchat.ListChatActivity" />
+        <activity android:name=".ui.category.listProduct.ListProductActivity" />
+        <activity android:name=".ui.ScannerQr" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="fe40cc6e6a158e06d023033afbe8f0e5233f76c4" />
+
 
 
         <service android:name=".network.socket.SocketClient">
@@ -95,8 +112,21 @@
             android:name=".network.socket.AlarmReceiver"
             android:enabled="true"
             android:process=":remote" />
-        <!--<service android:name=".utils.SchedulingService"/>-->
-
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC0wCBs99dEesoLn9n_U5HxJ3N9rYDG27I" />
+        <service
+            android:name=".ui.FCMService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".ui.FcmInstanceService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

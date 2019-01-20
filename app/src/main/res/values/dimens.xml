@@ -7,7 +7,7 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
 
-
+    <dimen name="recycler_padding">3dp</dimen>
     <dimen name="dps15">15sp</dimen>
     <dimen name="dps16">16sp</dimen>
     <dimen name="dps18">18sp</dimen>
@@ -16,10 +16,7 @@
     <dimen name="dps25">25sp</dimen>
     <dimen name="dps30">30sp</dimen>
     <dimen name="dps10">10sp</dimen>
-    <dimen name="speech_bubble_corners">10dp</dimen>
-    <dimen name="speech_bubble_corners_plus_tail">15dp</dimen>
-    <dimen name="speech_bubble_spacing">5dp</dimen>
-    <dimen name="speech_bubble_tail">25dp</dimen>
+
     <dimen name="alphabet_width">30dp</dimen>
     <dimen name="font_medium">15sp</dimen>
     <dimen name="dp10">10dp</dimen>
@@ -75,7 +72,7 @@
 
     <dimen name="size_line">2px</dimen>
     <dimen name="connection_size_dot">16dp</dimen>
-    <dimen name="size_dot">16dp</dimen>
+    <dimen name="size_dot">6dp</dimen>
     <dimen name="dp68">80dp</dimen>
 
 
@@ -94,9 +91,32 @@
     <dimen name="card_padding">30dp</dimen>
     <dimen name="size_archiement">24dp</dimen>
     <dimen name="size_avt">64dp</dimen>
-    <dimen name="size_avt_small">28dp</dimen>
+    <dimen name="size_avt_small">42dp</dimen>
     <dimen name="chat_post_img_w">200dp</dimen>
     <dimen name="chat_post_img_h">120dp</dimen>
-    <dimen name="size_avt_medium">48dp</dimen>
+    <dimen name="size_avt_medium">52dp</dimen>
+    <dimen name="size_box_goal">20dp</dimen>
+    <dimen name="size_photo">68dp</dimen>
+    <dimen name="size_h_photo">86dp</dimen>
+    <dimen name="radius_corner">8dp</dimen>
+    <dimen name="elevation">2dp</dimen>
+    <dimen name="dot_size_status">10dp</dimen>
+    <dimen name="toolbar_size_avt">48dp</dimen>
+    <dimen name="size_btn_swipe">80dp</dimen>
+    <dimen name="size_float">56dp</dimen>
+    <dimen name="size_avt_small_header">49dp</dimen>
 
+    <dimen name="speech_bubble_corners1">10dp</dimen>
+    <dimen name="speech_bubble_corners_plus_tail">15dp</dimen>
+    <dimen name="speech_bubble_spacing">5dp</dimen>
+    <dimen name="speech_bubble_tail">25dp</dimen>
+    <dimen name="size_avt_chat">28dp</dimen>
+    <dimen name="size_key_board">263dip</dimen>
+    <dimen name="size_photo_post">343dp</dimen>
+    <dimen name="photo_size_newfeed">128dp</dimen>
+    <dimen name="size_menu_profile">30dp</dimen>
+    <dimen name="size_radius_chips">30dp</dimen>
+    <dimen name="size_width_icon_nav">23dp</dimen>
+    <dimen name="size_recommend_photo_home">120dp</dimen>
+    <dimen name="size_photo_news_home">160dp</dimen>
 </resources>

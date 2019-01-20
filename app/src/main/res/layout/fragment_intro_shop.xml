@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp16"
+            android:text="Giới thiệu cửa hàng"
+            android:textColor="@color/green"
+            android:textSize="@dimen/dps16"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_marginBottom="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:text="Đảm bảo bạn sẽ hài lòng với thực phẩm tươi sống, hàng bách hóa chất lượng, nguồn gốc rõ ràng mà chúng tôi cung cấp. Đặc biệt dịch vụ đi chợ hộ, giao hàng tận tay trong 1 giờ của Chopp giúp bạn tiết kiệm, chủ động thời gian hơi trong cuộc sống hiện đại. "
+             />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

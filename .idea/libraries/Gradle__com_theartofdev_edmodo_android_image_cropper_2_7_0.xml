@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.theartofdev.edmodo:android-image-cropper-2.7.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/android-image-cropper-2.7.0.aar/47029d82bc08c6c517d9bf417ef9c0ca/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/android-image-cropper-2.7.0.aar/47029d82bc08c6c517d9bf417ef9c0ca/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-android-image-cropper-2.7.0.aar/4064a5ed15be198736453c5ddc61ce41/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-android-image-cropper-2.7.0.aar/4064a5ed15be198736453c5ddc61ce41/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

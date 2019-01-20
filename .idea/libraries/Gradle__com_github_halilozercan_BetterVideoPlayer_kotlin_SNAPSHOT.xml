@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.halilozercan:BetterVideoPlayer-kotlin-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/BetterVideoPlayer-kotlin-SNAPSHOT.aar/eb082ece95a1b55c2f90fd09ee253fce/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/BetterVideoPlayer-kotlin-SNAPSHOT.aar/eb082ece95a1b55c2f90fd09ee253fce/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.halilozercan/BetterVideoPlayer/kotlin-SNAPSHOT/4e4f66d9e83f879617d7cd0051156f38f5061ca5/BetterVideoPlayer-kotlin-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

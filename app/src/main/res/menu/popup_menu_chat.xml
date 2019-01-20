@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <item
+        android:id="@+id/newMessage"
+        android:icon="@drawable/ic_comment_dots"
+        android:title="Trò chuyện mới" />
+
+    <item
+        android:id="@+id/addGroup"
+        android:icon="@drawable/ic__ionicons_svg_ios_people"
+        android:title="Tạo nhóm mới" />
+
+    <item
+        android:id="@+id/contact"
+        android:icon="@drawable/ic__ionicons_svg_md_contact"
+        android:title="Danh bạ" />
+
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/ic_cog"
+        android:title="Thiết lập" />
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic__ionicons_svg_md_home"
+        android:title="Trang chủ" />
+</menu>

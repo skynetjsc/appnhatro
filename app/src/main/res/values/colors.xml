@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fff</color>
-    <color name="colorPrimaryDark">#c5c5c5</color>
-    <color name="colorAccent">#fd5739</color>
+    <color name="aon">#fff</color>
+    <color name="colorPrimary">#7ED321</color>
+    <color name="colorPrimaryDark">#7ED321</color>
+    <color name="colorAccent">#FFD93F</color>
     <color name="colorPinkWhite">#fff3f3</color>
     <color name="colorRed">#ef3a42</color>
     <color name="colorRedLight">#f37b81</color>
     <color name="colorGrayLight">#b2b2b2</color>
     <color name="colorGrayBlue">#6d6d6f</color>
 
-    <color name="background">#f6f6f6</color>
+    <color name="background">#ff6b23</color>
     <color name="colorBlueLight">#507cc0</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGreenLight">#dff3e2</color>
@@ -40,12 +41,12 @@
     <color name="colorGray">#fff</color>
     <color name="pink">#cd6e61</color>
     <color name="pink_alpha">#f2d1cb</color>
-    <color name="green">#2db25d</color>
+    <color name="green">#7ED321</color>
     <color name="green_200">#714cb271</color>
-    <color name="orage">#ff9f1a</color>
+    <color name="orage">#ECC731</color>
     <color name="yello">#fff600</color>
-    <color name="blue">#507cc0</color>
-    <color name="gray">#e5e9ef</color>
+    <color name="blue">#0B2031</color>
+    <color name="gray">#36a8b6c8</color>
     <color name="bgJob">#eeeeee</color>
     <color name="bgDetail">#ffffff</color>
     <color name="dusk">#4d5674</color>
@@ -69,7 +70,6 @@
     <color name="water_blue">#179fd3</color>
     <color name="aqua_green_two">#17d392</color>
     <color name="pale_grey_two">#f9fafc</color>
-    <color name="white">#FFF</color>
     <color name="dark_grey_blue">#2e4a6e</color>
     <color name="white_two">#fbfbfb</color>
     <color name="pale_grey">#eff1f5</color>
@@ -88,4 +88,21 @@
     <color name="brownish_grey">#5f5f5f</color>
     <color name="color_enable">#f67b26</color>
     <color name="color_disable">#5c6979</color>
+
+
+    <color name="dusty_orange">#ff6b23</color>
+    <color name="red_10">#19ff0000</color>
+    <color name="black_70">#b3000000</color>
+    <color name="cool_grey">#a1aab1</color>
+    <color name="grapefruit">#ff5858</color>
+    <color name="orange">#ff790e</color>
+    <color name="charcoal_grey">#3e4552</color>
+    <color name="mango">#ffaf23</color>
+    <color name="orange_two">#ff7711</color>
+    <color name="cool_grey_two">#98aab0</color>
+    <color name="black_50">#80000000</color>
+    <color name="dusty_orange_30">#4cff6b23</color>
+    <color name="white">#ffffff</color>
+    <color name="shadowColor">#ff6b23</color>
+    <color name="color_view">#c8c7cc</color>
 </resources>

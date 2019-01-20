@@ -13,6 +13,7 @@
 
         <LinearLayout
             android:layout_width="160dp"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:tag="Bottom3">
 
@@ -47,7 +48,7 @@
             android:tag="Hover"
             app:drag_edge="right">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible">
@@ -100,23 +101,11 @@
                     android:gravity="left|center_vertical"
                     android:text="TextView"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/tvOpen"
                     app:layout_constraintStart_toEndOf="@+id/circleImageView2"
                     app:layout_constraintTop_toBottomOf="@+id/tvContent" />
 
-                <TextView
-                    android:id="@+id/tvOpen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:drawableLeft="@drawable/chevron_double_left"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    android:text="Tùy chọn"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvTime"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvTime" />
-            </android.support.constraint.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
 

@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: cn.lightsky.infiniteindicator:library-1.2.2">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-1.2.2.aar/33afd9bd5b58077aadec65b19a19ee58/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/library-1.2.2.aar/33afd9bd5b58077aadec65b19a19ee58/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-library-1.2.2.aar/11831d8b083cc049e26575901cf6c0aa/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-library-1.2.2.aar/11831d8b083cc049e26575901cf6c0aa/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

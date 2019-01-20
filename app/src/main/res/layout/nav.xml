@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.navigation.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@color/green"
+   >
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp32">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgAvatarProfile"
+                    android:layout_width="@dimen/size_avt_medium"
+                    android:layout_height="@dimen/size_avt_medium"
+                    android:layout_marginTop="48dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="32dp"
+                    android:src="@drawable/avt_defaut"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <TextView
+                    android:id="@+id/tvNameProfile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="left"
+                    android:text="TRUNG QUÂN"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView9"
+                    app:layout_constraintStart_toStartOf="@+id/imgAvatarProfile"
+                    app:layout_constraintTop_toBottomOf="@+id/imgAvatarProfile" />
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="@dimen/dp16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_close_white_24dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_customer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:visibility="visible">
+
+
+                <LinearLayout
+                    android:id="@+id/nav_home"
+                    style="@style/nav_layout_root_item"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/nav_textview_item"
+                        android:drawableLeft="@drawable/ic_nav_shop"
+                        android:text="Trang chủ" />
+                </LinearLayout>
+                <View style="@style/nav_view" />
+                <LinearLayout
+                    android:id="@+id/nav_fav"
+                    style="@style/nav_layout_root_item">
+                    <TextView
+                        style="@style/nav_textview_item"
+                        android:drawableLeft="@drawable/ic_nav_bag"
+                        android:text="Yêu thích" />
+                </LinearLayout>
+                <View style="@style/nav_view" />
+
+                <LinearLayout
+                    android:id="@+id/nav_cart"
+                    style="@style/nav_layout_root_item"
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/nav_textview_item"
+                        android:drawableLeft="@drawable/ic_nav_cart"
+
+                        android:text="Giỏ hàng" />
+                </LinearLayout>
+                <View style="@style/nav_view" />
+
+                <LinearLayout
+                    android:id="@+id/nav_history"
+                    style="@style/nav_layout_root_item"
+
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/nav_textview_item"
+                        android:drawableLeft="@drawable/ic_nav_history"
+
+                        android:text="Lịch sử mua" />
+                </LinearLayout>
+                <View style="@style/nav_view" />
+
+                <LinearLayout
+                    android:id="@+id/nav_message"
+                    style="@style/nav_layout_root_item"
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/nav_textview_item"
+                        android:drawableStart="@drawable/ic_nav_chat"
+                        android:text="Trò chuyện" />
+                </LinearLayout>
+                <View style="@style/nav_view" />
+
+                <LinearLayout
+                    android:id="@+id/nav_news"
+                    style="@style/nav_layout_root_item"
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/nav_textview_item"
+                        android:drawableLeft="@drawable/ic_nav_news"
+
+                        android:text="Tin tức" />
+                </LinearLayout>
+                <View style="@style/nav_view" />
+
+                <LinearLayout
+                    android:id="@+id/nav_help"
+                    style="@style/nav_layout_root_item">
+
+                    <TextView
+                        style="@style/nav_textview_item"
+                        android:drawableLeft="@drawable/ic_nav_help"
+
+                        android:text="Hỗ trợ" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</com.google.android.material.navigation.NavigationView>
