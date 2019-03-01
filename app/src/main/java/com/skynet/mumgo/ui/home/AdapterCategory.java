@@ -1,6 +1,7 @@
 package com.skynet.mumgo.ui.home;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.skynet.mumgo.R;
 import com.skynet.mumgo.interfaces.ICallback;
+import com.skynet.mumgo.interfaces.ICallbackT;
 import com.skynet.mumgo.models.Category;
 import com.squareup.picasso.Picasso;
 
@@ -23,9 +25,9 @@ import butterknife.ButterKnife;
 public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHolder> {
     List<Category> list;
     Context context;
-    ICallback iCallback;
+    ICallbackT<Category> iCallback;
 
-    public AdapterCategory(List<Category> list, Context context, ICallback iCallback) {
+    public AdapterCategory(List<Category> list, Context context, ICallbackT<Category> iCallback) {
         this.list = list;
         this.context = context;
         this.iCallback = iCallback;
@@ -40,13 +42,14 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (list.get(position).getImg() != null && !list.get(position).getImg().isEmpty()) {
-            Picasso.with(context).load(list.get(position).getImg()).fit().centerCrop().into(holder.img);
+            Picasso.with(context).load(list.get(position).getImg()).into(holder.img);
         }
         holder.tvName.setText(list.get(position).getName());
+//        holder.tvName.setTextColor(Color.WHITE);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iCallback.onCallBack(position);
+                iCallback.onCallBack(position,list.get(position));
             }
         });
     }

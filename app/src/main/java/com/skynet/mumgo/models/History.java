@@ -26,6 +26,9 @@ public class History {
     @SerializedName("date_booking")
     private String date_booking;
     @Expose
+    @SerializedName("time_ship")
+    private String time_ship;
+    @Expose
     @SerializedName("date_create")
     private String date_create;
     @Expose
@@ -101,6 +104,14 @@ public class History {
 
     public int getPayment() {
         return payment;
+    }
+
+    public String getTime_ship() {
+        return time_ship;
+    }
+
+    public void setTime_ship(String time_ship) {
+        this.time_ship = time_ship;
     }
 
     public void setPayment(int payment) {

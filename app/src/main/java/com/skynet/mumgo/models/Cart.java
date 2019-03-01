@@ -17,6 +17,35 @@ public class Cart {
     double pricePromotion;
     @SerializedName("final_price")
     double final_price;
+    @SerializedName("receive")
+    Receiver receiver;
+    @SerializedName("time_ship")
+    String time_ship;
+    private int id_market ;
+
+    public int getId_market() {
+        return id_market;
+    }
+
+    public void setId_market(int id_market) {
+        this.id_market = id_market;
+    }
+
+    public String getTime_ship() {
+        return time_ship;
+    }
+
+    public void setTime_ship(String time_ship) {
+        this.time_ship = time_ship;
+    }
+
+    public Receiver getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Receiver receiver) {
+        this.receiver = receiver;
+    }
 
     int typePayment;
 
@@ -31,6 +60,7 @@ public class Cart {
     public double getPricePromotion() {
         return pricePromotion;
     }
+
     public double getFinal_price() {
         return final_price;
     }

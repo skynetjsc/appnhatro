@@ -8,7 +8,7 @@
     android:background="@color/white"
  >
     <include layout="@layout/layout_toolbar" />
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -34,7 +34,18 @@
                         android:layout_weight="2"
                         android:textColor="#333333"
                         android:textSize="@dimen/dps18" />
-
+                    <TextView
+                        android:id="@+id/code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:paddingBottom="@dimen/dp16"
+                        android:layout_margin="@dimen/dp16"
+                        android:paddingTop="@dimen/dp16"
+                        android:paddingLeft="@dimen/dp32"
+                        android:paddingRight="@dimen/dp32"
+                        android:background="@drawable/shape_round_dash"/>
                     <TextView
                         android:id="@+id/tvContent"
                         android:layout_width="match_parent"
@@ -62,6 +73,6 @@
         </LinearLayout>
 
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

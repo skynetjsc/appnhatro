@@ -28,6 +28,9 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:numStars="5"
+        android:theme="@style/RatingBar"
+
+        android:progressTint="#fff600"
         android:rating="3"
         android:isIndicator="true"
         app:layout_constraintEnd_toEndOf="parent"

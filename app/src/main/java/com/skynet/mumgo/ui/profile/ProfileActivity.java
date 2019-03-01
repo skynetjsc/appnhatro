@@ -4,37 +4,34 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.mindorks.paracamera.Camera;
 import com.skynet.mumgo.R;
 import com.skynet.mumgo.application.AppController;
-import com.skynet.mumgo.models.Image;
 import com.skynet.mumgo.models.Profile;
+import com.skynet.mumgo.ui.auth.updateProfile.ActivityProfileUpdate;
 import com.skynet.mumgo.ui.base.BaseActivity;
-import com.skynet.mumgo.ui.views.ProgressDialogCustom;
-import com.skynet.mumgo.ui.views.ViewpagerNotSwipe;
-import com.skynet.mumgo.utils.AppConstant;
+import com.skynet.mumgo.ui.privacy.PrivacyActivity;
+import com.skynet.mumgo.ui.privacy.TermActivity;
 import com.squareup.picasso.Picasso;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,32 +40,61 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import me.iwf.photopicker.PhotoPicker;
 
-public class ProfileActivity extends BaseActivity implements UploadContract.View, ChoosePhotoBottomSheet.ChoosePhotoOptionCallback {
+public class ProfileActivity extends BaseActivity implements UploadContract.View, SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.imgMore)
-    ImageView imgMore;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.viewpager)
-    ViewpagerNotSwipe viewpager;
-    @BindView(R.id.bottomNavigationViewEx)
-    BottomNavigationViewEx bnve;
-    @BindView(R.id.imgCover)
-    ImageView imgCover;
-    @BindView(R.id.imgAvatar)
-    CircleImageView imgAvatar;
-    @BindView(R.id.tvName)
-    TextView tvName;
-    @BindView(R.id.imgBack)
-    ImageView imgBack;
-    @BindView(R.id.tvTitle)
-    TextView tvTitle;
+    @BindView(R.id.imageView12)
+    ImageView imageView12;
+    @BindView(R.id.imageView13)
+    ImageView imageView13;
+    @BindView(R.id.textView19)
+    TextView textView19;
+    @BindView(R.id.imgAvt)
+    CircleImageView imgAvt;
+    @BindView(R.id.tvNameProfile)
+    TextView tvNameProfile;
+    @BindView(R.id.textView49)
+    TextView textView49;
+    @BindView(R.id.tvPayment)
+    TextView tvPayment;
+    @BindView(R.id.textView50)
+    TextView textView50;
+    @BindView(R.id.view15)
+    View view15;
+    @BindView(R.id.constraintLayout7)
+    ConstraintLayout constraintLayout7;
+    @BindView(R.id.tvAddress)
+    TextView tvAddress;
+    @BindView(R.id.tvTitleAddress)
+    TextView tvTitleAddress;
+    @BindView(R.id.viewAddress)
+    View viewAddress;
+    @BindView(R.id.constraintLayout10)
+    ConstraintLayout constraintLayout10;
+    @BindView(R.id.tvEmail)
+    TextView tvEmail;
+    @BindView(R.id.tvTitleEmail)
+    TextView tvTitleEmail;
+    @BindView(R.id.viewEmail)
+    View viewEmail;
+    @BindView(R.id.constraintLayout11)
+    ConstraintLayout constraintLayout11;
+    @BindView(R.id.tvPhone)
+    TextView tvPhone;
+    @BindView(R.id.tvTitlePhone)
+    TextView tvTitlePhone;
+    @BindView(R.id.viewPhone)
+    View viewPhone;
+    @BindView(R.id.constraintLayout8)
+    ConstraintLayout constraintLayout8;
+    @BindView(R.id.tvPrivacy)
+    TextView tvPrivacy;
+    @BindView(R.id.tvTerm)
+    TextView tvTerm;
+    @BindView(R.id.btnLogout)
+    Button btnLogout;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipe;
     private UploadContract.Presenter presenter;
-    private ProgressDialogCustom dialogLoading;
-    private int typeUpload;
-    Camera camera;
-
-    private ChoosePhotoBottomSheet choosePhotoBottomSheet;
 
     @Override
     protected int initLayout() {
@@ -77,48 +103,66 @@ public class ProfileActivity extends BaseActivity implements UploadContract.View
 
     @Override
     protected void initVariables() {
-        dialogLoading = new ProgressDialogCustom(this);
-        choosePhotoBottomSheet = new ChoosePhotoBottomSheet(this, this);
         presenter = new UploadPresenter(this);
-        Profile profile = AppController.getInstance().getmProfileUser();
-        if (profile != null) {
-            tvName.setText(profile.getName());
-            if (profile.getAvatar() != null && !profile.getAvatar().isEmpty()) {
-                Picasso.with(this).load(profile.getAvatar()).fit().centerCrop().into(imgAvatar);
-            }
-            if (profile.getCover() != null && !profile.getCover().isEmpty()) {
-                Picasso.with(this).load(profile.getCover()).fit().centerCrop().into(imgCover);
-            }
-        }
-// Build the camera
-        camera = new Camera.Builder()
-                .resetToCorrectOrientation(true)// it will rotate the camera bitmap to the correct orientation from meta data
-                .setTakePhotoRequestCode(1)
-                .setDirectory("pics")
-                .setName("ali_" + System.currentTimeMillis())
-                .setImageFormat(Camera.IMAGE_JPEG)
-                .setCompression(75)
-                .setImageHeight(1000)// it will try to achieve this height as close as possible maintaining the aspect ratio;
-                .build(this);
+        presenter.getInfor();
     }
 
     @Override
     protected void initViews() {
-        bnve.enableAnimation(false);
-        bnve.enableShiftingMode(false);
-        bnve.setTextVisibility(false);
-        bnve.enableItemShiftingMode(false);
-        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/SF-UI-Text-Medium.otf");
-        bnve.setTypeface(custom_font);
-
-        bnve.setupWithViewPager(viewpager);
-        viewpager.setPagingEnabled(true);
-        viewpager.setCurrentItem(1);
+        swipe.setOnRefreshListener(this);
     }
 
     @Override
     protected int initViewSBAnchor() {
         return 0;
+    }
+
+    @Override
+    public void onSuccessGetInfor() {
+        Profile profile = AppController.getInstance().getmProfileUser();
+        tvPhone.setText(profile.getPhone());
+        tvAddress.setText(profile.getAddress());
+        tvEmail.setText(profile.getEmail());
+        tvPayment.setText("Tiền mặt");
+        tvNameProfile.setText(profile.getName());
+        if (profile.getAvatar() != null && !profile.getAvatar().isEmpty()) {
+            Picasso.with(this).load(profile.getAvatar()).fit().centerCrop().into(imgAvt);
+        }
+    }
+
+    @Override
+    public void onSucessUploadAvat() {
+        setResult(RESULT_OK);
+    }
+
+    @Override
+    public Context getMyContext() {
+        return this;
+    }
+
+    @Override
+    public void showProgress() {
+        swipe.setRefreshing(true);
+    }
+
+    @Override
+    public void hiddenProgress() {
+        swipe.setRefreshing(false);
+    }
+
+    @Override
+    public void onErrorApi(String message) {
+        LogUtils.e(message);
+    }
+
+    @Override
+    public void onError(String message) {
+        LogUtils.e(message);
+    }
+
+    @Override
+    public void onErrorAuthorization() {
+        showDialogExpired();
     }
 
     @Override
@@ -128,16 +172,26 @@ public class ProfileActivity extends BaseActivity implements UploadContract.View
         ButterKnife.bind(this);
     }
 
+    @OnClick(R.id.imgAvt)
+    public void onClickAvt() {
+        choosePhoto();
+    }
 
-    @OnClick({R.id.imgBack, R.id.imgMore})
-    public void onView2Clicked(View view) {
+    @OnClick({R.id.imageView12, R.id.btnLogout})
+    public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.imgBack:
+            case R.id.imageView12:
                 onBackPressed();
                 break;
-            case R.id.imgMore:
+            case R.id.btnLogout:
+                logOut();
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.getInfor();
     }
 
     private void choosePhoto() {
@@ -245,141 +299,43 @@ public class ProfileActivity extends BaseActivity implements UploadContract.View
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 File file = new File(resultUri.getPath());
-                if (typeUpload == 1) {
-                    Picasso.with(this).load(file).fit().centerCrop().into(imgAvatar);
-                    presenter.upload(file, typeUpload);
+                Picasso.with(this).load(file).fit().centerCrop().into(imgAvt);
+                presenter.upload(file, 1);
 
-                } else if (typeUpload == 2) {
-                    Picasso.with(this).load(file).fit().centerCrop().into(imgCover);
-                    presenter.upload(file, typeUpload);
-
-                } else {
-                    LogUtils.e(file.getAbsoluteFile());
-                    List<Image> list = new ArrayList<>();
-                    Image image = new Image();
-                    image.setFile(file);
-                    image.setId(-1);
-                    list.add(image);
-
-
-                }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
 
         }
 
-        if (requestCode == Camera.REQUEST_TAKE_PHOTO) {
-            String path = camera.getCameraBitmapPath();
-            File file = new File(path);
-            LogUtils.e(path);
 
-            if (file.exists()) {
-                List<Image> list = new ArrayList<>();
-                Image image = new Image();
-                image.setFile(file);
-                image.setId(-1);
-                list.add(image);
-
-
-            } else {
-                Toast.makeText(this.getApplicationContext(), "Picture not taken!", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
-    @OnClick({R.id.imgCover, R.id.imgAvatar, R.id.imgAddNewMessage})
-    public void onViewClicked(View view) {
+    @OnClick({R.id.tvPrivacy, R.id.tvTerm})
+    public void onViewPrivacyClicked(View view) {
         switch (view.getId()) {
-            case R.id.imgAddNewMessage:
-                choosePhotoBottomSheet.show();
+            case R.id.tvPrivacy:
+                startActivity(new Intent(ProfileActivity.this, PrivacyActivity.class));
                 break;
-            case R.id.imgCover:
-                typeUpload = 2;
-                choosePhoto();
-                break;
-            case R.id.imgAvatar:
-                typeUpload = 1;
-                choosePhoto();
+            case R.id.tvTerm:
+                startActivity(new Intent(ProfileActivity.this, TermActivity.class));
 
                 break;
         }
     }
 
-    @Override
-    public void onSucessUploadAvat() {
-        setResult(RESULT_OK);
-    }
-
-    @Override
-    public Context getMyContext() {
-        return this;
-    }
-
-    @Override
-    public void showProgress() {
-        dialogLoading.showDialog();
-    }
-
-    @Override
-    public void hiddenProgress() {
-        dialogLoading.hideDialog();
-    }
-
-    @Override
-    public void onErrorApi(String message) {
-        LogUtils.e(message);
-    }
-
-    @Override
-    public void onError(String message) {
-        LogUtils.e(message);
-        showToast(message, AppConstant.NEGATIVE);
-    }
-
-    @Override
-    public void onErrorAuthorization() {
-        showDialogExpired();
-    }
-
-    @Override
-    public void onClickCapturePhoto() {
-        typeUpload = 3;
-        RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.request(Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-            }
-
-            @Override
-            public void onNext(Boolean aBoolean) {
-                if (aBoolean) {
-                    try {
-                        camera.takePicture();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
-            @Override
-            public void onComplete() {
-            }
-        });
-
-    }
-
-    @Override
-    public void onClickGalleryPhoto() {
-        typeUpload = 3;
-        choosePhoto();
-
+    @OnClick({R.id.constraintLayout7, R.id.constraintLayout10, R.id.constraintLayout11, R.id.constraintLayout8})
+    public void onViewUpdateClicked(View view) {
+        switch (view.getId()) {
+            case R.id.constraintLayout7:
+                break;
+            case R.id.constraintLayout10:
+                break;
+            case R.id.constraintLayout11:
+                break;
+            case R.id.constraintLayout8:
+                break;
+        }
+        startActivity(new Intent(ProfileActivity.this, ActivityProfileUpdate.class));
     }
 }

@@ -1,8 +1,8 @@
-package com.skynet.mumgo.ui.notification;
-
+package com.skynet.mumgo.ui.Notification;
 
 
 import com.skynet.mumgo.models.Notification;
+import com.skynet.mumgo.models.Promotion;
 
 import java.util.List;
 

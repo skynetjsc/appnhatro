@@ -1,15 +1,14 @@
-package com.skynet.mumgo.ui.DetailNotificationActivity;
+package com.skynet.mumgo.ui.DetailNews;
 
 
 import com.skynet.mumgo.application.AppController;
-import com.skynet.mumgo.models.Notification;
+import com.skynet.mumgo.models.Promotion;
 import com.skynet.mumgo.network.api.ApiResponse;
 import com.skynet.mumgo.network.api.ApiService;
 import com.skynet.mumgo.network.api.ApiUtil;
 import com.skynet.mumgo.network.api.CallBackBase;
 import com.skynet.mumgo.ui.base.Interactor;
 import com.skynet.mumgo.utils.AppConstant;
-
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -28,9 +27,9 @@ public class DetailNotificationRemoteImpl extends Interactor implements DetailNo
             return;
         }
 
-        getmService().getDetailNotification(id,2,AppController.getInstance().getmProfileUser().getId()).enqueue(new CallBackBase<ApiResponse<Notification>>() {
+        getmService().getDetailNotification(id,2,AppController.getInstance().getmProfileUser().getId()).enqueue(new CallBackBase<ApiResponse<Promotion>>() {
             @Override
-            public void onRequestSuccess(Call<ApiResponse<Notification>> call, Response<ApiResponse<Notification>> response) {
+            public void onRequestSuccess(Call<ApiResponse<Promotion>> call, Response<ApiResponse<Promotion>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     if (response.body().getCode() == AppConstant.CODE_API_SUCCESS && response.body().getData() != null) {
 
@@ -44,7 +43,7 @@ public class DetailNotificationRemoteImpl extends Interactor implements DetailNo
             }
 
             @Override
-            public void onRequestFailure(Call<ApiResponse<Notification>> call, Throwable t) {
+            public void onRequestFailure(Call<ApiResponse<Promotion>> call, Throwable t) {
                 listener.onErrorApi(t.getMessage());
 
             }

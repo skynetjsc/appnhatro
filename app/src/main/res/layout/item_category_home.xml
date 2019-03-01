@@ -2,19 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?selectableItemBackground"
-
     android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/holder"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/home_category_bg_item"
         android:padding="@dimen/dp4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,22 +19,20 @@
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             app:srcCompat="@drawable/bg" />
     </FrameLayout>
 
 
     <TextView
         android:id="@+id/tvName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:gravity="center"
         android:text="Chợ"
         android:textColor="#93332f20"
-        android:textSize="13sp"
-        android:textStyle="bold"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/holder"
         app:layout_constraintStart_toStartOf="@+id/holder"
         app:layout_constraintTop_toBottomOf="@+id/holder" />

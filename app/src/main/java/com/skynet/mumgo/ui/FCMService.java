@@ -35,7 +35,7 @@ public class FCMService extends FirebaseMessagingService {
             }
         }
 
-        // Check if message contains a notification payload.
+        // Check if message contains a news payload.
         if (remoteMessage.getNotification() != null) {
             LogUtils.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }

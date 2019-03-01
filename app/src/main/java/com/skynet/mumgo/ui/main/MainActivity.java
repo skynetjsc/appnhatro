@@ -14,21 +14,27 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jaeger.library.StatusBarUtil;
 import com.skynet.mumgo.R;
 import com.skynet.mumgo.application.AppController;
 import com.skynet.mumgo.interfaces.FragmentCallBackTitle;
 import com.skynet.mumgo.models.Profile;
-import com.skynet.mumgo.ui.ScannerQr;
+import com.skynet.mumgo.ui.contact.ContactUsActivity;
+import com.skynet.mumgo.ui.scanqr.ScannerQr;
 import com.skynet.mumgo.ui.auth.updateProfile.ActivityProfileUpdate;
 import com.skynet.mumgo.ui.base.BaseActivity;
 import com.skynet.mumgo.ui.cart.CartActivity;
 import com.skynet.mumgo.ui.history.ListHistoryActivity;
+import com.skynet.mumgo.ui.listProduct.ListProductActivity;
 import com.skynet.mumgo.ui.listchat.ListChatActivity;
+import com.skynet.mumgo.ui.news.NotificationActivity;
+import com.skynet.mumgo.ui.profile.ProfileActivity;
 import com.skynet.mumgo.ui.views.ViewpagerNotSwipe;
 import com.skynet.mumgo.utils.AppConstant;
 import com.squareup.picasso.Picasso;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;
 import butterknife.BindView;
@@ -90,6 +96,8 @@ public class MainActivity extends BaseActivity implements OptionBottomSheet.More
 
     @Override
     protected int initLayout() {
+        StatusBarUtil.setTransparent(this);
+
         return R.layout.activity_main;
     }
 
@@ -114,24 +122,28 @@ public class MainActivity extends BaseActivity implements OptionBottomSheet.More
                 switch (checkedId) {
                     case R.id.btmNewest: {
                         viewpager.setCurrentItem(0);
+                        findViewById(R.id.include5).setVisibility(View.GONE);
                         setTilte("Sản phẩm mới");
                         break;
                     }
                     case R.id.btmShop: {
+                        findViewById(R.id.include5).setVisibility(View.VISIBLE);
                         viewpager.setCurrentItem(1);
                         setTilte("Chuỗi cửa hàng");
                         break;
                     }
                     case R.id.btmCategory: {
-                        viewpager.setCurrentItem(2);
-                        setTilte("Ngành hàng");
+//                        viewpager.setCurrentItem(2);
+                        // setTilte("Ngành hàng");
                         imgRight.setImageResource(R.drawable.ic_search_toolbar);
+                        startActivity(new Intent(MainActivity.this, com.skynet.mumgo.ui.Notification.NotificationActivity.class));
+
                         break;
                     }
                     case R.id.btmFav: {
-                        viewpager.setCurrentItem(3);
-                        setTilte("Yêu thích");
-
+//                        viewpager.setCurrentItem(3);
+                        //   setTilte("Yêu thích");
+                        startActivity(new Intent(MainActivity.this, ListProductActivity.class));
                         break;
                     }
                 }
@@ -286,7 +298,7 @@ public class MainActivity extends BaseActivity implements OptionBottomSheet.More
         tvTitleToolbar.setText(title);
     }
 
-    @OnClick({R.id.nav_home, R.id.nav_fav, R.id.nav_cart, R.id.nav_history, R.id.nav_message, R.id.nav_news, R.id.nav_help})
+    @OnClick({R.id.nav_home, R.id.nav_fav, R.id.nav_cart, R.id.nav_history, R.id.nav_message, R.id.nav_news, R.id.nav_help, R.id.nav_setting, R.id.nav_intro, R.id.nav_share})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.nav_home:
@@ -306,12 +318,34 @@ public class MainActivity extends BaseActivity implements OptionBottomSheet.More
                 startActivity(new Intent(MainActivity.this, ListChatActivity.class));
                 break;
             case R.id.nav_news:
+                startActivity(new Intent(MainActivity.this, NotificationActivity.class));
+
                 break;
             case R.id.nav_help:
+                startActivity(new Intent(MainActivity.this, ContactUsActivity.class));
+
+                break;
+            case R.id.nav_setting:
+                startActivityForResult(new Intent(MainActivity.this, ProfileActivity.class), 1000);
+
+                break;
+            case R.id.nav_intro:
+                startActivity(new Intent(MainActivity.this, ContactUsActivity.class));
+
+                break;
+            case R.id.nav_share:
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "http://mumgo.vn/");
+                startActivity(Intent.createChooser(shareIntent, "Share link using"));
                 break;
         }
         drawerLayout.closeDrawer(Gravity.LEFT);
 
+    }
+
+    public void openMenu() {
+        drawerLayout.openDrawer(Gravity.LEFT);
     }
 
     @OnClick({R.id.imgHome, R.id.imgRight, R.id.imageView9})
@@ -331,7 +365,7 @@ public class MainActivity extends BaseActivity implements OptionBottomSheet.More
                     @Override
                     public void onNext(Boolean aBoolean) {
                         if (aBoolean) {
-                           startActivity(new Intent(MainActivity.this,ScannerQr.class));
+                            startActivity(new Intent(MainActivity.this, ScannerQr.class));
                         } else {
 
                         }
@@ -350,6 +384,20 @@ public class MainActivity extends BaseActivity implements OptionBottomSheet.More
             case R.id.imageView9:
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 break;
+        }
+    }
+
+    @OnClick({R.id.imgAvatarProfile, R.id.tvNameProfile})
+    public void onViewProfileClicked(View view) {
+        startActivityForResult(new Intent(MainActivity.this, ProfileActivity.class), 1000);
+        drawerLayout.closeDrawer(Gravity.LEFT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == RESULT_OK) {
+            bindUserData();
         }
     }
 }

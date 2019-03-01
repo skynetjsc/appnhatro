@@ -26,6 +26,8 @@ http://play.google.com/store/apps/details?id=%s
     <string name="what_do_u_think">Bạn đang nghĩ gì vậy?</string>
     <string name="open_drawer">Open</string>
     <string name="close_drawer">Close</string>
+    <string name="format_time_ship"><![CDATA[Giao hàng lúc: <font color="#7ED321">%02d:%02d %02d/%02d/%d</font> ]]></string>
+    <string name="format_time_ship_s"><![CDATA[Giao hàng lúc: <font color="#7ED321">%s</font> ]]></string>
     <array name="gender">
         <item >Nam</item>
         <item >Nữ</item>

@@ -10,8 +10,9 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"><androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -44,26 +45,26 @@
                 android:id="@+id/btmNewest"
                 style="@style/main_bottom_radius"
                 android:drawableTop="@drawable/seletor_newest"
-                android:text="Mới nhất" />
+                android:text="Home" />
 
             <RadioButton
                 android:id="@+id/btmShop"
                 style="@style/main_bottom_radius"
-                android:text="Cửa hàng"
+                android:text="Danh bạ"
                 android:drawableTop="@drawable/seletor_shop"
                 />
 
             <RadioButton
                 android:id="@+id/btmCategory"
                 style="@style/main_bottom_radius"
-                android:text="Danh mục"
+                android:text="Thông báo"
                 android:drawableTop="@drawable/seletor_category"
                 />
 
             <RadioButton
                 android:id="@+id/btmFav"
                 style="@style/main_bottom_radius"
-                android:text="Yêu thích"
+                android:text="Gợi ý"
                 android:drawableTop="@drawable/seletor_fav"
                 />
         </RadioGroup>
@@ -91,6 +92,8 @@
             layout="@layout/layout_toolbar_main" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     <include
         layout="@layout/nav"
         android:visibility="visible" />

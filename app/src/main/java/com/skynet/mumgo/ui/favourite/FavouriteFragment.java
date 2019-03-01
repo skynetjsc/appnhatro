@@ -1,6 +1,7 @@
 package com.skynet.mumgo.ui.favourite;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -15,6 +16,8 @@ import com.skynet.mumgo.models.FavouriteItem;
 import com.skynet.mumgo.models.Product;
 import com.skynet.mumgo.models.Shop;
 import com.skynet.mumgo.ui.base.BaseFragment;
+import com.skynet.mumgo.ui.detailProduct.ActivityDetailProduct;
+import com.skynet.mumgo.ui.detailshop.DetailShopActivity;
 import com.skynet.mumgo.utils.AppConstant;
 
 import java.util.List;
@@ -163,7 +166,17 @@ public class FavouriteFragment extends BaseFragment implements FavouriteContract
 
     @Override
     public void onCallBack(int pos) {
+        Intent i;
+        if(tab.getSelectedTabPosition() == 0) {
+           i = new Intent(getActivity(),DetailShopActivity.class);
+           i.putExtra(AppConstant.MSG,listShop.get(pos).getShop_id());
 
+        }else {
+            i = new Intent(getActivity(),ActivityDetailProduct.class);
+            i.putExtra(AppConstant.MSG,list.get(pos).getProduct_id());
+
+        }
+        startActivity(i);
     }
 
     @Override

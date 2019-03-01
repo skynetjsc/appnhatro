@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">#0B2031</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+
         <item name="android:textSize">14sp</item>
         <item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>
     </style>
@@ -15,7 +17,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryDark">@color/green</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/green</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>
@@ -31,10 +33,14 @@
         <item name="android:textSize">14sp</item>
         <item name="fontPath">fonts/SF-UI-Text-Medium.otf</item>
     </style>
-
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#E9BC08</item>
+        <item name="colorControlActivated">@color/gray</item>
+        <item name="android:progressTint">#E9BC08</item>
+    </style>
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <!-- Customize your theme here. -->
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -43,7 +49,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -55,9 +61,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.Chat" parent="AppTheme.NoActionBar">
+    <style name="AppThemeAuth.NoActionBar.Chat" parent="AppTheme.NoActionBar">
         <item name="colorControlNormal">@color/white</item>
-        <item name="colorControlActivated">@color/white</item>
         <item name="colorControlHighlight">@color/white</item>
     </style>
 
@@ -360,5 +365,17 @@
         <item name="android:background">#78e2e2e2</item>
     </style>
 
+    <style name="BaseAppTheme" parent="android:Theme.Material">
+        <!-- enable window content transitions -->
 
+        <!-- specify enter and exit transitions -->
+        <!--<item name="android:windowEnterTransition">@transition/explode</item>-->
+        <!--<item name="android:windowExitTransition">@transition/explode</item>-->
+
+        <!-- specify shared element transitions -->
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/change_image_transform</item>
+    </style>
 </resources>

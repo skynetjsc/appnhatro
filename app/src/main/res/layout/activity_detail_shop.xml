@@ -6,7 +6,6 @@
     android:background="@color/white"
         android:layout_height="match_parent">
         <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-
         <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
         <!--xmlns:tools="http://schemas.android.com/tools"-->
         <!--android:layout_width="match_parent"-->
@@ -28,6 +27,7 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
 
                 <ImageView
                     android:id="@+id/imgCover"
@@ -69,18 +69,17 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/bg_tran_gray_detail_shop" />
+
                     <TextView
                         android:id="@+id/tvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="16dp"
                         android:text="Profile"
                         android:textColor="@color/black"
                         android:textSize="@dimen/dps16"
                         app:layout_constraintBottom_toTopOf="@+id/tvAddress"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <CheckBox
@@ -99,14 +98,14 @@
                         style="@style/Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginBottom="16dp"
                         android:numStars="5"
+                        android:progressTint="#fff600"
                         android:rating="5"
                         android:stepSize="1"
+                        android:theme="@style/RatingBar"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
@@ -115,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="4.5"
-                        android:textColor="#E9BC08"
+                        android:textColor="#fff600"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
                         app:layout_constraintStart_toEndOf="@+id/ratingBar"
@@ -125,23 +124,29 @@
                         android:id="@+id/tvAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginBottom="16dp"
                         android:textColor="@color/black"
                         android:textSize="13sp"
                         app:layout_constraintBottom_toTopOf="@+id/ratingBar"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         tools:text="Ton duc thang, Ha Noi" />
 
+                    <ImageView
+                        android:id="@+id/imgShare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_share_black_24dp" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
+                    android:id="@+id/toolbar2"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="wrap_content"
                     android:contentInsetStart="0dp"
                     android:contentInsetLeft="0dp"
                     android:contentInsetEnd="0dp"
@@ -153,16 +158,29 @@
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
+
+                        <ImageView
+                            android:id="@+id/imgCart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_bag_toolbar" />
 
                         <ImageView
                             android:id="@+id/imgBack"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp16"
+                            android:layout_marginTop="16dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ic_back" />
@@ -177,18 +195,20 @@
                             android:textSize="@dimen/dps16" />
 
                         <ImageView
-                            android:id="@+id/imgMore"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/dp16"
+                            android:id="@+id/imgNew"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginTop="8dp"
+                            android:visibility="gone"
+                            android:layout_marginEnd="4dp"
+                            app:layout_constraintBottom_toTopOf="@+id/imgCart"
+                            app:layout_constraintEnd_toEndOf="@+id/imgCart"
+                            app:layout_constraintTop_toTopOf="@+id/imgCart"
+                            app:srcCompat="@drawable/dot_orange" />
 
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_bag_toolbar" />
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.appcompat.widget.Toolbar>
-
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
@@ -249,8 +269,10 @@
             <com.skynet.mumgo.ui.views.ViewpagerNotSwipe
                 android:id="@+id/viewpager"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tabLayout">

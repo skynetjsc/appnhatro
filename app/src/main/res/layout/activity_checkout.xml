@@ -13,7 +13,7 @@
         android:id="@+id/constraintLayout6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
+        android:fitsSystemWindows="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +40,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:text="KIỂM TRA ĐƠN HÀNG"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -149,7 +149,7 @@
                 android:layout_marginStart="8dp"
                 android:text="Thông tin liên hệ"
                 android:textColor="#0B2031"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textView11"
                 app:layout_constraintStart_toEndOf="@+id/textView11"
@@ -162,7 +162,7 @@
                 android:padding="16dp"
                 android:text="Sửa"
                 android:textColor="#E4283D"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView11"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView11" />
@@ -184,6 +184,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
+                    android:inputType="textPersonName"
+                    android:singleLine="true"
                     tools:text="Nguyễn Văn A" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -203,7 +205,9 @@
                     android:id="@+id/edtSdt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="false" />
+                    android:enabled="false"
+                    android:inputType="number"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -222,7 +226,10 @@
                     android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="false" />
+                    android:enabled="false"
+                    android:inputType="textEmailAddress"
+
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -242,8 +249,8 @@
                     android:id="@+id/edtAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-                    android:enabled="false" />
+                    android:enabled="false"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <View
@@ -257,13 +264,63 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp16"
+                app:layout_constraintTop_toBottomOf="@+id/view11">
+
+                <TextView
+                    android:id="@+id/tvEdit2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sửa"
+                    android:textColor="#E4283D"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView22"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/imageView22" />
+
+                <ImageView
+                    android:id="@+id/imageView22"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_clock"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvTimeShip"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:singleLine="true"
+                    android:text="17:30 - Hôm nay 21/01/2019"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView22"
+                    app:layout_constraintEnd_toStartOf="@+id/tvEdit2"
+                    app:layout_constraintStart_toEndOf="@+id/imageView22"
+                    app:layout_constraintTop_toTopOf="@+id/imageView22" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/view166"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutTime" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutpayment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view11">
+                app:layout_constraintTop_toBottomOf="@+id/view166">
 
                 <TextView
                     android:id="@+id/tvEditPayment"
@@ -297,7 +354,8 @@
                     android:layout_marginStart="8dp"
                     android:text="Thông tin thanh toán"
                     android:textColor="#0B2031"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
+
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tvStep2"
                     app:layout_constraintStart_toEndOf="@+id/tvStep2"
@@ -359,7 +417,7 @@
                 android:layout_marginStart="8dp"
                 android:text="Đơn hàng của bạn"
                 android:textColor="#0B2031"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/tvStep"
                 app:layout_constraintStart_toEndOf="@+id/textView11"

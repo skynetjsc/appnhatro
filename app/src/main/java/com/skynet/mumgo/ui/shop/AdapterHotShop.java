@@ -49,7 +49,7 @@ public class AdapterHotShop extends RecyclerView.Adapter<AdapterHotShop.Viewhold
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
         if (list.get(position).getAvatar() != null && !list.get(position).getAvatar().isEmpty()) {
-            Picasso.with(context).load(list.get(position).getAvatar()).fit().centerCrop().into(holder.imgShop);
+            Picasso.with(context).load(list.get(position).getAvatar()).into(holder.imgShop);
         }
         holder.tvNameShop.setText(list.get(position).getName());
         holder.tvNumberProduct.setText(list.get(position).getNumber_product() + " sản phẩm");

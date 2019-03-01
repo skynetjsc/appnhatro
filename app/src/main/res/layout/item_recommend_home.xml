@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/dp8"
     app:cardPreventCornerOverlap="true"
-    android:layout_marginRight="@dimen/dp8"
+    android:layout_marginRight="@dimen/dp4"
     app:cardUseCompatPadding="true"
     android:foreground="?selectableItemBackground"
     android:orientation="vertical">
@@ -16,7 +16,6 @@
             android:id="@+id/img"
             android:layout_width="@dimen/size_recommend_photo_home"
             android:layout_height="@dimen/size_recommend_photo_home"
-            android:scaleType="centerCrop"
             app:srcCompat="@drawable/bg" />
 
 </androidx.cardview.widget.CardView>

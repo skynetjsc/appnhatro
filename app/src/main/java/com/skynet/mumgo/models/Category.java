@@ -1,9 +1,12 @@
 package com.skynet.mumgo.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public  class Category {
+public  class Category implements Parcelable {
 
     @Expose
     @SerializedName("active")
@@ -82,4 +85,45 @@ public  class Category {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.active);
+        dest.writeInt(this.is_hot);
+        dest.writeString(this.date);
+        dest.writeString(this.img);
+        dest.writeString(this.content);
+        dest.writeString(this.name);
+        dest.writeInt(this.id);
+    }
+
+    public Category() {
+    }
+
+    protected Category(Parcel in) {
+        this.active = in.readString();
+        this.is_hot = in.readInt();
+        this.date = in.readString();
+        this.img = in.readString();
+        this.content = in.readString();
+        this.name = in.readString();
+        this.id = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Category> CREATOR = new Parcelable.Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel source) {
+            return new Category(source);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
 }

@@ -28,7 +28,6 @@ import butterknife.OnClick;
  */
 
 public class DialogEditProduct extends Dialog {
-
     @BindView(R.id.imageView16)
     ImageView imageView16;
     @BindView(R.id.imgAvt)
@@ -106,6 +105,7 @@ public class DialogEditProduct extends Dialog {
                 exceute(1);
                 break;
             case R.id.btnUpdate:
+                product.setNote(edtNote2.getText().toString());
                 mListener.okClick(product);
                 dismiss();
                 break;

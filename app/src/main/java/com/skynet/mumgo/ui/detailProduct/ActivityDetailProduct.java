@@ -14,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.google.android.material.appbar.AppBarLayout;
 import com.jaeger.library.StatusBarUtil;
 import com.skynet.mumgo.R;
+import com.skynet.mumgo.application.AppController;
 import com.skynet.mumgo.models.Product;
 import com.skynet.mumgo.ui.base.BaseActivity;
 import com.skynet.mumgo.ui.cart.CartActivity;
@@ -27,7 +29,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -102,6 +106,17 @@ public class ActivityDetailProduct extends BaseActivity implements DetailProduct
     @BindView(R.id.view8)
     FrameLayout view8;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.appBarLayout3)
+    AppBarLayout appBarLayout3;
+    @BindView(R.id.scrollview)
+    NestedScrollView scrollview;
+    @BindView(R.id.tvNumberProductInCart)
+    TextView tvNumberProductInCart;
+    @BindView(R.id.layoutbottomCart)
+    ConstraintLayout layoutbottomCart;
+
     private int quatity = 0, unit = 0;
     private double price = 0;
     private Product product;
@@ -131,6 +146,16 @@ public class ActivityDetailProduct extends BaseActivity implements DetailProduct
     @Override
     protected void initViews() {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AppController.getInstance().getCart() != null && AppController.getInstance().getCart().getListProduct() != null && !AppController.getInstance().getCart().getListProduct().isEmpty()) {
+            imgNew.setVisibility(View.VISIBLE);
+        } else {
+            imgNew.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -220,9 +245,13 @@ public class ActivityDetailProduct extends BaseActivity implements DetailProduct
         setResult(RESULT_OK);
         if (list.size() > 0) {
             imgNew.setVisibility(View.VISIBLE);
+            layoutbottomCart.setVisibility(View.VISIBLE);
         } else {
             imgNew.setVisibility(View.GONE);
+            layoutbottomCart.setVisibility(View.GONE);
         }
+        tvNumberProductInCart.setText(list.size()+"");
+
         if (move) startActivity(new Intent(ActivityDetailProduct.this, CartActivity.class));
     }
 
@@ -262,5 +291,11 @@ public class ActivityDetailProduct extends BaseActivity implements DetailProduct
         Intent i = new Intent(ActivityDetailProduct.this, DetailShopActivity.class);
         i.putExtra(AppConstant.MSG, product.getShop_id());
         startActivity(i);
+    }
+
+    @OnClick(R.id.layoutbottomCart)
+    public void onViewClicked() {
+        startActivityForResult(new Intent(ActivityDetailProduct.this, CartActivity.class), 1000);
+
     }
 }

@@ -1,7 +1,8 @@
-package com.skynet.mumgo.ui.DetailNotificationActivity;
+package com.skynet.mumgo.ui.detailNotification;
 
 
 import com.skynet.mumgo.models.Notification;
+import com.skynet.mumgo.models.Promotion;
 
 public class DetailNotificationPresenter implements DetailNotificationContract.Presenter {
     DetailNotificationContract.View view;

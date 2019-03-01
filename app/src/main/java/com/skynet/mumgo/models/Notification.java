@@ -14,7 +14,7 @@ public class Notification implements Parcelable {
     String name;
     @SerializedName("date")
     String time;
-    @SerializedName("user_read")
+    @SerializedName("is_read")
     int isRead;
     @SerializedName("type")
     int type;

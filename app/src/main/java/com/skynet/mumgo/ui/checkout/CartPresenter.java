@@ -51,7 +51,19 @@ public class CartPresenter extends Presenter<CartContract.View> implements CartC
         }
     }
 
+    @Override
+    public void updateInfo(String name, String email, String phone, String address) {
+        if(isAvaliableView()){
+            interactor.updateInfo(name,email,phone,address);
+        }
+    }
 
+    @Override
+    public void updateTimeShip(String time) {
+        if(isAvaliableView()){
+            interactor.updateTimeShip(time);
+        }
+    }
 
 
     @Override

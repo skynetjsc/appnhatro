@@ -1,9 +1,12 @@
 package com.skynet.mumgo.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public  class News {
+public  class News implements Parcelable {
 
     @Expose
     @SerializedName("active")
@@ -115,4 +118,51 @@ public  class News {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.active);
+        dest.writeString(this.img);
+        dest.writeString(this.date);
+        dest.writeString(this.code);
+        dest.writeString(this.date_end);
+        dest.writeString(this.date_start);
+        dest.writeInt(this.value);
+        dest.writeString(this.content);
+        dest.writeString(this.title);
+        dest.writeInt(this.id);
+    }
+
+    public News() {
+    }
+
+    protected News(Parcel in) {
+        this.active = in.readString();
+        this.img = in.readString();
+        this.date = in.readString();
+        this.code = in.readString();
+        this.date_end = in.readString();
+        this.date_start = in.readString();
+        this.value = in.readInt();
+        this.content = in.readString();
+        this.title = in.readString();
+        this.id = in.readInt();
+    }
+
+    public static final Parcelable.Creator<News> CREATOR = new Parcelable.Creator<News>() {
+        @Override
+        public News createFromParcel(Parcel source) {
+            return new News(source);
+        }
+
+        @Override
+        public News[] newArray(int size) {
+            return new News[size];
+        }
+    };
 }

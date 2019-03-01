@@ -54,6 +54,64 @@ public class CartImplRemote extends Interactor implements CartContract.Interacto
 
             }
         });
+    //    listener.onSucessGetCart(AppController.getInstance().getCart());
+    }
+
+    @Override
+    public void updateInfo(String name, String email, String phone, String address) {
+        Profile profile = AppController.getInstance().getmProfileUser();
+        if (profile == null) {
+            listener.onErrorAuthorization();
+            return;
+        }
+        getmService().updateInforCart(profile.getId(),name,phone,email,address).enqueue(new CallBackBase<ApiResponse>() {
+            @Override
+            public void onRequestSuccess(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
+
+                    } else {
+                        listener.onError(response.message());
+                    }
+                } else {
+                    listener.onError(response.message());
+                }
+            }
+
+            @Override
+            public void onRequestFailure(Call<ApiResponse> call, Throwable t) {
+                listener.onErrorApi(t.getMessage());
+
+            }
+        });
+    }
+
+    @Override
+    public void updateTimeShip(String time) {
+        Profile profile = AppController.getInstance().getmProfileUser();
+        if (profile == null) {
+            listener.onErrorAuthorization();
+            return;
+        }
+        getmService().updateTimeShip(profile.getId(),time).enqueue(new CallBackBase<ApiResponse>() {
+            @Override
+            public void onRequestSuccess(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
+                    } else {
+                        listener.onError(response.message());
+                    }
+                } else {
+                    listener.onError(response.message());
+                }
+            }
+
+            @Override
+            public void onRequestFailure(Call<ApiResponse> call, Throwable t) {
+                listener.onErrorApi(t.getMessage());
+
+            }
+        });
     }
 
 }

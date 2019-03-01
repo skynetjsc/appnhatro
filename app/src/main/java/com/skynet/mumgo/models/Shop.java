@@ -64,7 +64,10 @@ public  class Shop implements Parcelable {
     private String name;
     @Expose
     @SerializedName("id")
-    private int id;  @Expose
+    private int id;    @Expose
+    @SerializedName("shop_id")
+    private int shop_id;
+    @Expose
     @SerializedName("is_favourite")
     private int is_favourite;
     @SerializedName("star")
@@ -88,6 +91,14 @@ public  class Shop implements Parcelable {
 
     public void setIs_favourite(int is_favourite) {
         this.is_favourite = is_favourite;
+    }
+
+    public int getShop_id() {
+        return shop_id;
+    }
+
+    public void setShop_id(int shop_id) {
+        this.shop_id = shop_id;
     }
 
     public void setNumber_product(int number_product) {

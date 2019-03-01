@@ -11,8 +11,10 @@ import com.skynet.mumgo.models.ChatItem;
 import com.skynet.mumgo.ui.base.BaseActivity;
 import com.skynet.mumgo.ui.chatting.ChatActivity;
 import com.skynet.mumgo.ui.listchat.ListChatAdapter.ChatCallBack;
+import com.skynet.mumgo.ui.views.SimpleSectionedRecyclerViewAdapter;
 import com.skynet.mumgo.utils.AppConstant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -98,12 +100,26 @@ public class ListChatActivity extends BaseActivity implements ListChatContract.V
 
     @Override
     public void onSucessGetListChat(List<ChatItem> list) {
-        rcv.setAdapter(new ListChatAdapter(list, getContext(), this));
+        List<SimpleSectionedRecyclerViewAdapter.Section> sections =
+                new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+
+        //Sections
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, "Tin nhắn mới"));
+//        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(3, "Gần đây"));
+        //Add your adapter to the sectionAdapter
+        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+        SimpleSectionedRecyclerViewAdapter mSectionedAdapter = new
+                SimpleSectionedRecyclerViewAdapter(getContext(), R.layout.section, R.id.section_text, new ListChatAdapter(list, getContext(), this));
+        mSectionedAdapter.setSections(sections.toArray(dummy));
+
+        //Apply this adapter to the RecyclerView
+        rcv.setAdapter(mSectionedAdapter);
+
     }
 
     @Override
     public void onSucessConfirmChat() {
-        showToast("Xác nhận cho thuê thành công!", AppConstant.POSITIVE);
+
     }
 
     @Override

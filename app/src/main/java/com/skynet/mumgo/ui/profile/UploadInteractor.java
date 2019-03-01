@@ -31,6 +31,43 @@ public class UploadInteractor extends Interactor implements UploadContract.Inter
     }
 
     @Override
+    public void getInfor() {
+        Profile profile = AppController.getInstance().getmProfileUser();
+
+        if (profile == null) {
+            listener.onErrorAuthorization();
+            return;
+
+        }
+        getmService().getProfile(profile.getId(),AppConstant.TYPE_USER).enqueue(new CallBackBase<ApiResponse<Profile>>() {
+            @Override
+            public void onRequestSuccess(Call<ApiResponse<Profile>> call, final Response<ApiResponse<Profile>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().getCode() == AppConstant.CODE_API_SUCCESS && response.body().getData() != null) {
+                        new android.os.Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppController.getInstance().setmProfileUser(response.body().getData());
+                                listener.onSuccessGetInfor();
+                            }
+                        }, 2000);
+                    } else {
+                        listener.onError(response.body().getMessage());
+                    }
+                } else {
+                    listener.onError(response.message());
+                }
+            }
+
+            @Override
+            public void onRequestFailure(Call<ApiResponse<Profile>> call, Throwable t) {
+                listener.onErrorApi(t.getMessage());
+
+            }
+        });
+    }
+
+    @Override
     public void upload(File file, MultipartBody.Part part, int type) {
         Profile profile = AppController.getInstance().getmProfileUser();
 
@@ -38,9 +75,9 @@ public class UploadInteractor extends Interactor implements UploadContract.Inter
             return;
         }
         RequestBody idRequest = ApiUtil.createPartFromString(AppController.getInstance().getmProfileUser().getId());
-        RequestBody typeRequest = ApiUtil.createPartFromString(type + "");
+        RequestBody typeRequest = ApiUtil.createPartFromString(AppConstant.TYPE_USER + "");
         Map<String, RequestBody> map = new HashMap<>();
-        map.put("user_id", idRequest);
+        map.put("id", idRequest);
         map.put("type", typeRequest);
         getmService().uploadAvatar(part, map).enqueue(new CallBackBase<ApiResponse<String>>() {
             @Override

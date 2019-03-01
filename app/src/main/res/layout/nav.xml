@@ -63,11 +63,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp16"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:padding="@dimen/dp16"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_close_white_24dp" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Số dư: 0đ"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/imgAvatarProfile"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNameProfile" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -162,6 +174,50 @@
                         android:drawableLeft="@drawable/ic_nav_help"
 
                         android:text="Hỗ trợ" />
+                </LinearLayout>
+                <View style="@style/nav_view" />
+
+                <LinearLayout
+                    android:id="@+id/nav_setting"
+                    style="@style/nav_layout_root_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        style="@style/nav_textview_item"
+                        android:drawableLeft="@drawable/ic_nav_news"
+
+                        android:text="Cài đặt" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="bottom">
+                    <LinearLayout
+                        android:id="@+id/nav_intro"
+                        style="@style/nav_layout_root_item">
+
+                        <TextView
+                            style="@style/nav_textview_item"
+
+                            android:text="Giới thiệu" />
+                    </LinearLayout>
+                    <View style="@style/nav_view" />
+
+                    <LinearLayout
+                        android:id="@+id/nav_share"
+                        style="@style/nav_layout_root_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            style="@style/nav_textview_item"
+
+                            android:text="Cài đặt" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
 

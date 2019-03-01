@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.skynet.mumgo.R;
 import com.skynet.mumgo.interfaces.ICallback;
+import com.skynet.mumgo.models.Product;
 import com.skynet.mumgo.models.Suggestion;
 import com.squareup.picasso.Picasso;
 
@@ -19,11 +20,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AdapterRecommend extends RecyclerView.Adapter<AdapterRecommend.ViewHolder> {
-    List<Suggestion> list;
+    List<Product> list;
     Context context;
     ICallback iCallback;
 
-    public AdapterRecommend(List<Suggestion> list, Context context, ICallback iCallback) {
+    public AdapterRecommend(List<Product> list, Context context, ICallback iCallback) {
         this.list = list;
         this.context = context;
         this.iCallback = iCallback;
@@ -38,7 +39,7 @@ public class AdapterRecommend extends RecyclerView.Adapter<AdapterRecommend.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (list.get(position).getImg() != null && !list.get(position).getImg().isEmpty()) {
-            Picasso.with(context).load(list.get(position).getImg()).fit().centerCrop().into(holder.img);
+            Picasso.with(context).load(list.get(position).getImg()).into(holder.img);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

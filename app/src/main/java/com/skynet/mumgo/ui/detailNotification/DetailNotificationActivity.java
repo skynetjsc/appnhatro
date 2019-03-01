@@ -1,18 +1,23 @@
-package com.skynet.mumgo.ui.DetailNotificationActivity;
+package com.skynet.mumgo.ui.detailNotification;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.skynet.mumgo.R;
 import com.skynet.mumgo.models.Notification;
+import com.skynet.mumgo.models.Promotion;
 import com.skynet.mumgo.ui.base.BaseActivity;
 import com.skynet.mumgo.ui.views.ProgressDialogCustom;
 import com.skynet.mumgo.utils.AppConstant;
-
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
@@ -31,6 +36,10 @@ public class DetailNotificationActivity extends BaseActivity implements DetailNo
     TextView tvContent;
     @BindView(R.id.tvTime)
     TextView tvTime;
+    @BindView(R.id.imgBtn_back_toolbar)
+    ImageView imgBtnBackToolbar;
+    @BindView(R.id.code)
+    TextView code;
 
     private DetailNotificationContract.Presenter presenter;
     private ProgressDialogCustom dialogLoading;
@@ -48,6 +57,7 @@ public class DetailNotificationActivity extends BaseActivity implements DetailNo
         if (getIntent() != null && getIntent().getExtras() != null) {
             presenter.getDetail(getIntent().getExtras().getString(AppConstant.MSG));
         }
+        code.setVisibility(View.GONE);
     }
 
     @Override
@@ -63,11 +73,6 @@ public class DetailNotificationActivity extends BaseActivity implements DetailNo
         return 0;
     }
 
-
-    @OnClick(R.id.imgBtn_back_toolbar)
-    public void onViewClicked() {
-        onBackPressed();
-    }
 
     @Override
     public Context getMyContext() {
@@ -112,7 +117,7 @@ public class DetailNotificationActivity extends BaseActivity implements DetailNo
     @Override
     public void onRefresh() {
         if (getIntent() != null && getIntent().getExtras() != null) {
-            presenter.getDetail(getIntent().getExtras().getString(AppConstant.MSG));
+            presenter.getDetail(getIntent().getStringExtra(AppConstant.MSG));
         }
     }
 
@@ -121,7 +126,6 @@ public class DetailNotificationActivity extends BaseActivity implements DetailNo
     public void onSuccessGetDetail(Notification notification) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             tvContent.setText(Html.fromHtml(notification.getName(), Html.FROM_HTML_MODE_COMPACT));
-
         } else {
             tvContent.setText(Html.fromHtml(notification.getName()));
         }
@@ -132,4 +136,16 @@ public class DetailNotificationActivity extends BaseActivity implements DetailNo
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.imgBtn_back_toolbar)
+    public void onViewClicked() {
+        onBackPressed();
+
+    }
 }

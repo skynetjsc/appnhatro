@@ -39,7 +39,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/white"
                 android:textSize="@dimen/dps16"
                 android:textStyle="bold" />
 

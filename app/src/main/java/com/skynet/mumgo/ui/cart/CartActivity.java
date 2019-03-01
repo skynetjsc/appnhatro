@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.skynet.mumgo.R;
+import com.skynet.mumgo.application.AppController;
 import com.skynet.mumgo.models.Cart;
 import com.skynet.mumgo.models.Product;
 import com.skynet.mumgo.models.Promotion;
@@ -86,6 +87,7 @@ public class CartActivity extends BaseActivity implements AdapterCartItem.CallBa
     private Promotion promotion;
     private CartContract.Presenter presenter;
     private Timer timer;
+
     @Override
     protected int initLayout() {
         return R.layout.activity_cart;
@@ -119,7 +121,7 @@ public class CartActivity extends BaseActivity implements AdapterCartItem.CallBa
                     @Override
                     public void run() {
                         // do your actual work here
-                       runOnUiThread(new Runnable() {
+                        runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 presenter.checkPromotion(s.toString());
@@ -157,6 +159,7 @@ public class CartActivity extends BaseActivity implements AdapterCartItem.CallBa
                 onBackPressed();
                 break;
             case R.id.checkout:
+                if (list.size() == 0) return;
                 startActivity(new Intent(CartActivity.this, CheckoutActivity.class));
                 break;
         }
@@ -202,6 +205,10 @@ public class CartActivity extends BaseActivity implements AdapterCartItem.CallBa
 
     @Override
     public void onSucessGetCart(Cart cart) {
+        if(getIntent() != null && getIntent().getDoubleExtra("price",0)!=0){
+            AppController.getInstance().getCart().setFinal_price(getIntent().getDoubleExtra("price",0));
+            cart.setFinal_price(getIntent().getDoubleExtra("price",0));
+        }
         list = cart.getListProduct();
         adapter = new AdapterCartItem(list, this, this);
         rcv.setAdapter(adapter);
@@ -219,6 +226,7 @@ public class CartActivity extends BaseActivity implements AdapterCartItem.CallBa
 //        }
         tvPricePromo.setText(String.format("-%,.0fđ", cart.getPricePromotion()));
         tvFinalPrice.setText(String.format("%,.0fđ", cart.getFinal_price()));
+
     }
 
     @Override

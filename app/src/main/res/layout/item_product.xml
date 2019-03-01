@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     app:cardCornerRadius="8dp"
+    android:layout_marginLeft="@dimen/dp4"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,13 +18,11 @@
             android:layout_width="match_parent"
             android:layout_height="128dp"
             android:layout_marginStart="@dimen/dp16"
-            android:layout_marginTop="@dimen/dp16"
             android:layout_marginEnd="@dimen/dp16"
-            android:scaleType="centerCrop"
             android:src="@drawable/bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/cb" />
 
         <TextView
             android:id="@+id/tvName"

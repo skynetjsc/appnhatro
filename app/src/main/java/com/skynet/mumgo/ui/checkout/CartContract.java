@@ -11,10 +11,13 @@ public interface CartContract  {
     }
     interface Presenter extends IBasePresenter,Listener{
         void getCart();
+        void updateInfo(String name,String email,String phone,String address);
+        void updateTimeShip(String time);
     }
     interface Interactor{
         void getCart();
-
+        void updateInfo(String name,String email,String phone,String address);
+        void updateTimeShip(String time);
     }
     interface Listener extends OnFinishListener{
         void onSucessGetCart(Cart cart);

@@ -28,7 +28,8 @@ public interface ListProductContract {
     }
 
     interface Listener extends OnFinishListener {
-        void onSucessGetListProduct(ProductResponse response);        void onSucessGetCart(Cart cart);
+        void onSucessGetListProduct(ProductResponse response);
+        void onSucessGetCart(Cart cart);
 
     }
 }

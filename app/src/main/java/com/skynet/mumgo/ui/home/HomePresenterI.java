@@ -2,9 +2,13 @@ package com.skynet.mumgo.ui.home;
 
 
 import com.skynet.mumgo.application.AppController;
+import com.skynet.mumgo.models.Combo;
 import com.skynet.mumgo.models.HomeResponse;
+import com.skynet.mumgo.models.ProductResponse;
 import com.skynet.mumgo.models.Profile;
 import com.skynet.mumgo.utils.AppConstant;
+
+import java.util.List;
 
 public class HomePresenterI implements HomeContract.PresenterI {
     HomeContract.View view;
@@ -36,6 +40,12 @@ public class HomePresenterI implements HomeContract.PresenterI {
     }
 
     @Override
+    public void getListProduct(int id) {
+        if (view == null) return;
+        interactor.getListProduct(id);
+    }
+
+    @Override
     public void onSuccessGetInfor(Profile profile) {
         if (view == null) return;
         view.hiddenProgress();
@@ -44,13 +54,35 @@ public class HomePresenterI implements HomeContract.PresenterI {
     }
 
     @Override
+    public void onSucessGetListProduct(List<Combo> response) {
+        if (view != null) {
+            if (response != null) {
+                if (response!= null) {
+                    view.onSucessGetListMoreProduct(response,0);
+                }
+            }
+        }
+    }
+
+    @Override
     public void onSucessGetHome(HomeResponse response) {
         if (view == null) return;
         view.hiddenProgress();
         if (response.getBanners() != null && !response.getBanners().isEmpty())
             view.onSucessGetBanner(response.getBanners());
+
         if (response.getCategory() != null && !response.getCategory().isEmpty())
             view.onSucessGetCategory(response.getCategory());
+
+        if (response.getCombo() != null && !response.getCombo().isEmpty())
+            view.onSucessGetBannerCombo(response.getCombo());
+
+        if (response.getCategory_banner() != null && !response.getCategory_banner().isEmpty())
+            view.onSucessGetCategoryHeader(response.getCategory_banner());
+
+        if (response.getParent_category() != null && !response.getParent_category().isEmpty())
+            view.onSucessGetCategoryParent(response.getParent_category());
+
         if (response.getNews() != null && !response.getNews().isEmpty())
             view.onSucessGetNews(response.getNews());
         if (response.getSuggest() != null && !response.getSuggest().isEmpty())

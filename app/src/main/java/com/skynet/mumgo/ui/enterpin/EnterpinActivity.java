@@ -80,13 +80,13 @@ public class EnterpinActivity extends BaseActivity implements PurchaseContract.V
         tvDate.setText(DateTimeUtil.convertTimeToString(System.currentTimeMillis(), "dd/MM/yyyy"));
         tvTotalPriceHeader.setText(String.format("%,.0fđ", AppController.getInstance().getCart().getFinal_price()));
         presenter = new PurchasePresenter(this);
-        presenter.sendPin();
+        presenter.book();
     }
 
     @Override
     protected void initViews() {
         dialogLoading = new ProgressDialogCustom(this);
-        layoutpayment.setVisibility(View.VISIBLE);
+        layoutpayment.setVisibility(View.GONE);
         layoutResult.setVisibility(View.GONE);
     }
 

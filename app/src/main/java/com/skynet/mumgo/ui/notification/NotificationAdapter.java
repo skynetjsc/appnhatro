@@ -1,16 +1,16 @@
-package com.skynet.mumgo.ui.notification;
+package com.skynet.mumgo.ui.Notification;
 
 import android.content.Context;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.skynet.mumgo.R;
 import com.skynet.mumgo.interfaces.ICallback;
 import com.skynet.mumgo.models.Notification;
+import com.skynet.mumgo.models.Promotion;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         this.context = context;
         sparseBooleanArray = new SparseBooleanArray();
         for (int i = 0; i < this.list.size(); i++) {
-            sparseBooleanArray.append(i, list.get(i).isRead() == 1);
+            sparseBooleanArray.put(i, list.get(i).getIsRead() == 1);
         }
         this.iCallback = iCallback;
     }
@@ -46,7 +46,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull CategoryViewHoder holder, final int position) {
         holder.name.setText(list.get(position).getTitle());
         holder.address.setText(list.get(position).getName());
-        holder.textView8.setText(list.get(position).getTime());
+        holder.time.setText(list.get(position).getTime());
         if (sparseBooleanArray.get(position)) {
             holder.layoutRootNotia.setBackgroundResource(R.drawable.noti_bg_read);
         } else {
@@ -77,10 +77,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         TextView time;
         @BindView(R.id.address)
         TextView address;
-        @BindView(R.id.textView8)
-        TextView textView8;
-        @BindView(R.id.imageView5)
-        ImageView imageView5;
+
         @BindView(R.id.layoutRootNotia)
         androidx.constraintlayout.widget.ConstraintLayout layoutRootNotia;
 

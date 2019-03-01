@@ -27,7 +27,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <uses-library android:name="org.apache.http.legacy"
             android:required="false"/>
-        <activity android:name=".ui.main.MainActivity"         android:theme="@style/AppTheme.NoActionBar"
+        <activity android:name=".ui.main.MainActivity"        android:theme="@style/AppThemeAuth.NoActionBar"
             >
 
         </activity>
@@ -59,10 +59,10 @@
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".ui.DetailNotificationActivity.DetailNotificationActivity" />
+        <activity android:name=".ui.DetailNews.DetailNotificationActivity" />
         <activity android:name=".ui.base.ActivityNetwork" />
 
-        <activity android:name=".ui.profile.ProfileActivity"  android:theme="@style/AppThemeAuth.NoActionBar"/>
+        <activity android:name=".ui.profile.ProfileActivity"  />
         <activity android:name=".ui.auth.AuthActivity" android:theme="@style/AppThemeAuth2.NoActionBar"/>
         <activity android:name=".ui.auth.login.LoginActivity"   android:theme="@style/AppThemeAuth.NoActionBar"/>
         <activity android:name=".ui.auth.signup.ActivitySignUp"  android:theme="@style/AppThemeAuth.NoActionBar"/>
@@ -73,7 +73,7 @@
         <activity android:name=".ui.detailshop.DetailShopActivity" android:theme="@style/AppThemeAuth.NoActionBar"/>
         <activity android:name=".ui.detailProduct.ActivityDetailProduct"  android:theme="@style/AppThemeAuth.NoActionBar"/>
         <activity android:name=".ui.cart.CartActivity" />
-        <activity android:name=".ui.checkout.CheckoutActivity" android:theme="@style/AppTheme.NoActionBar.Chat"/>
+        <activity android:name=".ui.checkout.CheckoutActivity" android:theme="@style/AppThemeAuth.NoActionBar.Chat"/>
         <activity android:name=".ui.choosepayment.ChoosepaymetnActivity" />
         <activity android:name=".ui.enterpin.EnterpinActivity" android:theme="@style/AppThemeAuth.NoActionBar" />
         <activity android:name=".ui.listProduct.ListProductActivity" />
@@ -82,7 +82,17 @@
         <activity android:name=".ui.chatting.ChatActivity" />
         <activity android:name=".ui.listchat.ListChatActivity" />
         <activity android:name=".ui.category.listProduct.ListProductActivity" />
-        <activity android:name=".ui.ScannerQr" />
+        <activity android:name=".ui.scanqr.ScannerQr" />
+        <activity android:name=".ui.contact.ContactUsActivity" />
+        <activity android:name=".ui.shop.NearbyActivity" />
+        <activity android:name=".ui.home.ActivityDetailNews" />
+        <activity android:name=".ui.search.ActivitySearch" />
+        <activity android:name=".ui.news.NotificationActivity" />
+        <activity android:name=".ui.location.LocationActivity" />
+        <activity android:name=".ui.Notification.NotificationActivity" />
+        <activity android:name=".ui.detailNotification.DetailNotificationActivity" />
+        <activity android:name=".ui.market.ListMarketActivity" />
+        <activity android:name=".ui.combo.ListProductActivity" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

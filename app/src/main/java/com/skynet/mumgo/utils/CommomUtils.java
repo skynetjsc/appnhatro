@@ -373,9 +373,9 @@ public class CommomUtils {
         return result;
     }
 
-    public static Marker addMarker(Drawable resource, GoogleMap mMap, LatLng latLng, float rotate, String title) {
+    public static Marker addMarker(Drawable resource, GoogleMap mMap, LatLng latLng,  String title) {
         BitmapDescriptor markerIcon = getMarkerIconFromDrawable(resource);
-        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).anchor(0.5f, 0.5f).rotation(rotate).icon(markerIcon));
+        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).anchor(0.5f, 0.5f).icon(markerIcon).title(title));
         return marker;
     }  public static Marker addMarker(Drawable resource, GoogleMap mMap, LatLng latLng) {
         BitmapDescriptor markerIcon = getMarkerIconFromDrawable(resource);

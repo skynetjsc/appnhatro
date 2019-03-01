@@ -1,11 +1,9 @@
-package com.skynet.mumgo.ui.notification;
+package com.skynet.mumgo.ui.Notification;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -14,8 +12,9 @@ import com.skynet.mumgo.application.AppController;
 import com.skynet.mumgo.interfaces.ICallback;
 import com.skynet.mumgo.models.Notification;
 import com.skynet.mumgo.models.Profile;
-import com.skynet.mumgo.ui.DetailNotificationActivity.DetailNotificationActivity;
-import com.skynet.mumgo.ui.base.BaseFragment;
+import com.skynet.mumgo.models.Promotion;
+import com.skynet.mumgo.ui.DetailNews.DetailNotificationActivity;
+import com.skynet.mumgo.ui.base.BaseActivity;
 import com.skynet.mumgo.ui.views.ProgressDialogCustom;
 import com.skynet.mumgo.utils.AppConstant;
 
@@ -27,12 +26,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class NotificationActivity extends BaseFragment implements ICallback, NotificationContract.View, SwipeRefreshLayout.OnRefreshListener {
+import static com.blankj.utilcode.util.Utils.getContext;
+
+public class NotificationActivity extends BaseActivity implements ICallback, NotificationContract.View, SwipeRefreshLayout.OnRefreshListener {
 
 
     @BindView(R.id.swipe)
     SwipeRefreshLayout swipe;
+    @BindView(R.id.imgBtn_back_toolbar)
+    ImageView imgBtnBackToolbar;
+    @BindView(R.id.tvTitle_toolbar)
+    TextView tvTitleToolbar;
     //    @BindView(R.id.swipe)
 //    SwipeRefreshLayout swipe;
     private NotificationContract.Presenter presenter;
@@ -43,27 +49,12 @@ public class NotificationActivity extends BaseFragment implements ICallback, Not
     List<Notification> listGroupServices = new ArrayList<>();
     private ICallback mListener;
 
-    public static NotificationActivity newInstance() {
-
-        Bundle args = new Bundle();
-
-        NotificationActivity fragment = new NotificationActivity();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     protected int initLayout() {
         return R.layout.activity_notification;
     }
 
-    @Override
-    protected void initViews(View view) {
-        ButterKnife.bind(this, view);
-        rcvNotification.setLayoutManager(new LinearLayoutManager(getMyContext()));
-        rcvNotification.setHasFixedSize(true);
-        swipe.setOnRefreshListener(this);
-    }
 
     @Override
     protected void initVariables() {
@@ -71,10 +62,24 @@ public class NotificationActivity extends BaseFragment implements ICallback, Not
         presenter = new NotificationPresenter(this);
         profileModel = AppController.getInstance().getmProfileUser();
         if (profileModel == null) {
-            showDialogExpiredToken();
+            showDialogExpired();
             return;
         }
         presenter.getAllService(profileModel.getId());
+    }
+
+    @Override
+    protected void initViews() {
+        ButterKnife.bind(this);
+        rcvNotification.setLayoutManager(new LinearLayoutManager(getMyContext()));
+        rcvNotification.setHasFixedSize(true);
+        swipe.setOnRefreshListener(this);
+        tvTitleToolbar.setText("Thông báo");
+    }
+
+    @Override
+    protected int initViewSBAnchor() {
+        return 0;
     }
 
 
@@ -84,12 +89,10 @@ public class NotificationActivity extends BaseFragment implements ICallback, Not
     }
 
     @Override
-    public void onDestroyView() {
+    protected void onDestroy() {
         presenter.onDestroyView();
 
-        super.onDestroyView();
-
-
+        super.onDestroy();
     }
 
     @Override
@@ -141,8 +144,8 @@ public class NotificationActivity extends BaseFragment implements ICallback, Not
     // Click to item to fire this
     @Override
     public void onCallBack(int pos) {
-        Intent i = new Intent(getActivity(), DetailNotificationActivity.class);
-        if (listGroupServices.get(pos).isRead() == 0) {
+        Intent i = new Intent(NotificationActivity.this, com.skynet.mumgo.ui.detailNotification.DetailNotificationActivity.class);
+        if (listGroupServices.get(pos).getIsRead() == 0) {
             AppController.getInstance().getmProfileUser().setNoty(AppController.getInstance().getmProfileUser().getNoty() - 1);
 //            ((MainActivity) getActivity()).setBadget(AppController.getInstance().getmProfileUser().getNoty());
 //            mListener.onCallBack(1);
@@ -154,17 +157,12 @@ public class NotificationActivity extends BaseFragment implements ICallback, Not
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000 && resultCode == getActivity().RESULT_OK) {
+        if (requestCode == 1000 && resultCode == NotificationActivity.this.RESULT_OK) {
             //     onRefresh();
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        return rootView;
-    }
+
 
 //    @Override
 //    public void onAttach(Context context) {
@@ -184,14 +182,13 @@ public class NotificationActivity extends BaseFragment implements ICallback, Not
 //    }
 
     @Override
-    public void doAction() {
+    public void onResume() {
+        super.onResume();
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getCallBackTitle().setTilte(null);
-
+    @OnClick(R.id.imgBtn_back_toolbar)
+    public void onViewClicked() {
+        onBackPressed();
     }
 }

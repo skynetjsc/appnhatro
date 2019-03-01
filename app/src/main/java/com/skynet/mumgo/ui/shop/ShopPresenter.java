@@ -1,6 +1,7 @@
 package com.skynet.mumgo.ui.shop;
 
 import com.skynet.mumgo.models.Category;
+import com.skynet.mumgo.models.Shop;
 import com.skynet.mumgo.models.ShopResponse;
 import com.skynet.mumgo.ui.base.Presenter;
 
@@ -54,33 +55,31 @@ public class ShopPresenter extends Presenter<ShopContract.View> implements ShopC
     }
 
     @Override
-    public void getCategory() {
+    public void getListFriend() {
         if (isAvaliableView()) {
             view.showProgress();
-            interactor.getCategory();
+            interactor.getListFriend(1);
         }
     }
 
     @Override
-    public void onSuccessGetListShop(ShopResponse shopResponse) {
+    public void getListShopNearby(double lat, double lng) {
+        if (isAvaliableView()) {
+            view.showProgress();
+            interactor.getListShopNearby(lat, lng);
+        }
+    }
+
+
+    @Override
+    public void onSuccessGetListShop(List<Shop> shopResponse) {
         if (isAvaliableView()) {
             view.hiddenProgress();
             if (shopResponse != null) {
-                if (shopResponse.getHot_shop() != null && !shopResponse.getHot_shop().isEmpty())
-                    view.onSuccessGetListHotShop(shopResponse.getHot_shop());
-                if (shopResponse.getListShop() != null && !shopResponse.getListShop().isEmpty())
-                    view.onSuccessGetListShop(shopResponse.getListShop());
+                view.onSuccessGetListShop(shopResponse);
             }
         }
     }
 
-    @Override
-    public void onSucessGetCategory(List<Category> categories) {
-        if (isAvaliableView()) {
-            view.hiddenProgress();
-            if (categories != null) {
-                view.onSucessGetCategory(categories);
-            }
-        }
-    }
+
 }

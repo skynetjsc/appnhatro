@@ -3,6 +3,7 @@ package com.skynet.mumgo.ui.category;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,8 +13,11 @@ import com.skynet.mumgo.interfaces.ICallback;
 import com.skynet.mumgo.models.Category;
 import com.skynet.mumgo.ui.base.BaseFragment;
 import com.skynet.mumgo.ui.category.listProduct.ListProductActivity;
+import com.skynet.mumgo.ui.location.LocationActivity;
+import com.skynet.mumgo.ui.search.ActivitySearch;
 import com.skynet.mumgo.utils.AppConstant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -106,6 +110,12 @@ public class ListCategoryFragment extends BaseFragment implements CategoryContra
 
     @OnClick(R.id.button3)
     public void onViewClicked() {
+        Intent i = new Intent(getActivity(),ActivitySearch.class);
+        Bundle b = new Bundle();
+        b.putInt("type",ActivitySearch.TYPE_CATEGORY);
+        b.putParcelableArrayList(AppConstant.MSG, (ArrayList<? extends Parcelable>) listCategories);
+        i.putExtra(AppConstant.BUNDLE,b);
+        startActivity(i);
     }
 
     @Override
@@ -116,8 +126,9 @@ public class ListCategoryFragment extends BaseFragment implements CategoryContra
 
     @Override
     public void onCallBack(int pos) {
-        Intent i = new Intent(getActivity(),ListProductActivity.class);
+        Intent i = new Intent(getActivity(), LocationActivity.class);
         i.putExtra(AppConstant.MSG,listCategories.get(pos).getId());
+        i.putExtra("name",listCategories.get(pos).getName());
         startActivity(i);
     }
 }

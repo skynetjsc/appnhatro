@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +20,9 @@ import com.skynet.mumgo.ui.chatting.ChatActivity;
 import com.skynet.mumgo.ui.detailProduct.ActivityDetailProduct;
 import com.skynet.mumgo.ui.views.ProgressDialogCustom;
 import com.skynet.mumgo.utils.AppConstant;
+import com.skynet.mumgo.utils.DateTimeUtil;
+
+import java.text.SimpleDateFormat;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -175,7 +179,7 @@ public class HistoryDetailActivity extends BaseActivity implements AdapterCarHis
         this.history = history;
         recyclerView.setAdapter(new AdapterCarHistorytItem(history.getList_product(), this, this));
         tvTitleToolbar.setText("ĐƠN HÀNG #" + history.getId());
-        tvDate.setText(history.getDate_booking());
+        tvDate.setText(history.getTime_ship());
         tvTotalPriceFooter.setText(String.format("%,.0fđ", history.getPrice()));
         tvTotalPriceHeader.setText(String.format("%,.0fđ", history.getPrice()));
         btnNext.setVisibility(View.GONE);
@@ -203,7 +207,6 @@ public class HistoryDetailActivity extends BaseActivity implements AdapterCarHis
             case 4: {
                 textView44.setText("Đã huỷ");
                 textView44.setTextColor(Color.parseColor("#FF1313"));
-                textView44.setTextColor(Color.parseColor("#00C464"));
                 textView44.setBackgroundResource(R.drawable.ic_cancel_status);
                 break;
             }
@@ -213,6 +216,9 @@ public class HistoryDetailActivity extends BaseActivity implements AdapterCarHis
 
                 break;
             }
+        }
+        if(DateTimeUtil.convertToDate(history.getDate_booking(),new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")).getTime() + (15*60*1000) < System.currentTimeMillis()){
+            btnNext.setVisibility(View.GONE);
         }
     }
 

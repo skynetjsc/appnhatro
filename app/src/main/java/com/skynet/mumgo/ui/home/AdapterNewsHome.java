@@ -1,6 +1,8 @@
 package com.skynet.mumgo.ui.home;
 
 import android.content.Context;
+import android.os.Build;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +45,11 @@ public class AdapterNewsHome extends RecyclerView.Adapter<AdapterNewsHome.ViewHo
             Picasso.with(context).load(list.get(position).getImg()).fit().centerCrop().into(holder.img);
         }
         holder.tvTitle.setText(list.get(position).getTitle());
-        holder.tvContent.setText(list.get(position).getContent());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            holder.tvContent.setText(Html.fromHtml(list.get(position).getContent(),Html.FROM_HTML_MODE_COMPACT));
+        }else{
+            holder.tvContent.setText(Html.fromHtml(list.get(position).getContent()));
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -2,20 +2,26 @@ package com.skynet.mumgo.network.api;
 
 
 import com.google.gson.JsonObject;
+import com.skynet.mumgo.models.AddressGeocoding;
 import com.skynet.mumgo.models.Cart;
 import com.skynet.mumgo.models.Category;
 import com.skynet.mumgo.models.ChatItem;
+import com.skynet.mumgo.models.Combo;
 import com.skynet.mumgo.models.FavouriteItem;
 import com.skynet.mumgo.models.History;
 import com.skynet.mumgo.models.HomeResponse;
+import com.skynet.mumgo.models.Market;
 import com.skynet.mumgo.models.Message;
 import com.skynet.mumgo.models.MyPlace;
+import com.skynet.mumgo.models.Nearby;
 import com.skynet.mumgo.models.Notification;
 import com.skynet.mumgo.models.PlaceNearby;
 import com.skynet.mumgo.models.Product;
 import com.skynet.mumgo.models.ProductResponse;
 import com.skynet.mumgo.models.Profile;
+import com.skynet.mumgo.models.Promotion;
 import com.skynet.mumgo.models.Routes;
+import com.skynet.mumgo.models.Shop;
 import com.skynet.mumgo.models.ShopDetail;
 import com.skynet.mumgo.models.ShopResponse;
 import com.skynet.mumgo.models.Term;
@@ -70,6 +76,11 @@ public interface ApiService {
             , @Query("type") String type
             , @Query("limit") int limit
             , @Query("key") String key);
+    @GET("geocode/json")
+    Call<ApiResponseGeoCoding<List<AddressGeocoding>>> getAddress(
+            @Query("latlng") String location
+            , @Query("key") String key);
+
     @GET("place/nearbysearch/json")
     Call<JsonObject> getNearbyJson(
             @Query("location") String location
@@ -79,31 +90,49 @@ public interface ApiService {
             , @Query("key") String key);
 
     @GET("get_info.php")
-    Call<ApiResponse<Profile>> getProfile(@Query("id") String uid,@Query("type") int type);
+    Call<ApiResponse<Profile>> getProfile(@Query("id") String uid, @Query("type") int type);
 
     @GET("home.php")
     Call<ApiResponse<HomeResponse>> getHome(@Query("user_id") String uid);
 
     @GET("login.php")
-    Call<ApiResponse<Profile>> login(@Query("phone") String uid,@Query("password") String password,@Query("type") int type);
+    Call<ApiResponse<Profile>> login(@Query("phone") String uid, @Query("password") String password, @Query("type") int type);
+
+    @GET("promotion.php")
+    Call<ApiResponse<List<Promotion>>> getListNotification(@Query("user_id") String uid, @Query("type") int type);
 
     @GET("notification.php")
-    Call<ApiResponse<List<Notification>>> getListNotification(@Query("id") String uid, @Query("type") int type);
+    Call<ApiResponse<List<Notification>>> getNotification(@Query("id") String uid, @Query("type") int type);
 
     @GET("category.php")
     Call<ApiResponse<List<Category>>> getListCategory();
 
+    @GET("list_friend.php")
+    Call<ApiResponse<List<Shop>>> getListFriend(@Query("user_id") String uid);
+
     @GET("list_shop.php")
     Call<ApiResponse<ShopResponse>> getListShop(@Query("user_id") String uid, @Query("category_id") int category_id);
 
+    @GET("get_product.php")
+    Call<ApiResponse<Nearby>> getNearbyProduct(@Query("user_id") String uid, @Query("category_id") int category_id, @Query("index") int index, @Query("lat") double lat, @Query("lng") double lng);
+
+    @GET("get_shop.php")
+    Call<ApiResponse<List<Shop>>> getListShopNearby(@Query("lat") double lat, @Query("lng") double lng);
+
     @GET("shop_detail.php")
     Call<ApiResponse<ShopDetail>> getDetailShop(@Query("user_id") String uid, @Query("shop_id") int shop_id);
+    @FormUrlEncoded
+    @GET("scan_qr.php")
+    Call<ApiResponse> scanShop(@Field("user_id") String uid, @Field("shop_id") int shop_id);
 
     @GET("product_detail.php")
     Call<ApiResponse<Product>> getDetailProduct(@Query("user_id") String uid, @Query("product_id") int shop_id);
 
+    @GET("promotion_detail.php")
+    Call<ApiResponse<Promotion>> getDetailNotification(@Query("promotion_id") String id, @Query("type") int type, @Query("user_id") String shID);
+
     @GET("notification_detail.php")
-    Call<ApiResponse<Notification>> getDetailNotification(@Query("id") String id, @Query("type") int type, @Query("user_id") String shID);
+    Call<ApiResponse<Notification>> getDetailNotifications(@Query("id") String id, @Query("type") int type, @Query("user_id") String shID);
 
     @FormUrlEncoded
     @POST("favourite_shop.php")
@@ -114,14 +143,27 @@ public interface ApiService {
     Call<ApiResponse> toggleFavProduct(@Field("user_id") String idUser, @Field("product_id") int shop_id, @Field("type") int isFav);
 
     @FormUrlEncoded
+    @POST("feedback.php")
+    Call<ApiResponse> feedback(@Field("user_id") String idUser, @Field("name") String name, @Field("phone") String phone, @Field("email") String email, @Field("content") String content);
+
+    @FormUrlEncoded
     @POST("forget_password.php")
-    Call<ApiResponse> forgotPassword    (@Field("phone") String phone, @Field("type") int type);
+    Call<ApiResponse> forgotPassword(@Field("phone") String phone, @Field("type") int type);
 
     @GET("verify_code.php")
     Call<ApiResponse<String>> sendCode(@Query("phone") String phone, @Query("type") int type);
 
     @GET("list_product.php")
-    Call<ApiResponse<ProductResponse>> getListProduct(@Query("user_id") String user_id, @Query("index") int type);
+    Call<ApiResponse<ProductResponse>> getListProduct(@Query("user_id") String user_id, @Query("index") int type, @Query("id_market") int id_market);
+
+    @GET("list_combo.php")
+    Call<ApiResponse<List<Combo>>> getListCombo(@Query("user_id") String user_id);
+
+    @GET("combo_detail.php")
+    Call<ApiResponse<Combo>> getComboDetail(@Query("combo_id") int user_id);
+
+    @GET("market_nearby.php")
+    Call<ApiResponse<List<Market>>> getListMarket(@Query("lat") double user_id, @Query("lng") double type);
 
     @GET("list_favourite.php")
     Call<ApiResponse<FavouriteItem>> getListFavourite(@Query("user_id") String user_id);
@@ -156,21 +198,33 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("add_cart.php")
-    Call<ApiResponse<Cart>> addToCart(@Field("user_id") String idUser, @Field("product_id") int  productId, @Field("number") int  number, @Field("note") String  note);
+    Call<ApiResponse<Cart>> addToCart(@Field("user_id") String idUser, @Field("product_id") int productId, @Field("number") int number, @Field("note") String note);
+
+    @FormUrlEncoded
+    @POST("update_info.php")
+    Call<ApiResponse> updateInforCart(@Field("user_id") String idUser, @Field("name") String name, @Field("phone") String phone,
+                                      @Field("email") String email, @Field("address") String address);
+
+    @FormUrlEncoded
+    @POST("update_time_booking.php")
+    Call<ApiResponse> updateTimeShip(@Field("user_id") String idUser, @Field("time_ship") String name);
 
     @GET("cart_info.php")
     Call<ApiResponse<Cart>> getCart(@Query("user_id") String idUser);
+
     @GET("booking_detail.php")
     Call<ApiResponse<History>> getHistory(@Query("id") int idUser);
+
     @FormUrlEncoded
-   @POST("status_booking.php")
-    Call<ApiResponse> cancelBooking(@Field("id") int idHis,@Field("active") int active);
+    @POST("status_booking.php")
+    Call<ApiResponse> cancelBooking(@Field("id") int idHis, @Field("active") int active);
 
     @GET("term.php")
     Call<ApiResponse<Term>> getTerm();
 
     @GET("list_chat.php")
     Call<ApiResponse<List<ChatItem>>> getListChat(@Query("id") String phone, @Query("type") int type);
+
     @GET("privacy.php")
     Call<ApiResponse<Term>> getPrivacy();
 
@@ -193,7 +247,8 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("update_fcm.php")
-    Call<ApiResponse> updateFCM(@Field("user_id") String u_id, @Field("token_fcm") String tokenFCM);
+    Call<ApiResponse> updateFCM(@Field("id") String u_id, @Field("token_fcm") String tokenFCM, @Field("type") int type);
+
     @GET("content_chat.php")
     Call<ApiResponse<ChatItem>> getListMessageBetween(@Query("user_id") int uiId, @Query("shop_id") int id_host, @Query("type") int type);
 

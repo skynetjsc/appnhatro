@@ -2,6 +2,7 @@ package com.skynet.mumgo.ui.auth.updateProfile;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -9,10 +10,12 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -26,7 +29,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.skynet.mumgo.R;
+import com.skynet.mumgo.models.MyPlace;
 import com.skynet.mumgo.models.Place;
+import com.skynet.mumgo.ui.location.LocationContract;
+import com.skynet.mumgo.ui.location.LocationPresenter;
 import com.skynet.mumgo.utils.AppConstant;
 
 import java.io.IOException;
@@ -40,7 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SearchMapAdressActivity extends FragmentActivity implements OnMapReadyCallback {
+public class SearchMapAdressActivity extends FragmentActivity implements OnMapReadyCallback, LocationContract.View {
 
     private static final int PLACE_PICKER_REQUEST = 10;
     @BindView(R.id.loading)
@@ -51,12 +57,14 @@ public class SearchMapAdressActivity extends FragmentActivity implements OnMapRe
     private FusedLocationProviderClient mFusedLocationClient;
     private LatLng myLatlng;
     Place place;
+    LocationPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_map_adress);
         ButterKnife.bind(this);
+        presenter = new LocationPresenter(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -76,7 +84,6 @@ public class SearchMapAdressActivity extends FragmentActivity implements OnMapRe
                         }
                     }
                 });
-
 
     }
 
@@ -117,35 +124,7 @@ public class SearchMapAdressActivity extends FragmentActivity implements OnMapRe
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                loading.setVisibility(View.VISIBLE);
-                Geocoder geocoder;
-                List<Address> addresses;
-                geocoder = new Geocoder(SearchMapAdressActivity.this, Locale.getDefault());
-                try {
-                    addresses = geocoder.getFromLocation(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                    if (addresses.size() == 0) {
-                        loading.setVisibility(View.INVISIBLE);
-                        return;
-                    }
-                    String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                    String city = addresses.get(0).getLocality();
-                    String state = addresses.get(0).getAdminArea();
-                    String country = addresses.get(0).getCountryName();
-                    String postalCode = addresses.get(0).getPostalCode();
-                    String knownName = addresses.get(0).getFeatureName();
-                    place = new Place();
-                    place.setLatLng(mMap.getCameraPosition().target);
-                    place.setName(knownName);
-                    String[] splitAddress = address.split(",");
-                    if (splitAddress.length > 2)
-                        place.setAddress(splitAddress[0] + ", " + splitAddress[1]);
-                    else
-                        place.setAddress(address);
-                    loading.setVisibility(View.INVISIBLE);
-                    tvaddress.setText(place.getAddress());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                presenter.getMyAddress(new LatLng(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude));
             }
         });
     }
@@ -211,4 +190,45 @@ public class SearchMapAdressActivity extends FragmentActivity implements OnMapRe
     }
 
 
+    @Override
+    public void onSuccessGetMyAddress(MyPlace response) {
+        place=new Place();
+        place.setAddress(response.getAddress());
+        place.setLatLng(new LatLng(response.getLat(), response.getLng()));
+        place.setName(response.getAddress());
+        tvaddress.setText(response.getAddress());
+    }
+
+    @Override
+    public Context getMyContext() {
+        return this;
+    }
+
+    @Override
+    public void showProgress() {
+        loading.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void hiddenProgress() {
+        loading.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void onErrorApi(String message) {
+        LogUtils.e(message);
+    }
+
+    @Override
+    public void onError(String message) {
+        LogUtils.e(message);
+
+    }
+
+    @Override
+    public void onErrorAuthorization() {
+
+    }
 }

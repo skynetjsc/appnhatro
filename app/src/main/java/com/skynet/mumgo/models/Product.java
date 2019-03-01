@@ -39,6 +39,7 @@ public  class Product implements Parcelable {
     @Expose
     @SerializedName("discount")
     private int discount;
+
     @Expose
     @SerializedName("min_price")
     private double min_price;

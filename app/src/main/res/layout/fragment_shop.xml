@@ -5,11 +5,11 @@
     android:id="@+id/swipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -44,66 +44,26 @@
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@color/white"
                     app:tabMode="scrollable"
+                    app:tabSelectedTextColor="#5E5E5E"
                     app:tabTextAppearance="@style/TextAppearance.AppCompat.Body1"
                     app:tabTextColor="#C3C3C3"
-                    app:tabSelectedTextColor="#5E5E5E"
 
                     >
 
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cửa hàng quen" />
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cửa hàng gần bạn" />
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cửa hàng nổi bật" />
                 </com.google.android.material.tabs.TabLayout>
 
-
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/shop_bg_stock_green"
-                    android:paddingLeft="@dimen/dp16"
-                    android:paddingTop="@dimen/dp4"
-                    android:paddingRight="@dimen/dp16"
-                    android:paddingBottom="@dimen/dp4"
-                    android:text="Nổi bật"
-                    android:textColor="#606E79"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcvHot"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:backgroundTint="#417505"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView17"
-                    tools:itemCount="5"
-                    tools:layoutManager="GridLayoutManager"
-                    tools:listitem="@layout/recycler_view_item_1"
-                    tools:spanCount="5">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <TextView
-                    android:id="@+id/tvShowMore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/shop_bg_stock_green"
-                    android:paddingLeft="@dimen/dp16"
-                    android:paddingTop="@dimen/dp4"
-                    android:paddingRight="@dimen/dp16"
-                    android:paddingBottom="@dimen/dp4"
-                    android:text="Siêu thị"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rcvHot" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcvMore"
@@ -114,7 +74,7 @@
                     android:layout_marginEnd="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvShowMore" />
+                    app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,9 @@ package com.skynet.mumgo.ui.home;
 
 import com.google.gson.Gson;
 import com.skynet.mumgo.application.AppController;
+import com.skynet.mumgo.models.Combo;
 import com.skynet.mumgo.models.HomeResponse;
+import com.skynet.mumgo.models.ProductResponse;
 import com.skynet.mumgo.models.Profile;
 import com.skynet.mumgo.network.api.ApiResponse;
 import com.skynet.mumgo.network.api.ApiService;
@@ -10,6 +12,8 @@ import com.skynet.mumgo.network.api.ApiUtil;
 import com.skynet.mumgo.network.api.CallBackBase;
 import com.skynet.mumgo.ui.base.Interactor;
 import com.skynet.mumgo.utils.AppConstant;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -57,6 +61,34 @@ public class HomeRemoteImpl extends Interactor implements HomeContract.Interacto
             public void onRequestFailure(Call<ApiResponse<Profile>> call, Throwable t) {
                 presenter.onErrorAuthorization();
 
+            }
+        });
+    }
+
+    @Override
+    public void getListProduct(int id) {
+        Profile profile = AppController.getInstance().getmProfileUser();
+        if (profile == null) {
+            presenter.onErrorAuthorization();
+            return;
+        }
+        getmService().getListCombo(profile.getId()).enqueue(new CallBackBase<ApiResponse<List<Combo>>>() {
+            @Override
+            public void onRequestSuccess(Call<ApiResponse<List<Combo>>> call, Response<ApiResponse<List<Combo>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
+                        presenter.onSucessGetListProduct(response.body().getData());
+                    } else {
+                        presenter.onError(response.body().getMessage());
+                    }
+                } else {
+                    presenter.onError(response.message());
+                }
+            }
+
+            @Override
+            public void onRequestFailure(Call<ApiResponse<List<Combo>>> call, Throwable t) {
+                presenter.onErrorApi(t.getMessage());
             }
         });
     }

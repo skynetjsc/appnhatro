@@ -1,14 +1,14 @@
-package com.skynet.mumgo.ui.DetailNotificationActivity;
+package com.skynet.mumgo.ui.DetailNews;
 
 
-import com.skynet.mumgo.models.Notification;
+import com.skynet.mumgo.models.Promotion;
 import com.skynet.mumgo.ui.base.BaseView;
 import com.skynet.mumgo.ui.base.IBasePresenter;
 import com.skynet.mumgo.ui.base.OnFinishListener;
 
 public interface DetailNotificationContract  {
     interface View extends BaseView {
-        void onSuccessGetDetail(Notification notification);
+        void onSuccessGetDetail(Promotion notification);
 
     }
 
@@ -21,6 +21,6 @@ public interface DetailNotificationContract  {
     }
 
     interface OnFinishDetailNotificationListener extends OnFinishListener {
-        void onSuccessGetDetail(Notification notification);
+        void onSuccessGetDetail(Promotion notification);
     }
 }

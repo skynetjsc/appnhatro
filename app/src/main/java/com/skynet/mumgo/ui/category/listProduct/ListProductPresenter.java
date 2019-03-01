@@ -1,6 +1,7 @@
 package com.skynet.mumgo.ui.category.listProduct;
 
 import com.skynet.mumgo.models.Cart;
+import com.skynet.mumgo.models.Nearby;
 import com.skynet.mumgo.models.ProductResponse;
 import com.skynet.mumgo.ui.base.Presenter;
 
@@ -13,10 +14,10 @@ public class ListProductPresenter extends Presenter<ListProductContract.View> im
     }
 
     @Override
-    public void getListProduct(int id,int idCate) {
+    public void getListProduct(int id, int idCate, double lat, double lng) {
         if (isAvaliableView()) {
             view.showProgress();
-            interactor.getListProduct(id,idCate);
+            interactor.getListProduct(id, idCate, lat, lng);
         }
     }
 
@@ -33,12 +34,18 @@ public class ListProductPresenter extends Presenter<ListProductContract.View> im
     }
 
     @Override
-    public void onSucessGetListProduct(ProductResponse response) {
+    public void onSucessGetListProduct(Nearby response) {
         if (isAvaliableView()) {
             view.hiddenProgress();
             if (response != null) {
-                if (response.getList() != null) {
-                    view.onSucessGetListProduct(response.getList(), response.getIndex());
+                if (response.getListProduct() != null) {
+                    view.onSucessGetListProduct(response.getListProduct(), response.getIndex());
+                }
+                if(response.getListShop() != null && !response.getListShop().isEmpty()){
+                    view.onSucessGetListShop(response.getListShop());
+
+                }if(response.getListFriend() != null && !response.getListFriend().isEmpty()){
+                    view.onSucessGetListFriendShop(response.getListFriend());
                 }
             }
         }
@@ -54,16 +61,18 @@ public class ListProductPresenter extends Presenter<ListProductContract.View> im
             }
         }
     }
+
     @Override
     public void getCart() {
-        if(isAvaliableView()){
+        if (isAvaliableView()) {
             view.showProgress();
             interactor.getCart();
         }
     }
+
     @Override
     public void onErrorApi(String message) {
-        if(isAvaliableView()){
+        if (isAvaliableView()) {
             view.hiddenProgress();
             view.onErrorApi(message);
         }
@@ -71,7 +80,7 @@ public class ListProductPresenter extends Presenter<ListProductContract.View> im
 
     @Override
     public void onError(String message) {
-        if(isAvaliableView()){
+        if (isAvaliableView()) {
             view.hiddenProgress();
             view.onError(message);
         }
@@ -79,7 +88,7 @@ public class ListProductPresenter extends Presenter<ListProductContract.View> im
 
     @Override
     public void onErrorAuthorization() {
-        if(isAvaliableView()){
+        if (isAvaliableView()) {
             view.hiddenProgress();
             view.onErrorAuthorization();
         }

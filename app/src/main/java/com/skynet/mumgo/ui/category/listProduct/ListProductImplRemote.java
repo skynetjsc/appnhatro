@@ -2,6 +2,7 @@ package com.skynet.mumgo.ui.category.listProduct;
 
 import com.skynet.mumgo.application.AppController;
 import com.skynet.mumgo.models.Cart;
+import com.skynet.mumgo.models.Nearby;
 import com.skynet.mumgo.models.ProductResponse;
 import com.skynet.mumgo.models.Profile;
 import com.skynet.mumgo.network.api.ApiResponse;
@@ -27,15 +28,15 @@ public class ListProductImplRemote extends Interactor implements ListProductCont
     }
 
     @Override
-    public void getListProduct(int index,int idCate) {
+    public void getListProduct(int index,int idCate,double lat,double lng) {
         Profile profile = AppController.getInstance().getmProfileUser();
         if (profile == null) {
             listener.onErrorAuthorization();
             return;
         }
-        getmService().getListProductCategory(profile.getId(), index,idCate).enqueue(new CallBackBase<ApiResponse<ProductResponse>>() {
+        getmService().getNearbyProduct(profile.getId(),idCate, index,lat,lng).enqueue(new CallBackBase<ApiResponse<Nearby>>() {
             @Override
-            public void onRequestSuccess(Call<ApiResponse<ProductResponse>> call, Response<ApiResponse<ProductResponse>> response) {
+            public void onRequestSuccess(Call<ApiResponse<Nearby>> call, Response<ApiResponse<Nearby>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
                         listener.onSucessGetListProduct(response.body().getData());
@@ -48,7 +49,7 @@ public class ListProductImplRemote extends Interactor implements ListProductCont
             }
 
             @Override
-            public void onRequestFailure(Call<ApiResponse<ProductResponse>> call, Throwable t) {
+            public void onRequestFailure(Call<ApiResponse<Nearby>> call, Throwable t) {
                 listener.onErrorApi(t.getMessage());
             }
         });

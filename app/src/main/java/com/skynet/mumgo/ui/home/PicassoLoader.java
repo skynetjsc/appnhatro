@@ -37,9 +37,8 @@ public class PicassoLoader implements ImageLoader {
         }
 
         requestCreator
-                .fit()
-                .centerCrop()
                 .tag(context)
+                .fit()
                 .into(targetView);
 
     }

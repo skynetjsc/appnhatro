@@ -3,6 +3,7 @@ package com.skynet.mumgo.ui.checkout;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,11 +14,15 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.skynet.mumgo.R;
 import com.skynet.mumgo.models.Cart;
 import com.skynet.mumgo.models.Profile;
+import com.skynet.mumgo.models.Receiver;
 import com.skynet.mumgo.ui.base.BaseActivity;
 import com.skynet.mumgo.ui.choosepayment.ChoosepaymetnActivity;
 import com.skynet.mumgo.ui.enterpin.EnterpinActivity;
+import com.skynet.mumgo.ui.views.AlertDialogCustom;
 import com.skynet.mumgo.ui.views.ProgressDialogCustom;
 import com.skynet.mumgo.utils.DateTimeUtil;
+
+import java.util.Calendar;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -88,6 +93,10 @@ public class CheckoutActivity extends BaseActivity implements CartContract.View 
     Button btnback;
     @BindView(R.id.layoutpayment)
     ConstraintLayout layoutpayment;
+    @BindView(R.id.tvTimeShip)
+    TextView tvTimeShip;
+    @BindView(R.id.layoutTime)
+    ConstraintLayout layoutTime;
     private CartContract.Presenter presenter;
     private ProgressDialogCustom dialogLoading;
 
@@ -132,7 +141,20 @@ public class CheckoutActivity extends BaseActivity implements CartContract.View 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvEdit:
-                edtSdt.setEnabled(true);
+                if (edtSdt.isEnabled()) {
+                    tvEdit.setText("Sửa");
+                    edtSdt.setEnabled(false);
+                    edtName.setEnabled(false);
+                    edtEmail.setEnabled(false);
+                    edtAddress.setEnabled(false);
+                    presenter.updateInfo(edtName.getText().toString(), edtEmail.getText().toString(), edtSdt.getText().toString(), edtAddress.getText().toString());
+                } else {
+                    edtSdt.setEnabled(true);
+                    edtName.setEnabled(true);
+                    edtEmail.setEnabled(true);
+                    edtAddress.setEnabled(true);
+                    tvEdit.setText("Lưu");
+                }
                 break;
             case R.id.btnNext:
                 if (layoutpayment.getVisibility() == View.VISIBLE) {
@@ -156,6 +178,7 @@ public class CheckoutActivity extends BaseActivity implements CartContract.View 
         if (resultCode == RESULT_OK) {
             layoutpayment.setVisibility(View.VISIBLE);
             tvStep.setText(3 + "");
+            startActivityForResult(new Intent(CheckoutActivity.this, EnterpinActivity.class), 1000);
         }
     }
 
@@ -164,11 +187,19 @@ public class CheckoutActivity extends BaseActivity implements CartContract.View 
         recyclerView.setAdapter(new AdapterCartCheckout(cart.getListProduct(), this));
         tvTotalPriceFooter.setText(String.format("%,.0fđ", cart.getFinal_price()));
         tvTotalPriceHeader.setText(String.format("%,.0fđ", cart.getFinal_price()));
+        tvTimeShip.setText(Html.fromHtml(String.format(getString(R.string.format_time_ship_s),cart.getTime_ship())));
+        Receiver receiver = cart.getReceiver();
+        if (receiver != null) {
+            edtName.setText(receiver.getName());
+            edtSdt.setText(receiver.getPhone());
+            edtAddress.setText(receiver.getAddress());
+            edtEmail.setText(receiver.getEmail());
+        }
     }
 
     @Override
     public Context getMyContext() {
-        return null;
+        return this;
     }
 
     @Override
@@ -194,5 +225,18 @@ public class CheckoutActivity extends BaseActivity implements CartContract.View 
     @Override
     public void onErrorAuthorization() {
 
+    }
+
+    @OnClick(R.id.layoutTime)
+    public void onViewClicked() {
+        AlertDialogCustom.showDialogDateTime(this, new AlertDialogCustom.CallBack() {
+            @Override
+            public void onCallBack(Calendar start) {
+                tvTimeShip.setText(Html.fromHtml(String.format(getString(R.string.format_time_ship), start.get(Calendar.HOUR_OF_DAY),
+                        start.get(Calendar.MINUTE), start.get(Calendar.DATE), start.get(Calendar.MONTH)+1, start.get(Calendar.YEAR))));
+                presenter.updateTimeShip(String.format("%02d:%02d %02d/%02d/%d", start.get(Calendar.HOUR_OF_DAY),
+                        start.get(Calendar.MINUTE), start.get(Calendar.DATE), start.get(Calendar.MONTH)+1, start.get(Calendar.YEAR)));
+            }
+        }).show();
     }
 }

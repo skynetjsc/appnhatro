@@ -60,4 +60,19 @@ public class UploadPresenter extends Presenter<UploadContract.View> implements U
             view.onSucessUploadAvat();
         }
     }
+    @Override
+    public void getInfor() {
+        if (isAvaliableView()) {
+            view.showProgress();
+            interactor.getInfor();
+        }
+    }
+
+    @Override
+    public void onSuccessGetInfor() {
+        if(isAvaliableView()){
+            view.hiddenProgress();
+            view.onSuccessGetInfor();
+        }
+    }
 }

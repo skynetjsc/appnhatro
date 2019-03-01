@@ -49,7 +49,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (list.get(position).getImg() != null && !list.get(position).getImg().isEmpty()) {
-            Picasso.with(context).load(list.get(position).getImg()).fit().centerCrop().into(holder.imgPhoto);
+            Picasso.with(context).load(list.get(position).getImg()).into(holder.imgPhoto);
         }
         holder.tvName.setText(list.get(position).getName());
         holder.tvUnit.setText("Giá\n1" + list.get(position).getName_unit());
