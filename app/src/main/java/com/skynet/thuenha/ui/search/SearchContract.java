@@ -9,27 +9,31 @@ import java.util.List;
 
 public interface SearchContract {
     interface View extends BaseView {
-        void onSucessGetPost(List<Post> list);
+        void onSucessGetPost(List<Post> list,int index);
 
     }
 
     interface Presenter extends IBasePresenter, Listener {
-        void getAllPostByService(int idService,int idDistrict);
-        void getAllPostByFilter();
+        void getAllPostByService(int idService, int idDistrict, int index);
 
-        void queryPostByService(int idService, String query);
+        void getAllPostByFilter(int index);
+
+        void queryPostByService(int idService, String query, int index);
 
     }
 
     interface Interactor {
-        void getAllPostByService(int idService,int idDistrict);
-        void getAllPostByFilter();
-        void queryPostByService(int idService, String query);
+        void getAllPostByService(int idService, int idDistrict, int index);
+
+        void getAllPostByFilter(int index);
+
+        void queryPostByService(int idService, String query, int index);
 
     }
 
     interface Listener extends OnFinishListener {
-        void onSucessGetPost(List<Post> list);
+        void onSucessGetPost(List<Post> list,int index);
 //        void onSucessQueryPost(List<Post> list);
     }
 }
+

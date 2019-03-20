@@ -2,13 +2,15 @@ package com.skynet.thuenha.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +26,15 @@ import com.skynet.thuenha.models.Banner;
 import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.models.Service;
 import com.skynet.thuenha.ui.base.BaseFragment;
-import com.skynet.thuenha.ui.chosseAddress.ChooseAddressFragment;
 import com.skynet.thuenha.ui.feedback.FeedbackActivity;
 import com.skynet.thuenha.ui.makepost.MakeAPostActivity;
 import com.skynet.thuenha.ui.notification.NotificationActivity;
+import com.skynet.thuenha.ui.privacy.HelpActivity;
 import com.skynet.thuenha.ui.search.FragmentSearch;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
 import com.skynet.thuenha.ui.views.SlideView;
 import com.skynet.thuenha.utils.AppConstant;
+import com.skynet.thuenha.utils.CommomUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +58,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     TextView tvWallet;
     @BindView(R.id.cardSearch)
     CardView cardSearch;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
     Unbinder unbinder1;
     private OnFragmentHomeCallBack mListener;
     HomeContract.Presenter presenter;
@@ -76,7 +81,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         public void onCallBack(int pos) {
             if (AppController.getInstance().getmProfileUser().getType() == 1) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentSearch fragmentSearch = FragmentSearch.newInstance(listService.get(pos).getId(),listService.get(pos).getName());
+                FragmentSearch fragmentSearch = FragmentSearch.newInstance(listService.get(pos).getId(), listService.get(pos).getName());
                 fragmentManager.beginTransaction().replace(R.id.layoutRoot, fragmentSearch, fragmentSearch.getClass().getSimpleName())
                         .addToBackStack(null)
                         .commit();
@@ -118,9 +123,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         }
     }
 
-    @OnClick({R.id.layoutFeedback, R.id.imageView3})
+    @OnClick({R.id.layoutFeedback})
     public void onClickMakePost(View view) {
         startActivity(new Intent(getActivity(), FeedbackActivity.class));
+        drawerLayout.closeDrawer(Gravity.LEFT);
+    }
+
+    @OnClick({R.id.imageView3})
+    public void onClickimageView3MakePost(View view) {
+        drawerLayout.openDrawer(Gravity.LEFT);
     }
 
     @Override
@@ -131,6 +142,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     protected void initViews(View view) {
         ButterKnife.bind(this, view);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                getActivity(), drawerLayout, null, R.string.open_drawer, R.string.close_drawer);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
         rcv.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rcv.setHasFixedSize(true);
     }
@@ -149,8 +164,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         if (AppController.getInstance().getmProfileUser().getType() == 2) {
             cardSearch.setVisibility(View.GONE);
         }
-            String type = (AppController.getInstance().getmProfileUser().getType()==1 ? "Người thuê":"Chủ nhà");
-        tvWallet.setText(String.format("Số dư TK: %,.0fvnđ\nTài khoản: %s", AppController.getInstance().getmProfileUser().getAccountWallet(),type));
+        String type = (AppController.getInstance().getmProfileUser().getType() == 1 ? "Người thuê" : "Chủ nhà");
+        tvWallet.setText(String.format("Số dư TK: %,.0fvnđ\nTài khoản: %s", AppController.getInstance().getmProfileUser().getAccountWallet(), type));
 //        tvWallet.setTextColor(Color.RED);
     }
 
@@ -208,6 +223,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         fragmentManager.beginTransaction().replace(R.id.layoutRoot, fragmentSearch, fragmentSearch.getClass().getSimpleName())
                 .addToBackStack(null)
                 .commit();
+        drawerLayout.closeDrawer(Gravity.LEFT);
+
     }
 
     @Override
@@ -262,6 +279,31 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder1 = ButterKnife.bind(this, rootView);
         return rootView;
+    }
+
+    @OnClick({R.id.nav_feedback, R.id.nav_help, R.id.nav_share})
+    public void onViewClicked(View view) {
+        final String appPackageName = getContext().getPackageName(); // getPackageName() from Context or Activity object
+
+        switch (view.getId()) {
+            case R.id.nav_feedback:
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+                break;
+            case R.id.nav_help:
+                startActivity(new Intent(getActivity(),HelpActivity.class));
+                break;
+            case R.id.nav_share:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=" + appPackageName);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                break;
+        }
     }
 
 

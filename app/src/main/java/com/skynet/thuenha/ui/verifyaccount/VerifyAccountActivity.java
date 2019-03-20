@@ -59,7 +59,7 @@ public class VerifyAccountActivity extends BaseActivity implements VerifyAccount
         code = getIntent().getExtras().getString("code");
         msg_verify.setText(String.format(getString(R.string.msg_verify),phone));
         LogUtils.e(code);
-        countDownTimer = new CountDownTimer(30000, 1000) {
+        countDownTimer = new CountDownTimer(90000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 tvCountdown.setText(" sau " + millisUntilFinished / 1000 + "s");

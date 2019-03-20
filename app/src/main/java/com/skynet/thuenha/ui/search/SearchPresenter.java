@@ -14,27 +14,27 @@ public class SearchPresenter extends Presenter<SearchContract.View> implements S
     }
 
     @Override
-    public void getAllPostByService(int idService,int id) {
+    public void getAllPostByService(int idService,int id,int index) {
         if (isAvaliableView()) {
             view.showProgress();
-            interactor.getAllPostByService(idService,id);
+            interactor.getAllPostByService(idService,id,index);
         }
     }
 
     @Override
-    public void getAllPostByFilter() {
+    public void getAllPostByFilter(int index) {
         if (isAvaliableView()) {
             view.showProgress();
-            interactor.getAllPostByFilter();
+            interactor.getAllPostByFilter(index);
         }
     }
 
     @Override
-    public void queryPostByService(int idService, String query) {
+    public void queryPostByService(int idService, String query,int index) {
 
         if (isAvaliableView()) {
             view.showProgress();
-            interactor.queryPostByService(idService, query);
+            interactor.queryPostByService(idService, query,index);
         }
     }
 
@@ -44,12 +44,12 @@ public class SearchPresenter extends Presenter<SearchContract.View> implements S
     }
 
     @Override
-    public void onSucessGetPost(List<Post> list) {
+    public void onSucessGetPost(List<Post> list,int index) {
 
         if (isAvaliableView()) {
             view.hiddenProgress();
             if (list != null)
-                view.onSucessGetPost(list);
+                view.onSucessGetPost(list,index);
         }
     }
 

@@ -226,7 +226,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
 
-            <android.support.v7.widget.RecyclerView
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
                 android:id="@+id/rcv"
                 android:layout_width="0dp"
                 android:layout_height="0dp"

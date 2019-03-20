@@ -33,12 +33,14 @@ public class AdapterFeedback extends RecyclerView.Adapter<AdapterFeedback.ViewHo
     Context context;
     feedbackCallback iCallback;
     SparseBooleanArray cache;
+    SparseBooleanArray cacheComment;
 
     public AdapterFeedback(List<Feedback> list, Context context, feedbackCallback iCallback) {
         this.list = list;
         this.context = context;
         this.iCallback = iCallback;
         cache = new SparseBooleanArray();
+        cacheComment = new SparseBooleanArray();
         for (int i = 0; i < list.size(); i++) {
             cache.put(i, list.get(i).getIs_like() == 1);
             if (!list.get(i).getResponse().isEmpty()) {
@@ -49,6 +51,12 @@ public class AdapterFeedback extends RecyclerView.Adapter<AdapterFeedback.ViewHo
                 if (list.get(i).getListComment() == null)
                     list.get(i).setListComment(new ArrayList<Comment>());
                 list.get(i).getListComment().add(0,comment);
+            }
+
+            if(list.get(i).getListComment() != null && !list.get(i).getListComment().isEmpty()){
+                cacheComment.put(i,true);
+            }else{
+                cacheComment.put(i,false);
             }
         }
 
@@ -75,7 +83,7 @@ public class AdapterFeedback extends RecyclerView.Adapter<AdapterFeedback.ViewHo
         viewHolder.tvLike.setText(list.get(i).getLike_feedback() + "");
         viewHolder.cbLike.setChecked(cache.get(i));
 
-        if (list.get(i).getListComment() != null) {
+        if (cacheComment.get(i)) {
             int count = list.get(i).getListComment().size();
             viewHolder.rcvComment.setLayoutManager(new LinearLayoutManager(context));
             viewHolder.rcvComment.setHasFixedSize(true);
@@ -89,6 +97,9 @@ public class AdapterFeedback extends RecyclerView.Adapter<AdapterFeedback.ViewHo
 //            }
             viewHolder.tvComment.setText(count + " Bình luận");
             viewHolder.rcvComment.setAdapter(new AdapterComment(list.get(i).getListComment(), context));
+        }else{
+//            viewHolder.rcvComment.setVisibility(View.INVISIBLE);
+            viewHolder.expandLayout.collapse();
         }
         viewHolder.tvLike.setOnClickListener(new View.OnClickListener() {
             @Override

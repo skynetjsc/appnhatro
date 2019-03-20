@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.NavigationView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@color/white"
+   >
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/nav_customer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:visibility="visible">
+
+
+                <LinearLayout
+                    android:id="@+id/layoutFeedback"
+                    style="@style/nav_layout_root_item"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/nav_textview_item"
+                        android:text="Phản hồi" />
+                </LinearLayout>
+                <View style="@style/nav_view" />
+                <LinearLayout
+                    android:id="@+id/tvNoti"
+                    style="@style/nav_layout_root_item">
+                    <TextView
+                        style="@style/nav_textview_item"
+                        android:text="Thông báo" />
+                </LinearLayout>
+                <View style="@style/nav_view" />
+
+                <LinearLayout
+                    android:id="@+id/nav_feedback"
+                    style="@style/nav_layout_root_item"
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/nav_textview_item"
+
+                        android:text="Đánh giá" />
+                </LinearLayout>
+                <View style="@style/nav_view" />
+
+                <LinearLayout
+                    android:id="@+id/nav_help"
+                    style="@style/nav_layout_root_item"
+
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/nav_textview_item"
+
+                        android:text="Huớng dẫn" />
+                </LinearLayout>
+
+                <View style="@style/nav_view" />
+
+                <LinearLayout
+                    android:id="@+id/nav_share"
+                    style="@style/nav_layout_root_item"
+
+                    android:visibility="visible">
+
+                    <TextView
+                        style="@style/nav_textview_item"
+
+                        android:text="Chia sẻ" />
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.NavigationView>

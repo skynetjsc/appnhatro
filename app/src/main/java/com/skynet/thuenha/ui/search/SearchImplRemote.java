@@ -34,7 +34,7 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
     }
 
     @Override
-    public void getAllPostByService(int idService, int idDistrict) {
+    public void getAllPostByService(int idService, int idDistrict,int index) {
         if (AppController.getInstance().getmProfileUser() == null) {
             listener.onErrorAuthorization();
             return;
@@ -46,12 +46,12 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
         if (id != 0) {
             id = district != null ? district.getId() : 0;
         }
-        getmService().getListPost(AppController.getInstance().getmProfileUser().getId(), idService, id).enqueue(new CallBackBase<ApiResponse<List<Post>>>() {
+        getmService().getListPost(AppController.getInstance().getmProfileUser().getId(), idService, id,index).enqueue(new CallBackBase<ApiResponse<List<Post>>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<List<Post>>> call, Response<ApiResponse<List<Post>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
-                        listener.onSucessGetPost(response.body().getData());
+                        listener.onSucessGetPost(response.body().getData(), Integer.parseInt(response.body().getMessage()));
                     } else {
                         new ExceptionHandler<List<Post>>(listener, response.body()).excute();
                     }
@@ -68,7 +68,7 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
     }
 
     @Override
-    public void getAllPostByFilter() {
+    public void getAllPostByFilter(int index) {
         String json = AppController.getInstance().getmSetting().getString(AppConstant.district);
         if (json != null && !json.isEmpty())
             district = new Gson().fromJson(json, Address.class);
@@ -90,7 +90,7 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
                     public void onRequestSuccess(Call<ApiResponse<List<Post>>> call, Response<ApiResponse<List<Post>>> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
-                                listener.onSucessGetPost(response.body().getData());
+                                listener.onSucessGetPost(response.body().getData(),0);
                             } else {
                                 new ExceptionHandler<List<Post>>(listener, response.body()).excute();
                             }
@@ -107,7 +107,7 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
     }
 
     @Override
-    public void queryPostByService(int idService, String query) {
+    public void queryPostByService(int idService, String query,int index) {
         String json = AppController.getInstance().getmSetting().getString(AppConstant.district);
         if (json != null && !json.isEmpty())
             district = new Gson().fromJson(json, Address.class);
@@ -133,7 +133,7 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
             public void onRequestSuccess(Call<ApiResponse<List<Post>>> call, Response<ApiResponse<List<Post>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     if (response.body().getCode() == AppConstant.CODE_API_SUCCESS) {
-                        listener.onSucessGetPost(response.body().getData());
+                        listener.onSucessGetPost(response.body().getData(),0);
                     } else {
                         new ExceptionHandler<List<Post>>(listener, response.body()).excute();
                     }

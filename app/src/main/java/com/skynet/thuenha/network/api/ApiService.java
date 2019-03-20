@@ -36,7 +36,7 @@ import retrofit2.http.Query;
  */
 
 public interface ApiService {
-    public static String API_ROOT = "http://thuenha.site/api/";
+    public static String API_ROOT = "http://chapp.com.vn/cms/api/";
 
     @GET("get_info.php")
     Call<ApiResponse<Profile>> getProfile(@Query("id") String uid, @Query("type") int type);
@@ -75,7 +75,7 @@ public interface ApiService {
     Call<ApiResponse<List<Address>>> getDistrict(@Query("city_id") int phone);
 
     @GET("list_post.php")
-    Call<ApiResponse<List<Post>>> getListPost(@Query("user_id") String user_id, @Query("id_service") int phone, @Query("id_district") int idDistrict);
+    Call<ApiResponse<List<Post>>> getListPost(@Query("user_id") String user_id, @Query("id_service") int phone, @Query("id_district") int idDistrict, @Query("index") int index);
 
     @GET("filter.php")
     Call<ApiResponse<List<Post>>> getListFilterPost(@Query("user_id") String user_id, @Query("id_service") String phone, @Query("price_min") String min,
@@ -214,6 +214,9 @@ public interface ApiService {
 
     @GET("term.php")
     Call<ApiResponse<Term>> getTerm();
+
+    @GET("instruction.php")
+    Call<ApiResponse<Term>> getIntruction();
 
     @GET("privacy.php")
     Call<ApiResponse<Term>> getPrivacy();

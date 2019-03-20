@@ -71,6 +71,7 @@
         <activity android:name=".ui.feedback.FeedbackActivity" />
         <activity android:name=".ui.privacy.TermActivity" />
         <activity android:name=".ui.choosewhorent.ListViewerActivity" />
+        <activity android:name=".ui.privacy.HelpActivity" />
 
 
         <service android:name=".network.socket.SocketClient">
