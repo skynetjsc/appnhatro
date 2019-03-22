@@ -46,7 +46,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class FragmentSearch extends BaseFragment implements SearchContract.View, ICallback, OnRangeChangedListener ,XRecyclerView.LoadingListener {
+public class FragmentSearch extends BaseFragment implements SearchContract.View, ICallback, OnRangeChangedListener, XRecyclerView.LoadingListener {
     @BindView(R.id.editText)
     EditText editText;
     @BindView(R.id.rcv)
@@ -84,18 +84,21 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     private Address myDistrict;
     private float max, min;
     private int index = 0;
-    public static FragmentSearch newInstance(int id, String title) {
+
+    public static FragmentSearch newInstance(int id, String title, int number) {
         Bundle args = new Bundle();
         args.putInt("idService", id);
         args.putString("title", title);
+        args.putInt("number", number);
         FragmentSearch fragment = new FragmentSearch();
         fragment.setArguments(args);
         return fragment;
     }
-    private      int    requestType ;
-    private          SearchAdapter adapter;
-    private static  final int  TYPE_REFREESH=1;
-    private static  final int  TYPE_LOADMORE=2;
+
+    private int requestType;
+    private SearchAdapter adapter;
+    private static final int TYPE_REFREESH = 1;
+    private static final int TYPE_LOADMORE = 2;
 
     @Override
     protected int initLayout() {
@@ -111,6 +114,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
         rcv.setLoadingMoreEnabled(true);
         rcv.setLoadingListener(this);
         rangeSeekBar.setOnRangeChangedListener(this);
+        title.setText(Html.fromHtml(String.format(getString(R.string.tilte_search), getArguments().getString("title"), getArguments().getInt("number", 0))));
     }
 
     @Override
@@ -118,16 +122,16 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
         presenter = new SearchPresenter(this);
         dialogLoading = new ProgressDialogCustom(getMyContext());
         listPost = new ArrayList<>();
-        adapter =  new SearchAdapter(listPost, getMyContext(), this);
+        adapter = new SearchAdapter(listPost, getMyContext(), this);
         rcv.setAdapter(adapter);
         requestType = TYPE_REFREESH;
 
         if (AppController.getInstance().getFilter() != null) {
             dot_filter.setVisibility(View.VISIBLE);
-            tvPrice.setText(AppController.getInstance().getFilter().getPrice()+"");
+            tvPrice.setText(AppController.getInstance().getFilter().getPrice() + "");
             presenter.getAllPostByFilter(index);
         } else {
-            presenter.getAllPostByService(getArguments().getInt("idService"), 0,index);
+            presenter.getAllPostByService(getArguments().getInt("idService"), 0, index);
             dot_filter.setVisibility(View.GONE);
         }
         editText.addTextChangedListener(new TextWatcher() {
@@ -154,9 +158,10 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                index  = 0;        requestType = TYPE_REFREESH;
+                                index = 0;
+                                requestType = TYPE_REFREESH;
 
-                                presenter.queryPostByService(getArguments().getInt("idService"), editable.toString(),index);
+                                presenter.queryPostByService(getArguments().getInt("idService"), editable.toString(), index);
                             }
                         });
                     }
@@ -191,9 +196,10 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
                                     Filter filter = AppController.getInstance().getFilter();
                                     if (filter == null) filter = new Filter(0, min, max, "");
                                     filter.setPrice(0);
-                                    index = 0;        requestType = TYPE_REFREESH;
+                                    index = 0;
+                                    requestType = TYPE_REFREESH;
 
-                                    presenter.getAllPostByService(getArguments().getInt("idService"), 0,index);
+                                    presenter.getAllPostByService(getArguments().getInt("idService"), 0, index);
                                     return;
                                 }
                                 Filter filter = AppController.getInstance().getFilter();
@@ -203,8 +209,8 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
                                 AppController.getInstance().setFilter(filter);
                                 filter.setPrice(Float.parseFloat(tvPrice.getText().toString().isEmpty() ? "0" : tvPrice.getText().toString()));
                                 LogUtils.e(min + " ----------- " + max + "is from user");
-                                index = 0;        requestType = TYPE_REFREESH;
-
+                                index = 0;
+                                requestType = TYPE_REFREESH;
                                 presenter.getAllPostByFilter(index);
 
                             }
@@ -217,7 +223,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     }
 
     @Override
-    public void onSucessGetPost(List<Post> list,int index) {
+    public void onSucessGetPost(List<Post> list, int index) {
         if (requestType == TYPE_REFREESH) {
             this.listPost.clear();
         }
@@ -228,7 +234,6 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
             rcv.setNoMore(true);
         }
         this.index = index;
-        title.setText(Html.fromHtml(String.format(getString(R.string.tilte_search), getArguments().getString("title"), listPost.size())));
         rcv.loadMoreComplete();
         rcv.refreshComplete();
 
@@ -266,7 +271,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     @Override
     public void onDestroy() {
         super.onDestroy();
-       // AppController.getInstance().setFilter(null);
+        // AppController.getInstance().setFilter(null);
     }
 
     @Override
@@ -293,7 +298,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
         tvDistrict.setText("Tìm kiếm theo khu vực");
         requestType = TYPE_REFREESH;
         index = 0;
-        presenter.getAllPostByService(getArguments().getInt("idService"), 0,index);
+        presenter.getAllPostByService(getArguments().getInt("idService"), 0, index);
 
     }
 
@@ -320,7 +325,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
                 presenter.getAllPostByFilter(index);
             } else {
                 dot_filter.setVisibility(View.GONE);
-                presenter.getAllPostByService(getArguments().getInt("idService"), 0,index);
+                presenter.getAllPostByService(getArguments().getInt("idService"), 0, index);
 
             }
         }
@@ -331,7 +336,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
                 presenter.getAllPostByFilter(index);
             } else {
                 dot_filter.setVisibility(View.GONE);
-                presenter.getAllPostByService(getArguments().getInt("idService"), 1,index);
+                presenter.getAllPostByService(getArguments().getInt("idService"), 1, index);
 
             }
         }
@@ -387,7 +392,8 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
         filter.setMin(min);
         AppController.getInstance().setFilter(filter);
         LogUtils.e(min + " ----------- " + max + "is from user");
-        index = 0;        requestType = TYPE_REFREESH;
+        index = 0;
+        requestType = TYPE_REFREESH;
 
 //        tvPrice.setText(String.format("Mức giá trung bình: %,.0fvnđ", ((min + max) / 2)));
         presenter.getAllPostByFilter(index);
@@ -402,7 +408,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
             presenter.getAllPostByFilter(index);
         } else {
             dot_filter.setVisibility(View.GONE);
-            presenter.getAllPostByService(getArguments().getInt("idService"), 0,index);
+            presenter.getAllPostByService(getArguments().getInt("idService"), 0, index);
 
         }
     }
@@ -415,7 +421,7 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
             presenter.getAllPostByFilter(index);
         } else {
             dot_filter.setVisibility(View.GONE);
-            presenter.getAllPostByService(getArguments().getInt("idService"), 0,index);
+            presenter.getAllPostByService(getArguments().getInt("idService"), 0, index);
 
         }
     }

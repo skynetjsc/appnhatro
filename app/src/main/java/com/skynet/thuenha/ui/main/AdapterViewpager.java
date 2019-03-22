@@ -67,7 +67,7 @@ public class AdapterViewpager extends FragmentStatePagerAdapter {
 
             }
         }
-        return FragmentSearch.newInstance(1,"");
+        return FragmentSearch.newInstance(1,"",0);
 
     }
 

@@ -17,7 +17,18 @@ public class Service {
     @Expose
     @SerializedName("id")
     private int id;
+    @Expose
+    @SerializedName("number_post")
+    private int number_post;
     private boolean isChecked;
+
+    public int getNumber_post() {
+        return number_post;
+    }
+
+    public void setNumber_post(int number_post) {
+        this.number_post = number_post;
+    }
 
     public boolean isChecked() {
         return isChecked;
