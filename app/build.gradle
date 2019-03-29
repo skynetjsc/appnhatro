@@ -6,9 +6,9 @@ android {
         applicationId "com.skynet.thuenha"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 6
+        versionCode 7
         multiDexEnabled true
-        versionName "1.5"
+        versionName "1.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

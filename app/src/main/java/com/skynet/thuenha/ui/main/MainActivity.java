@@ -100,7 +100,12 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
 //            startActivity(new Intent(MainActivity.this, ProfileUpdateFragment.class));
 //        }
     }
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        AppController.getInstance().getmSetting().remove(AppConstant.district);
+        AppController.getInstance().getmSetting().remove(AppConstant.city);
+    }
     private void addBadgeAt(int position, int number) {
         // add badge
         if (badge == null)

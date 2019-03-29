@@ -119,8 +119,8 @@ public class ChooseAddressActivity extends BaseActivity implements ChooseAddress
         spiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                presenter.getDistrict(listCities.get(position).getId());
                 AppController.getInstance().getmSetting().put(AppConstant.city, new Gson().toJson(listCities.get(position)));
+                presenter.getDistrict(listCities.get(position).getId());
             }
 
             @Override
@@ -185,6 +185,7 @@ public class ChooseAddressActivity extends BaseActivity implements ChooseAddress
     @Override
     public void onCallBack(Object pos) {
         Address obj = (Address) pos;
+        AppController.getInstance().getmSetting().put(AppConstant.city, new Gson().toJson(listCities.get(spiner.getSelectedItemPosition())));
         AppController.getInstance().getmSetting().put(AppConstant.district, new Gson().toJson(obj));
         setResult(RESULT_OK);
         finish();

@@ -43,9 +43,9 @@ public class SearchImplRemote extends Interactor implements SearchContract.Inter
         if (json != null && !json.isEmpty())
             district = new Gson().fromJson(json, Address.class);
         int id = idDistrict;
-        if (id != 0) {
+//        if (id != 0) {
             id = district != null ? district.getId() : 0;
-        }
+//        }
         getmService().getListPost(AppController.getInstance().getmProfileUser().getId(), idService, id,index).enqueue(new CallBackBase<ApiResponse<List<Post>>>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse<List<Post>>> call, Response<ApiResponse<List<Post>>> response) {

@@ -125,7 +125,9 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
         adapter = new SearchAdapter(listPost, getMyContext(), this);
         rcv.setAdapter(adapter);
         requestType = TYPE_REFREESH;
-
+        AppController.getInstance().getmSetting().remove(AppConstant.district);
+        AppController.getInstance().getmSetting().remove(AppConstant.city);
+        setupAddress();
         if (AppController.getInstance().getFilter() != null) {
             dot_filter.setVisibility(View.VISIBLE);
             tvPrice.setText(AppController.getInstance().getFilter().getPrice() + "");
@@ -255,6 +257,8 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     @Override
     public void hiddenProgress() {
         dialogLoading.hideDialog();
+        rcv.refreshComplete();
+        rcv.loadMoreComplete();
     }
 
     @Override
@@ -403,6 +407,9 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
     public void onRefresh() {
         requestType = TYPE_REFREESH;
         index = 0;
+        AppController.getInstance().getmSetting().remove(AppConstant.district);
+        AppController.getInstance().getmSetting().remove(AppConstant.city);
+        setupAddress();
         if (AppController.getInstance().getFilter() != null) {
             dot_filter.setVisibility(View.VISIBLE);
             presenter.getAllPostByFilter(index);
@@ -422,7 +429,13 @@ public class FragmentSearch extends BaseFragment implements SearchContract.View,
         } else {
             dot_filter.setVisibility(View.GONE);
             presenter.getAllPostByService(getArguments().getInt("idService"), 0, index);
-
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        AppController.getInstance().getmSetting().remove(AppConstant.district);
+        AppController.getInstance().getmSetting().remove(AppConstant.city);
     }
 }
