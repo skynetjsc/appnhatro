@@ -72,6 +72,7 @@
         <activity android:name=".ui.privacy.TermActivity" />
         <activity android:name=".ui.choosewhorent.ListViewerActivity" />
         <activity android:name=".ui.privacy.HelpActivity" />
+        <activity android:name=".ui.main.ContactUsActivity" />
 
 
         <service android:name=".network.socket.SocketClient">

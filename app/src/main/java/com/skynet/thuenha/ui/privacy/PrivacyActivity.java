@@ -2,6 +2,7 @@ package com.skynet.thuenha.ui.privacy;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,7 +40,8 @@ public class PrivacyActivity extends BaseActivity {
             @Override
             public void onRequestSuccess(Call<ApiResponse<Term>> call, Response<ApiResponse<Term>> response) {
                 if (response.isSuccessful() && response.body().getData() != null) {
-                    tv.setText(response.body().getData().getContent());
+                    tv.setText(Html.fromHtml(response.body().getData().getContent()));
+
                 }
             }
 

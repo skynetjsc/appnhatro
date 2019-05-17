@@ -71,7 +71,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 startActivity(new Intent(LoginActivity.this, ForgotPwActivity.class));
                 break;
             case R.id.privacy:
-                startActivity(new Intent(LoginActivity.this, PrivacyActivity.class));
+                startActivity(new Intent(LoginActivity.this, TermActivity.class));
                 break;
                 case R.id.term:
                 startActivity(new Intent(LoginActivity.this, TermActivity.class));

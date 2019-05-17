@@ -27,6 +27,7 @@ import com.skynet.thuenha.models.Profile;
 import com.skynet.thuenha.models.Service;
 import com.skynet.thuenha.ui.base.BaseFragment;
 import com.skynet.thuenha.ui.feedback.FeedbackActivity;
+import com.skynet.thuenha.ui.main.ContactUsActivity;
 import com.skynet.thuenha.ui.makepost.MakeAPostActivity;
 import com.skynet.thuenha.ui.notification.NotificationActivity;
 import com.skynet.thuenha.ui.privacy.HelpActivity;
@@ -281,7 +282,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         return rootView;
     }
 
-    @OnClick({R.id.nav_feedback, R.id.nav_help, R.id.nav_share})
+    @OnClick({R.id.nav_feedback, R.id.nav_help, R.id.nav_share, R.id.nav_info})
     public void onViewClicked(View view) {
         final String appPackageName = getContext().getPackageName(); // getPackageName() from Context or Activity object
 
@@ -295,6 +296,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 break;
             case R.id.nav_help:
                 startActivity(new Intent(getActivity(),HelpActivity.class));
+                break;
+                case R.id.nav_info:
+                startActivity(new Intent(getActivity(), ContactUsActivity.class));
                 break;
             case R.id.nav_share:
                 Intent sendIntent = new Intent();

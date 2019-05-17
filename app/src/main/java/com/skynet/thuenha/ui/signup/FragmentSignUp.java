@@ -152,7 +152,7 @@ public class FragmentSignUp extends BaseActivity implements SignUpContract.View 
 
                 break;
             case R.id.privacy:
-                startActivity(new Intent(FragmentSignUp.this, PrivacyActivity.class));
+                startActivity(new Intent(FragmentSignUp.this, TermActivity.class));
                 break;
             case R.id.term:
                 startActivity(new Intent(FragmentSignUp.this, TermActivity.class));

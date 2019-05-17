@@ -70,7 +70,18 @@
                     <TextView
                         style="@style/nav_textview_item"
 
-                        android:text="Huớng dẫn" />
+                        android:text="Hướng dẫn" />
+                </LinearLayout>
+
+                <View style="@style/nav_view" />
+
+                <LinearLayout
+                    android:id="@+id/nav_info"
+                    style="@style/nav_layout_root_item"
+                    android:visibility="visible">
+                    <TextView
+                        style="@style/nav_textview_item"
+                        android:text="Thông tin liên hệ"/>
                 </LinearLayout>
 
                 <View style="@style/nav_view" />

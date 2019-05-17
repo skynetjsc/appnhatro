@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.sasank.roundedhorizontalprogress:roundedhorizontalprogress:1.0.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/roundedhorizontalprogress-1.0.1.aar/5d346a62e18527e396ee55e0ee531a84/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/roundedhorizontalprogress-1.0.1.aar/5d346a62e18527e396ee55e0ee531a84/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sasank.roundedhorizontalprogress/roundedhorizontalprogress/1.0.1/37aa330eb5ae8d7e5bb9a2f6e4cffaea9528c576/roundedhorizontalprogress-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
