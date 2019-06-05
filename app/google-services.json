@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "610260061433",
+    "firebase_url": "https://thuenha-cdcd0.firebaseio.com",
+    "project_id": "thuenha-cdcd0",
+    "storage_bucket": "thuenha-cdcd0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610260061433:android:96957a430dc2b818",
+        "android_client_info": {
+          "package_name": "com.skynet.thuenha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610260061433-ks79untvjiiah29or897ta10hg2jfek3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skynet.thuenha",
+            "certificate_hash": "c0609ee3130266f52099641abe896de7ac045baa"
+          }
+        },
+        {
+          "client_id": "610260061433-t9a0mbmsh13vvvugti2fetdr5mma63to.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4kAgiu2hj-Is4EVs7oeVkJS6WsfPvGMs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610260061433-t9a0mbmsh13vvvugti2fetdr5mma63to.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

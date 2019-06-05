@@ -1,15 +1,29 @@
 package com.skynet.thuenha.ui.main;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
+//
+//import com.byappsoft.sap.launcher.Sap_act_main_launcher;
+//import com.byappsoft.sap.utils.Sap_Func;
+import com.blankj.utilcode.util.LogUtils;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.formats.NativeAd;
+import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.gson.Gson;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.skynet.thuenha.R;
@@ -24,6 +38,9 @@ import com.skynet.thuenha.ui.notification.NotificationActivity;
 import com.skynet.thuenha.ui.updateProfile.ProfileUpdateFragment;
 import com.skynet.thuenha.ui.views.ViewpagerNotSwipe;
 import com.skynet.thuenha.utils.AppConstant;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,10 +88,82 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
 
         }
     }
+    private boolean checkPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void requestSapPermissions() {
+        try{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+            }
+        }catch (Exception e){
+        }
+    }
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
+        MobileAds.initialize(this,
+                getString(R.string.admob_app_id));
+        AdRequest adRequestInterstitial = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("FFABFA1692AA499FFBC2A4EB34847CAE")
+                .build();
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-8862945044447812/1012456009");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                LogUtils.e("Đã tải xong quảng cáo");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+                LogUtils.e("onAdFailedToLoad : " + errorCode);
+
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when the ad is displayed.
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                LogUtils.e("Đã đóng quảng cáo");
+
+                // Code to be executed when the interstitial ad is closed.
+            }
+        });
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                // Load the next interstitial.
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+
+        });
         bnve.enableAnimation(false);
         bnve.enableShiftingMode(false);
         bnve.setTextVisibility(true);
@@ -84,7 +173,11 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         bnve.setupWithViewPager(viewpager);
         viewpager.setPagingEnabled(false);
 
-
+//        if(!checkPermission()){
+//            requestSapPermissions();
+//        }else{
+//            Sap_Func.notiUpdate(getApplicationContext());
+//        }
     }
 
     @Override
@@ -95,7 +188,10 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
             addBadgeAt(2, count);
         else if (badge != null)
             badge.hide(true);
-
+//        if(checkPermission()){
+//            Sap_Func.setNotiBarLockScreen(this, false);
+//            Sap_act_main_launcher.initsapStart(this, "anhhoa125555", true, true);
+//        }
 //        if (AppController.getInstance().getmProfileUser().getName().isEmpty() || AppController.getInstance().getmProfileUser().getEmail().isEmpty()) {
 //            startActivity(new Intent(MainActivity.this, ProfileUpdateFragment.class));
 //        }
@@ -139,6 +235,15 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onShowAds() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
     }
 
     @Override

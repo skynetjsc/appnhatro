@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: net.cachapa.expandablelayout:expandablelayout:2.9.2@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/expandablelayout-2.9.2.aar/31f731a8906ffdca08ac42f8a1cde5ae/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/expandablelayout-2.9.2.aar/31f731a8906ffdca08ac42f8a1cde5ae/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/expandablelayout-2.9.2.aar/09eb08e4058fc15a28587e4354873fc7/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/expandablelayout-2.9.2.aar/09eb08e4058fc15a28587e4354873fc7/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

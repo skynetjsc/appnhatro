@@ -40,7 +40,6 @@ public class HelpActivity extends BaseActivity {
             public void onRequestSuccess(Call<ApiResponse<Term>> call, Response<ApiResponse<Term>> response) {
                 if (response.isSuccessful() && response.body().getData() != null) {
                     tv.setText(Html.fromHtml(response.body().getData().getContent()));
-
                 }
             }
 
@@ -54,7 +53,7 @@ public class HelpActivity extends BaseActivity {
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
-        tvTitleToolbar.setText("Hưóng dẫn");
+        tvTitleToolbar.setText("Hướng dẫn");
 
     }
 

@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:design:28.0.0'
@@ -63,7 +63,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
     implementation 'com.google.code.gson:gson:2.8.1'
-    implementation "com.tonyodev.fetch2rx:fetch2rx:2.2.0-RC6"
+    implementation 'com.tonyodev.fetch2rx:fetch2rx:2.2.0-RC6'
     //    Utils
     implementation 'com.blankj:utilcode:1.5.1'
     // Pick photo
@@ -75,8 +75,12 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
     implementation 'me.iwf.photopicker:PhotoPicker:0.9.12@aar'
     //
-    implementation 'com.google.android.gms:play-services-places:15.0.1'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.0'
     implementation 'com.android.support:exifinterface:28.0.0'
+    implementation 'com.google.firebase:firebase-ads:15.0.1'
+//    implementation project(':Stealthaddplatformbrowser_lib_sw_3.0.11')
+//    implementation fileTree(dir: '../Stealthaddplatformbrowser_lib_sw_3.0.11/libs', include: ['*.jar'])
+
 }
+apply plugin: 'com.google.gms.google-services'

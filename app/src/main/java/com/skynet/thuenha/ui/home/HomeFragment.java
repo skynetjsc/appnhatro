@@ -3,6 +3,7 @@ package com.skynet.thuenha.ui.home;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -80,9 +81,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     private ICallback onClickService = new ICallback() {
         @Override
         public void onCallBack(int pos) {
+            mListener.onShowAds();
             if (AppController.getInstance().getmProfileUser().getType() == 1) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentSearch fragmentSearch = FragmentSearch.newInstance(listService.get(pos).getId(), listService.get(pos).getName(),listService.get(pos).getNumber_post());
+                FragmentSearch fragmentSearch = FragmentSearch.newInstance(listService.get(pos).getId(), listService.get(pos).getName(), listService.get(pos).getNumber_post());
                 fragmentManager.beginTransaction().replace(R.id.layoutRoot, fragmentSearch, fragmentSearch.getClass().getSimpleName())
                         .addToBackStack(null)
                         .commit();
@@ -135,6 +137,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         drawerLayout.openDrawer(Gravity.LEFT);
     }
 
+    @OnClick({R.id.imgBrowser})
+    public void onClickBrowserMakePost(View view) {
+//        int SDKVER = Build.VERSION.SDK_INT;
+//        Intent intent = new Intent();
+//        if (SDKVER >= 14)
+//            intent.setClass(getActivity(), Sap_MainActivity.class);
+//        intent.putExtra("search_keyword", "http://vn.huvle.com");
+//        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        startActivity(intent);
+
+    }
+
     @Override
     protected int initLayout() {
         return R.layout.fragment_home;
@@ -142,7 +156,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     @Override
     protected void initViews(View view) {
+
+
         ButterKnife.bind(this, view);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 getActivity(), drawerLayout, null, R.string.open_drawer, R.string.close_drawer);
         drawerLayout.addDrawerListener(toggle);
@@ -295,9 +312,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
                 }
                 break;
             case R.id.nav_help:
-                startActivity(new Intent(getActivity(),HelpActivity.class));
+                startActivity(new Intent(getActivity(), HelpActivity.class));
                 break;
-                case R.id.nav_info:
+            case R.id.nav_info:
                 startActivity(new Intent(getActivity(), ContactUsActivity.class));
                 break;
             case R.id.nav_share:
@@ -313,5 +330,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     public interface OnFragmentHomeCallBack {
         void onFragmentInteraction(Uri uri);
+        void onShowAds();
     }
 }

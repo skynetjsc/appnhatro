@@ -1,35 +1,16 @@
 package com.skynet.thuenha.ui.main;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.ui.base.BaseActivity;
-import com.skynet.thuenha.utils.AppConstant;
-import com.skynet.thuenha.utils.CommomUtils;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.annotations.NonNull;
 
 public class ContactUsActivity extends BaseActivity {
-
-
-
 
 
     @Override
@@ -60,13 +41,17 @@ public class ContactUsActivity extends BaseActivity {
     }
 
 
-
-
-
     @OnClick(R.id.imageView13)
     public void onViewClicked() {
         onBackPressed();
     }
 
 
+    @OnClick(R.id.imageView14)
+    public void onViewsClicked() {
+        String url = "http://online.gov.vn/HomePage/AppDisplay.aspx?DocId=617";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
 }

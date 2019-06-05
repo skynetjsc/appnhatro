@@ -15,7 +15,11 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,12 +50,12 @@
                     android:id="@+id/filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_filterbtn"
+                    android:drawablePadding="@dimen/dp8"
                     android:padding="@dimen/dp16"
                     android:text="Lọc"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:drawablePadding="@dimen/dp8"
-                    android:drawableRight="@drawable/ic_filterbtn" />
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/dot_filter"
@@ -206,7 +210,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/login_edit_bg"
-                android:drawableLeft="@drawable/places_ic_search"
                 android:drawablePadding="@dimen/dp16"
                 android:ems="10"
                 android:hint="Tìm kiếm theo tên"
