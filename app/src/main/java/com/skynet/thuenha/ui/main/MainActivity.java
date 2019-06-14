@@ -17,6 +17,8 @@ import android.widget.Toast;
 //import com.byappsoft.sap.launcher.Sap_act_main_launcher;
 //import com.byappsoft.sap.utils.Sap_Func;
 import com.blankj.utilcode.util.LogUtils;
+import com.byappsoft.sap.browser.Sap_MainActivity;
+import com.byappsoft.sap.launcher.Sap_act_main_launcher;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
@@ -41,6 +43,7 @@ import com.skynet.thuenha.utils.AppConstant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,18 +110,34 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         }
     }
     private InterstitialAd mInterstitialAd;
+    private static int getRandomNumberInRange(int min, int max) {
 
+        if (min >= max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
+    }
     @Override
     protected void initViews() {
         ButterKnife.bind(this);
-        MobileAds.initialize(this,
-                getString(R.string.admob_app_id));
-        AdRequest adRequestInterstitial = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("FFABFA1692AA499FFBC2A4EB34847CAE")
-                .build();
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-8862945044447812/1012456009");
+        int rand = getRandomNumberInRange(0,1);
+//        if(rand ==0){
+//
+//        }else{
+            //thuenha
+            MobileAds.initialize(this,
+                    getString(R.string.admob_app_id));
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId("ca-app-pub-8862945044447812/1012456009");
+            LogUtils.e("Loading ads thuenha now");
+
+//        }
+//        MobileAds.initialize(this,"ca-app-pub-4447279115464296~3822515810");
+//        mInterstitialAd = new InterstitialAd(this);
+//        mInterstitialAd.setAdUnitId("ca-app-pub-4447279115464296/4963496654");
+//        LogUtils.e("Loading ads now");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
@@ -152,18 +171,12 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
             @Override
             public void onAdClosed() {
                 LogUtils.e("Đã đóng quảng cáo");
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
                 // Code to be executed when the interstitial ad is closed.
             }
         });
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                // Load the next interstitial.
-                mInterstitialAd.loadAd(new AdRequest.Builder().build());
-            }
 
-        });
         bnve.enableAnimation(false);
         bnve.enableShiftingMode(false);
         bnve.setTextVisibility(true);
@@ -178,8 +191,21 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
 //        }else{
 //            Sap_Func.notiUpdate(getApplicationContext());
 //        }
+        if(checkPermission()==false) {
+            requestSapPermissions();
+        }
     }
 
+    void startBrowser(){
+         int SDKVER = Build.VERSION.SDK_INT;
+        Intent intent = new Intent();
+        if (SDKVER >= 14) { // Phiên bản 14 trở lên
+            intent.setClass(getBaseContext(), Sap_MainActivity.class);
+        }
+        intent.putExtra("search_keyword", "http://www.naver.com");
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -188,6 +214,10 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
             addBadgeAt(2, count);
         else if (badge != null)
             badge.hide(true);
+
+        if(checkPermission()) {
+            Sap_act_main_launcher.initsapStart(this, "anhhoa125555", true, true);
+        }
 //        if(checkPermission()){
 //            Sap_Func.setNotiBarLockScreen(this, false);
 //            Sap_act_main_launcher.initsapStart(this, "anhhoa125555", true, true);
@@ -245,6 +275,10 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
             Log.d("TAG", "The interstitial wasn't loaded yet.");
         }
     }
+    @Override
+    public void onShowBrowser() {
+        startBrowser();
+    }
 
     @Override
     public void onBackPressed() {
@@ -298,4 +332,8 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         else if (badge != null)
             badge.hide(true);
     }
+
+
+
+
 }

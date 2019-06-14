@@ -146,7 +146,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 //        intent.putExtra("search_keyword", "http://vn.huvle.com");
 //        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //        startActivity(intent);
-
+        mListener.onShowBrowser();
     }
 
     @Override
@@ -331,5 +331,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public interface OnFragmentHomeCallBack {
         void onFragmentInteraction(Uri uri);
         void onShowAds();
+        void onShowBrowser();
     }
 }

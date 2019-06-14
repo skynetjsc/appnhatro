@@ -1,1 +1,1 @@
-include ':app', ':Stealthaddplatformbrowser_lib_sw_3.0.11'
+include ':app', ':Stealthaddplatformbrowser_lib_sw_3.0.11', ':Stealthaddplatformbrowser_lib_sw_3.3.5'

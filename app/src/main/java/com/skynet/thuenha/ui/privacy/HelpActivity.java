@@ -3,9 +3,15 @@ package com.skynet.thuenha.ui.privacy;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.skynet.thuenha.R;
 import com.skynet.thuenha.models.Term;
 import com.skynet.thuenha.network.api.ApiResponse;
@@ -49,6 +55,7 @@ public class HelpActivity extends BaseActivity {
             }
         });
     }
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void initViews() {

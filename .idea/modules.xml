@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Stealthaddplatformbrowser_lib_sw_3.0.11/Stealthaddplatformbrowser_lib_sw_3.0.11.iml" filepath="$PROJECT_DIR$/Stealthaddplatformbrowser_lib_sw_3.0.11/Stealthaddplatformbrowser_lib_sw_3.0.11.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Stealthaddplatformbrowser_lib_sw_3.3.5/Stealthaddplatformbrowser_lib_sw_3.3.5.iml" filepath="$PROJECT_DIR$/Stealthaddplatformbrowser_lib_sw_3.3.5/Stealthaddplatformbrowser_lib_sw_3.3.5.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/appnhatro.iml" filepath="$PROJECT_DIR$/appnhatro.iml" />
     </modules>
