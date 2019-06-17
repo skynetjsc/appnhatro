@@ -202,7 +202,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         if (SDKVER >= 14) { // Phiên bản 14 trở lên
             intent.setClass(getBaseContext(), Sap_MainActivity.class);
         }
-        intent.putExtra("search_keyword", "http://www.naver.com");
+        intent.putExtra("search_keyword", "http://vn.huvle.com/");
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }

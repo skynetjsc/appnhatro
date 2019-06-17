@@ -160,6 +160,6 @@
 </FrameLayout>
     <include
         layout="@layout/nav"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </android.support.v4.widget.DrawerLayout>
