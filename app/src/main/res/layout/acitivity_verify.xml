@@ -49,6 +49,18 @@
                     android:inputType="number" />
 
 
+                <EditText
+                    android:id="@+id/edtCode2"
+                    style="@style/login_edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:background="@drawable/login_edit_bg"
+                    android:gravity="center"
+                    android:hint="Tạo mật khẩu"
+                    android:inputType="textPassword"
+                    android:textSize="18sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

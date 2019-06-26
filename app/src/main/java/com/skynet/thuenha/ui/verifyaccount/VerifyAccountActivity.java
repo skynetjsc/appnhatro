@@ -25,7 +25,8 @@ public class VerifyAccountActivity extends BaseActivity implements VerifyAccount
     @BindView(R.id.tvTitle_toolbar)
     TextView tvTitle;
     @BindView(R.id.edtCode)
-    EditText edtCode;
+    EditText edtCode;    @BindView(R.id.edtCode2)
+    EditText edtPass;
     @BindView(R.id.tvResend)
     TextView tvResend;
     @BindView(R.id.tvCountdown)
@@ -86,9 +87,9 @@ public class VerifyAccountActivity extends BaseActivity implements VerifyAccount
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (edtCode.getText().toString().equals(code)) {
-                    presenter.signUp(phone, code, type);
-                }
+//                if (edtCode.getText().toString().equals(code)) {
+//                    presenter.signUp(phone, code, type);
+//                }
             }
         });
     }
@@ -113,7 +114,7 @@ public class VerifyAccountActivity extends BaseActivity implements VerifyAccount
                 break;
             case R.id.btnsubmit:
                 if (edtCode.getText().toString().equals(code)) {
-                    presenter.signUp(phone, code, type);
+                    presenter.signUp(phone, edtPass.getText().toString(), type);
 
                 } else {
                     Toast.makeText(this, "Mã xác thực không chính xác", Toast.LENGTH_LONG).show();
