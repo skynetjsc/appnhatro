@@ -171,7 +171,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("update_account.php")
-    Call<ApiResponse> updateAccount(@Field("id") String id, @Field("type") int type, @Field("money") double money);
+    Call<ApiResponse> updateAccount(@Field("id") String id, @Field("type") int type, @Field("money") double money, @Field("vnp_TransactionNo") String vnp_TransactionNo);
 
     @FormUrlEncoded
     @POST("comment.php")

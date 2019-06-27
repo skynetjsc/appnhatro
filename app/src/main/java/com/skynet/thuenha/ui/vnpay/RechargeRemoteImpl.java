@@ -62,14 +62,14 @@ public class RechargeRemoteImpl extends Interactor implements RechargeContract.I
             return;
         }
         //http://chapp.com.vn/cms/api/vnpay_php/vnpay_return.php?vnp_Amount=1000000&vnp_BankCode=NCB&vnp_BankTranNo=20190627095940&vnp_CardType=ATM&vnp_OrderInfo=Noi+dung+thanh+toan&vnp_PayDate=20190627100423&vnp_ResponseCode=00&vnp_TmnCode=CHAPP001&vnp_TransactionNo=13154247&vnp_TxnRef=20190627105810&vnp_SecureHashType=SHA256&vnp_SecureHash=1e984640f4c891b220c1a3636fe4b0bfe10b255eccf76c4528082857dfc37f38
-
         Uri uri = Uri.parse(url);
         String server = uri.getAuthority();
         String path = uri.getPath();
         String protocol = uri.getScheme();
         Set<String> args = uri.getQueryParameterNames();
         double vnp_Amount = Double.parseDouble(uri.getQueryParameter("vnp_Amount"));
-        getmService().updateAccount(profile.getId(),AppConstant.TYPE_USER,vnp_Amount).enqueue(new CallBackBase<ApiResponse>() {
+        String vnp_TransactionNo = uri.getQueryParameter("vnp_TransactionNo");
+        getmService().updateAccount(profile.getId(),AppConstant.TYPE_USER,vnp_Amount,vnp_TransactionNo).enqueue(new CallBackBase<ApiResponse>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
