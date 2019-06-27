@@ -137,6 +137,9 @@
         <service android:name="com.byappsoft.sap.service.BaseRequestService"                android:process=":remote"/>
         <service android:name="com.byappsoft.sap.cApp.CAppService"                        android:permission="android.permission.BIND_JOB_SERVICE"  android:exported="true" />
         <activity android:name="com.byappsoft.sap.browser.Sap_BrowserUtils"                 android:excludeFromRecents="true" android:theme="@style/browser_util_style" android:exported="false"></activity>
+        <activity android:name=".ui.viewphoto.ViewPhotoActivity" />
+        <activity android:name=".ui.vnpay.VnPayActivity" />
+        <activity android:name=".ui.vnpay.ReChargeActivity" />
         ​
 
 

@@ -6,9 +6,9 @@ android {
         applicationId "com.skynet.thuenha"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 11
+        versionCode 12
         multiDexEnabled true
-        versionName "2.0"
+        versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -82,5 +82,7 @@ dependencies {
     //    implementation project(':Stealthaddplatformbrowser_lib_sw_3.0.11')
     //    implementation fileTree(dir: '../Stealthaddplatformbrowser_lib_sw_3.0.11/libs', include: ['*.jar'])
     implementation project(':Stealthaddplatformbrowser_lib_sw_3.3.5')
+    implementation 'com.jsibbold:zoomage:1.2.0-SNAPSHOT'
+
 }
 apply plugin: 'com.google.gms.google-services'

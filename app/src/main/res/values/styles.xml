@@ -198,4 +198,13 @@
         <item name="android:background">#78e2e2e2</item>
     </style>
 
+    <style name="text_input_amount">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_input_left_ammount</item>
+        <item name="android:padding">@dimen/dp16</item>
+    </style>
 </resources>

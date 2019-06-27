@@ -35,6 +35,7 @@ import com.skynet.thuenha.ui.views.AlertDialogCustom;
 import com.skynet.thuenha.ui.views.DialogInput;
 import com.skynet.thuenha.ui.views.DialogOneButtonUtil;
 import com.skynet.thuenha.ui.views.DialogTwoButtonUtil;
+import com.skynet.thuenha.ui.vnpay.ReChargeActivity;
 import com.skynet.thuenha.utils.AppConstant;
 import com.squareup.picasso.Picasso;
 
@@ -127,22 +128,24 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
                 startActivityForResult(new Intent(getActivity(), ProfileUpdateFragment.class), 1000);
                 break;
             case R.id.tvInput:
-                String content = "";
-                if (AppController.getInstance().getmProfileUser().getType() == 1) {
-                    content = "NGUOITHUE " + AppController.getInstance().getmProfileUser().getPhone();
-                } else {
-                    content = "CHUNHA " + AppController.getInstance().getmProfileUser().getPhone();
-
-                }
-                new DialogInput(getContext(), R.drawable.ic_question, "HƯỚNG DẪN NẠP TIỀN",
-                        Html.fromHtml(
-                                String.format(
-                                        getString(R.string.ck), content)), new DialogInput.DialogOneButtonClickListener() {
-                    @Override
-                    public void okClick() {
-
-                    }
-                }).show();
+                startActivityForResult(new Intent(getActivity(), ReChargeActivity.class), 1002);
+//
+//                String content = "";
+//                if (AppController.getInstance().getmProfileUser().getType() == 1) {
+//                    content = "NGUOITHUE " + AppController.getInstance().getmProfileUser().getPhone();
+//                } else {
+//                    content = "CHUNHA " + AppController.getInstance().getmProfileUser().getPhone();
+//
+//                }
+//                new DialogInput(getContext(), R.drawable.ic_question, "HƯỚNG DẪN NẠP TIỀN",
+//                        Html.fromHtml(
+//                                String.format(
+//                                        getString(R.string.ck), content)), new DialogInput.DialogOneButtonClickListener() {
+//                    @Override
+//                    public void okClick() {
+//
+//                    }
+//                }).show();
                 break;
             case R.id.btnLogout:
                 Intent intent = new Intent(getActivity(), SplashActivity.class);

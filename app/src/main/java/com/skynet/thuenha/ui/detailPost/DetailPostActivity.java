@@ -29,6 +29,7 @@ import com.skynet.thuenha.ui.choosewhorent.ListViewerActivity;
 import com.skynet.thuenha.ui.detailPost.viewProfile.ProfileViewerFragment;
 import com.skynet.thuenha.ui.listviewer.ListViewerFragment;
 import com.skynet.thuenha.ui.makepost.MakeAPostActivity;
+import com.skynet.thuenha.ui.viewphoto.ViewPhotoActivity;
 import com.skynet.thuenha.ui.views.DialogTwoButtonUtil;
 import com.skynet.thuenha.ui.views.LockableScrollView;
 import com.skynet.thuenha.ui.views.ProgressDialogCustom;
@@ -425,8 +426,10 @@ public class DetailPostActivity extends BaseActivity implements DetailPostContra
     }
 
     @Override
-    public void onPageClick(int i, Page page) {
-
+    public void onPageClick(int i2, Page page) {
+        Intent i = new Intent(DetailPostActivity.this, ViewPhotoActivity.class);
+        i.putExtra(AppConstant.MSG, (String) page.res);
+        startActivity(i);
     }
 
     @Override

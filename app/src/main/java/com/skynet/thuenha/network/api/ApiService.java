@@ -166,6 +166,14 @@ public interface ApiService {
                                    @Field("is_like") int is_like);
 
     @FormUrlEncoded
+    @POST("vnpay_php/create_link.php")
+    Call<ApiResponse<String>> createLink(@Field("order_desc") String order_desc, @Field("amount") String amount);
+
+    @FormUrlEncoded
+    @POST("update_account.php")
+    Call<ApiResponse> updateAccount(@Field("id") String id, @Field("type") int type, @Field("money") double money);
+
+    @FormUrlEncoded
     @POST("comment.php")
     Call<ApiResponse> commentFeedback(@Field("id") int idFeedback, @Field("user_id") String user_id, @Field("type") int type,
                                       @Field("comment") String comment);
