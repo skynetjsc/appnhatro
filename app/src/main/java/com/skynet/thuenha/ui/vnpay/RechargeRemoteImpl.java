@@ -69,7 +69,10 @@ public class RechargeRemoteImpl extends Interactor implements RechargeContract.I
         Set<String> args = uri.getQueryParameterNames();
         double vnp_Amount = Double.parseDouble(uri.getQueryParameter("vnp_Amount"));
         String vnp_TransactionNo = uri.getQueryParameter("vnp_TransactionNo");
-        getmService().updateAccount(profile.getId(),AppConstant.TYPE_USER,vnp_Amount,vnp_TransactionNo).enqueue(new CallBackBase<ApiResponse>() {
+        String vnp_TxnRef = uri.getQueryParameter("vnp_TxnRef");
+        String type_transaction = uri.getQueryParameter("vnp_ResponseCode").equals("00")? "1" : "2";
+
+        getmService().updateAccount(profile.getId(),AppConstant.TYPE_USER,vnp_Amount,vnp_TransactionNo,vnp_TxnRef,type_transaction).enqueue(new CallBackBase<ApiResponse>() {
             @Override
             public void onRequestSuccess(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {

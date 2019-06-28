@@ -119,10 +119,10 @@ public class FragmentWeb extends BaseFragment {
                 String protocol = uri.getScheme();
                 Set<String> args = uri.getQueryParameterNames();
                 String code = uri.getQueryParameter("vnp_ResponseCode");
-                if(code.equals("00")) {
+//                if(code.equals("00")) {
                     listener.onURLCallback(url);
 //                    finishFragment();
-                }
+//                }
 
             }
             return super.shouldOverrideUrlLoading(view, url);
