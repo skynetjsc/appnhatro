@@ -154,12 +154,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/slidePhotos"
             app:srcCompat="@drawable/ic_browser" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tin tức mới"
+            android:textColor="@color/red"
+            app:layout_constraintBottom_toBottomOf="@+id/imgBrowser"
+            app:layout_constraintEnd_toStartOf="@+id/imgBrowser"
+            app:layout_constraintTop_toTopOf="@+id/imgBrowser" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v4.widget.NestedScrollView>
 </FrameLayout>
     <include
         layout="@layout/nav"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </android.support.v4.widget.DrawerLayout>

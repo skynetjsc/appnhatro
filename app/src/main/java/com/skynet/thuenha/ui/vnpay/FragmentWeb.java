@@ -121,9 +121,9 @@ public class FragmentWeb extends BaseFragment {
                 String code = uri.getQueryParameter("vnp_ResponseCode");
                 if(code.equals("00")) {
                     listener.onURLCallback(url);
-                    finishFragment();
+//                    finishFragment();
                 }
-                return true;
+
             }
             return super.shouldOverrideUrlLoading(view, url);
         }

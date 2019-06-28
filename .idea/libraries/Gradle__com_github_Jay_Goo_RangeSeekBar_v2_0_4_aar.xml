@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.Jay-Goo:RangeSeekBar:v2.0.4@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/RangeSeekBar-v2.0.4.aar/2bb23811721d1b7a825cf91b5a695541/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/RangeSeekBar-v2.0.4.aar/2bb23811721d1b7a825cf91b5a695541/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/RangeSeekBar-v2.0.4.aar/8560a01cf7112f9c32ae1f14d2cf698a/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/RangeSeekBar-v2.0.4.aar/8560a01cf7112f9c32ae1f14d2cf698a/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

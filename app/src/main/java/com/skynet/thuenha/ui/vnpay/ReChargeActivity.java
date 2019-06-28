@@ -87,7 +87,7 @@ public class ReChargeActivity extends BaseActivity implements RechargeContract.V
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.imgBtn_back_toolbar, R.id.tvOption1, R.id.tvOption2, R.id.tvOption3, R.id.btnNext})
+    @OnClick({R.id.imgBtn_back_toolbar, R.id.tvOption1, R.id.tvOption2, R.id.tvOption3, R.id.btnNext, R.id.tvNext})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBtn_back_toolbar:
@@ -102,7 +102,7 @@ public class ReChargeActivity extends BaseActivity implements RechargeContract.V
             case R.id.tvOption3:
                 editText.setText("100000");
                 break;
-            case R.id.btnNext:
+            default:
                 presenter.doPayment(editText.getText().toString(),editText2.getText().toString());
                 break;
         }
@@ -120,7 +120,7 @@ public class ReChargeActivity extends BaseActivity implements RechargeContract.V
         showToast("Nạp tiền thành công.Số dư Tài khoản đã được cập nhật", AppConstant.POSITIVE, new SnackBarCallBack() {
             @Override
             public void onClosedSnackBar() {
-                finish();
+              //  finish();
             }
         });
 

@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.jsibbold:zoomage:1.2.0-SNAPSHOT@aar">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/zoomage-1.2.0-SNAPSHOT.aar/5b5f5a0cb16e137edc2903c5a117b47a/annotations.zip!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/zoomage-1.2.0-SNAPSHOT.aar/93a75ca0ded95c19747454bcdce9f11f/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/zoomage-1.2.0-SNAPSHOT.aar/5b5f5a0cb16e137edc2903c5a117b47a/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/zoomage-1.2.0-SNAPSHOT.aar/5b5f5a0cb16e137edc2903c5a117b47a/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/zoomage-1.2.0-SNAPSHOT.aar/93a75ca0ded95c19747454bcdce9f11f/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/zoomage-1.2.0-SNAPSHOT.aar/93a75ca0ded95c19747454bcdce9f11f/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
